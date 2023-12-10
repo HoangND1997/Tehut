@@ -4,6 +4,6 @@ namespace Tehut.Database
 {
     public interface IDatabaseFactory
     {
-        public IDbConnection CreateConnection(); 
+        IDbConnection CreateConnection();
     }
 }
