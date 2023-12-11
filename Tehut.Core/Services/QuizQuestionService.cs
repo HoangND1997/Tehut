@@ -12,29 +12,29 @@ namespace Tehut.Core.Services
             this.repository = repository;
         }
 
-        public Task<QuizQuestion> AddAnswer(QuizAnswer answer)
+        public Task<QuizQuestion> CreateQuestion(Quiz quiz, string question)
         {
-            return repository.AddAnswer(answer);
+            throw new NotImplementedException();
         }
 
-        public Task<QuizQuestion> CreateQuestion(string question)
+        public Task DeleteQuestion(QuizQuestion question)
         {
-            return repository.CreateQuestion(question);
-        }
-
-        public Task DeleteAnswer(QuizAnswer answer)
-        {
-            return repository.DeleteAnswer(answer); 
+            throw new NotImplementedException();
         }
 
         public Task EditQuestion(QuizQuestion question, string newQuestion)
         {
-            return repository.EditQuestion(question, newQuestion);
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<QuizAnswer>> GetAnswers(QuizQuestion question)
+        {
+            throw new NotImplementedException();
         }
 
         public Task SetCorrectAnswer(QuizAnswer answer)
         {
-            return repository.SetCorrectAnswer(answer);
+            throw new NotImplementedException();
         }
     }
 }

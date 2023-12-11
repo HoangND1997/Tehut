@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tehut.Core.Models;
+﻿using Tehut.Core.Models;
 using Tehut.Core.Repositories;
 
 namespace Tehut.Core.Services
@@ -17,44 +12,34 @@ namespace Tehut.Core.Services
             this.repository = repository;
         }
 
-        public Task AddQuestion(QuizQuestion question)
+        public Task<Quiz> CreateQuiz(string title)
         {
-            return repository.AddQuestion(question);
-        }
-
-        public Task<Quiz> CreateQuiz(string name)
-        {
-            return repository.CreateQuiz(name);
+            throw new NotImplementedException();
         }
 
         public Task DeleteQuiz(Quiz quiz)
         {
-            return repository.DeleteQuiz(quiz);
+            throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Quiz>> GetAllQuiz()
+        public Task<Quiz> EditQuiz(Quiz quiz, string newTitle)
         {
-            return repository.GetAllQuiz();
+            throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Quiz>> GetAllQuiz(string pattern)
+        public Task<IEnumerable<Quiz>> GetAllQuizzes()
         {
-            return repository.GetAllQuiz(pattern);
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<QuizQuestion>> GetQuestions(Quiz quiz)
+        {
+            throw new NotImplementedException();
         }
 
         public Task<Quiz> GetQuizByName(string name)
         {
-            return repository.GetQuizByName(name);
-        }
-
-        public Task RemoveQuestion(QuizQuestion question)
-        {
-            return repository.RemoveQuestion(question); 
-        }
-
-        public Task<Quiz> RenameQuiz(Quiz quiz, string newName)
-        {
-            return repository.RenameQuiz(quiz, newName);
+            throw new NotImplementedException();
         }
     }
 }

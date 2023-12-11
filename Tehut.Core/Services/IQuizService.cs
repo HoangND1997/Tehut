@@ -6,10 +6,24 @@ namespace Tehut.Core.Services
     {
         #region  Write Methods 
 
-        Task<Quiz> CreateQuiz(string name);
+        /// <summary>
+        /// Creates a new quiz with the given title. 
+        /// </summary>
+        /// <param name="title">The title of the new quiz.</param>
+        Task<Quiz> CreateQuiz(string title);
 
-        Task<Quiz> RenameQuiz(Quiz quiz, string newName);
+        /// <summary>
+        /// Edits the title of the quiz to the new given title. 
+        /// </summary>
+        /// <param name="quiz">The quiz to be added.</param>
+        /// <param name="newTitle">The new title of the quiz.</param>
+        Task<Quiz> EditQuiz(Quiz quiz, string newTitle);
 
+        /// <summary>
+        /// Deletes the quiz. 
+        /// </summary>
+        /// <param name="quiz">Quiz, to be deleted.</param>
+        /// <returns></returns>
         Task DeleteQuiz(Quiz quiz);
 
         #endregion
@@ -17,21 +31,23 @@ namespace Tehut.Core.Services
 
         #region Search Methods
 
-        Task<IEnumerable<Quiz>> GetAllQuiz();
-        
-        Task<IEnumerable<Quiz>> GetAllQuiz(string pattern);
+        /// <summary>
+        /// Get all the available quizzes. 
+        /// </summary>
+        Task<IEnumerable<Quiz>> GetAllQuizzes();
 
+        /// <summary>
+        /// Gets a quiz by its name or its title. 
+        /// </summary>
+        /// <param name="name">The name or title of the quiz to search for.</param>
         Task<Quiz> GetQuizByName(string name);
 
         #endregion
 
-
-        #region Question Methods
-
-        Task AddQuestion(QuizQuestion question);
-
-        Task RemoveQuestion(QuizQuestion question);
-
-        #endregion 
+        /// <summary>
+        /// Gets all the questions attached to the quiz. 
+        /// </summary>
+        /// <param name="quiz">The quiz to retrieve the questions from.</param>
+        Task<IEnumerable<QuizQuestion>> GetQuestions(Quiz quiz); 
     }
 }
