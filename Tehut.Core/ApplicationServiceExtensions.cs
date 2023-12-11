@@ -3,7 +3,7 @@ using Tehut.Core.Services;
 
 namespace Tehut.Core
 {
-    public static class ApplicationExtensions
+    public static class ApplicationServiceExtensions
     {
         public static void AddTehutApplication(this IServiceCollection serviceCollection)
         {
