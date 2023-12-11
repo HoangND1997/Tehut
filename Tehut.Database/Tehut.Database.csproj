@@ -19,8 +19,4 @@
     <ProjectReference Include="..\Tehut.Core\Tehut.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Migrator\Migrations\" />
-  </ItemGroup>
-
 </Project>

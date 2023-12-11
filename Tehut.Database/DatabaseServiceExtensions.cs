@@ -6,7 +6,7 @@ using Tehut.Database.Repositories;
 
 namespace Tehut.Database
 {
-    public static class DatabaseExtensions
+    public static class DatabaseServiceExtensions
     {
         public static void AddTehutDatabase(this IServiceCollection serviceCollection, DatabaseConfig databaseConfig)
         {
@@ -21,8 +21,8 @@ namespace Tehut.Database
                              .ConfigureRunner(rb => rb
                                 .AddSQLite()
                                 .WithGlobalConnectionString($"Data Source={databaseConfig.DatabasePath}")
-                                .ScanIn(typeof(DatabaseExtensions).Assembly).For.Migrations()
-                             );
+                                .ScanIn(typeof(DatabaseServiceExtensions).Assembly).For.Migrations())
+                             .AddLogging(lb => lb.AddFluentMigratorConsole());
         }
     }
 }
