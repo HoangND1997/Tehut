@@ -1,4 +1,5 @@
-﻿using Tehut.Core.Models;
+﻿using System.Data;
+using Tehut.Core.Models;
 using Tehut.Core.Repositories;
 
 namespace Tehut.Core.Services
@@ -12,34 +13,39 @@ namespace Tehut.Core.Services
             this.repository = repository;
         }
 
-        public Task<Quiz> CreateQuiz(string title)
+        public async Task<Quiz> CreateQuiz(string title)
         {
-            throw new NotImplementedException();
+            if (await repository.DoesQuizNameExists(title))
+            {
+                throw new DuplicateNameException($"There is already a quiz with the title \"{title}\"! Can not create new quiz.");
+            }
+
+            return await repository.CreateQuiz(title);    
         }
 
         public Task DeleteQuiz(Quiz quiz)
         {
-            throw new NotImplementedException();
+            return repository.DeleteQuiz(quiz);
         }
 
-        public Task<Quiz> EditQuiz(Quiz quiz, string newTitle)
+        public Task EditQuiz(Quiz quiz, string newTitle)
         {
-            throw new NotImplementedException();
+            return repository.EditQuiz(quiz, newTitle); 
         }
 
         public Task<IEnumerable<Quiz>> GetAllQuizzes()
         {
-            throw new NotImplementedException();
+            return repository.GetAllQuizzes();
         }
 
         public Task<IEnumerable<QuizQuestion>> GetQuestions(Quiz quiz)
         {
-            throw new NotImplementedException();
+            return repository.GetQuestions(quiz); 
         }
 
-        public Task<Quiz> GetQuizByName(string name)
+        public Task<Quiz?> GetQuizByName(string name)
         {
-            throw new NotImplementedException();
+            return repository.GetQuizByName(name); 
         }
     }
 }

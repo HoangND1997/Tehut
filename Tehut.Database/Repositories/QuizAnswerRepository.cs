@@ -12,7 +12,7 @@ namespace Tehut.Database.Repositories
             this.databaseFactory = databaseFactory;
         }
 
-        public Task<QuizAnswer> CreateAnswer(string answer)
+        public Task<QuizAnswer> CreateAnswer(QuizQuestion quizQuestion, string answer)
         {
             throw new NotImplementedException();
         }

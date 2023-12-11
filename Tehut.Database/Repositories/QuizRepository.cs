@@ -27,7 +27,7 @@ namespace Tehut.Database.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Quiz>> GetAllQuiz()
+        public Task<IEnumerable<Quiz>> GetAllQuizzes()
         {
             throw new NotImplementedException();
         }

@@ -11,6 +11,7 @@ namespace Tehut.Core.Services
         /// </summary>
         /// <param name="quiz">The quiz, to which the new question should be attached.</param>
         /// <param name="question">The text of the new question.</param>
+        /// <returns>The new created quiz question.</returns>
         Task<QuizQuestion> CreateQuestion(Quiz quiz, string question);
 
         /// <summary>
@@ -24,7 +25,6 @@ namespace Tehut.Core.Services
         /// Deletes the question and removes it from the attached quiz. 
         /// </summary>
         /// <param name="question">The question to be deleted.</param>
-        /// <returns></returns>
         Task DeleteQuestion(QuizQuestion question);
 
         #endregion
@@ -42,7 +42,7 @@ namespace Tehut.Core.Services
         /// Gets all the possible answers of a question.
         /// </summary>
         /// <param name="question">The question, from which the answers should be queried.</param>
-        /// <returns></returns>
+        /// <returns>The answers belonging to the quiz question.</returns>
         Task<IEnumerable<QuizAnswer>> GetAnswers(QuizQuestion question); 
 
         #endregion 

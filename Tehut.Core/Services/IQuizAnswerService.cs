@@ -9,6 +9,7 @@ namespace Tehut.Core.Services
         /// </summary>
         /// <param name="question">The quiz question to which the answer is attached to.</param>
         /// <param name="answer">The text of the quiz answer.</param>
+        /// <returns>The newly created quiz answer.</returns>
         Task<QuizAnswer> CreateAnswer(QuizQuestion question, string answer);
 
         /// <summary>
@@ -16,14 +17,12 @@ namespace Tehut.Core.Services
         /// </summary>
         /// <param name="answer">The quiz answer to be edited.</param>
         /// <param name="newAnswer">The new text of the quiz answer.</param>
-        /// <returns></returns>
         Task EditAnswer(QuizAnswer answer, string newAnswer); 
 
         /// <summary>
         /// Deletes the answer from the attached question.
         /// </summary>
         /// <param name="answer">The quiz answer to be deleted.</param>
-        /// <returns></returns>
         Task DeleteAnswer(QuizAnswer answer); 
     }
 }

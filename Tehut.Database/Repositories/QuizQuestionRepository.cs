@@ -36,5 +36,10 @@ namespace Tehut.Database.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public Task<IEnumerable<QuizAnswer>> GetAnswers(QuizQuestion quizQuestion)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

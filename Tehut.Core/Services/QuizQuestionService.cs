@@ -14,27 +14,27 @@ namespace Tehut.Core.Services
 
         public Task<QuizQuestion> CreateQuestion(Quiz quiz, string question)
         {
-            throw new NotImplementedException();
+            return repository.CreateQuestion(quiz, question);
         }
 
         public Task DeleteQuestion(QuizQuestion question)
         {
-            throw new NotImplementedException();
+            return repository.DeleteQuestion(question);
         }
 
         public Task EditQuestion(QuizQuestion question, string newQuestion)
         {
-            throw new NotImplementedException();
+            return repository.EditQuestion(question, newQuestion);  
         }
 
         public Task<IEnumerable<QuizAnswer>> GetAnswers(QuizQuestion question)
         {
-            throw new NotImplementedException();
+            return repository.GetAnswers(question); 
         }
 
         public Task SetCorrectAnswer(QuizAnswer answer)
         {
-            throw new NotImplementedException();
+            return repository.SetCorrectAnswer(answer);
         }
     }
 }
