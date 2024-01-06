@@ -1,5 +1,7 @@
-﻿using Tehut.Core.Models;
+﻿using Dapper;
+using Tehut.Core.Models;
 using Tehut.Core.Repositories;
+using Tehut.Database.Schemas;
 
 namespace Tehut.Database.Repositories
 {
@@ -12,49 +14,83 @@ namespace Tehut.Database.Repositories
             this.databaseFactory = databaseFactory;
         }
 
-        public Task AddQuestion(QuizQuestion question)
+        public async Task<Quiz> CreateQuiz(string name)
         {
-            throw new NotImplementedException();
+            using var connection = databaseFactory.CreateConnection();
+
+            await connection.ExecuteAsync(new CommandDefinition($"Insert into {QuizTable.TableName} ({QuizTable.Name}) Values (@name);", new { name }));
+
+            return new Quiz
+            {
+                Id = 0,
+                Name = name,
+            };
         }
 
-        public Task<Quiz> CreateQuiz(string name)
+        public async Task EditQuiz(Quiz quiz, string newName)
         {
-            throw new NotImplementedException();
+            if (quiz is null)
+            {
+                return; 
+            }
+
+            using var connection = databaseFactory.CreateConnection();
+
+            await connection.ExecuteAsync(new CommandDefinition($"Update {QuizTable.TableName} Set {QuizTable.Name} = @name;", new { name = newName })); 
         }
 
-        public Task DeleteQuiz(Quiz quiz)
+        public async Task DeleteQuiz(Quiz quiz)
         {
-            throw new NotImplementedException();
+            if (quiz is null)
+            {
+                return; 
+            }
+
+            using var connection = databaseFactory.CreateConnection();
+
+            await connection.ExecuteAsync(new CommandDefinition($"Delete from {QuizTable.TableName} where id = @id;", new { id = quiz.Id })); 
         }
 
-        public Task<IEnumerable<Quiz>> GetAllQuizzes()
+        public async Task<bool> DoesQuizNameExists(string name)
         {
-            throw new NotImplementedException();
+            if (name is null)
+            {
+                return false; 
+            }
+
+            using var connection = databaseFactory.CreateConnection();
+
+            var exists = await connection.ExecuteScalarAsync<int>(new CommandDefinition($"Select Exists (Select 1 from {QuizTable.TableName} where {QuizTable.Name} = @name) as name_exists;", new { name }));
+
+            return exists == 1; 
         }
 
-        public Task<IEnumerable<Quiz>> GetAllQuiz(string pattern)
+
+        public async Task<IEnumerable<Quiz>> GetAllQuizzes()
         {
-            throw new NotImplementedException();
+            using var connection = databaseFactory.CreateConnection();
+
+            return await connection.QueryAsync<Quiz>(new CommandDefinition($"Select * from {QuizTable.TableName};")); 
         }
 
-        public Task<Quiz> GetQuizById(int quizId)
+        public async Task<Quiz?> GetQuizByName(string name)
         {
-            throw new NotImplementedException();
+            using var connection = databaseFactory.CreateConnection();
+
+            return await connection.QueryFirstOrDefaultAsync<Quiz>(new CommandDefinition($"Select * from {QuizTable.TableName} where {QuizTable.Name} = @name;", new { name })); 
         }
 
-        public Task<Quiz> GetQuizByName(string name)
-        {
-            throw new NotImplementedException();
-        }
 
-        public Task RemoveQuestion(QuizQuestion question)
+        public async Task<IEnumerable<QuizQuestion>> GetQuestions(Quiz quiz)
         {
-            throw new NotImplementedException();
-        }
+            if (quiz is null)
+            { 
+                return Enumerable.Empty<QuizQuestion>();
+            }
 
-        public Task<Quiz> RenameQuiz(Quiz quiz, string newName)
-        {
-            throw new NotImplementedException();
+            using var connection = databaseFactory.CreateConnection();
+
+            return await connection.QueryAsync<QuizQuestion>(new CommandDefinition($"Select * from {QuizQuestionTable.TableName} where {QuizQuestionTable.Quiz} = @quizId;", new { quizId = quiz.Id }));
         }
     }
 }

@@ -12,17 +12,12 @@ namespace Tehut.Database.Repositories
             this.databaseFactory = databaseFactory;
         }
 
-        public Task<QuizQuestion> AddAnswer(QuizAnswer answer)
+        public Task<QuizQuestion> CreateQuestion(Quiz quiz, string question)
         {
             throw new NotImplementedException();
         }
 
-        public Task<QuizQuestion> CreateQuestion(string question)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteAnswer(QuizAnswer answer)
+        public Task DeleteQuestion(QuizQuestion question)
         {
             throw new NotImplementedException();
         }
@@ -32,12 +27,12 @@ namespace Tehut.Database.Repositories
             throw new NotImplementedException();
         }
 
-        public Task SetCorrectAnswer(QuizAnswer answer)
+        public Task<IEnumerable<QuizAnswer>> GetAnswers(QuizQuestion question)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<QuizAnswer>> GetAnswers(QuizQuestion quizQuestion)
+        public Task SetCorrectAnswer(QuizAnswer answer)
         {
             throw new NotImplementedException();
         }

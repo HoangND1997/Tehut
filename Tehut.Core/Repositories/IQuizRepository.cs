@@ -8,17 +8,17 @@ namespace Tehut.Core.Repositories
         #region  Write Methods 
 
         /// <summary>
-        /// Creates a new quiz in the database with the given title. 
+        /// Creates a new quiz in the database with the given name. 
         /// </summary>
-        /// <param name="title">The title of the new quiz.</param>
+        /// <param name="name">The name of the new quiz.</param>
         /// <returns>The new created quiz</returns>
-        Task<Quiz> CreateQuiz(string title);
+        Task<Quiz> CreateQuiz(string name);
 
         /// <summary>
-        /// Edits the title of the given quiz to the new given title in the database. 
+        /// Edits the name of the given quiz to the new given name in the database. 
         /// </summary>
         /// <param name="quiz">The quiz to be edited.</param>
-        /// <param name="newName">The new title of the quiz.</param>
+        /// <param name="newName">The new name of the quiz.</param>
         Task EditQuiz(Quiz quiz, string newName);
 
         /// <summary>
@@ -39,17 +39,17 @@ namespace Tehut.Core.Repositories
         Task<IEnumerable<Quiz>> GetAllQuizzes();
 
         /// <summary>
-        /// Gets a quiz by its title from the database.
+        /// Gets a quiz by its name from the database.
         /// </summary>
-        /// <param name="name">The title to search for in a quiz.</param>
-        /// <returns>The quiz with the given title or null if not existing.</returns>
+        /// <param name="name">The name to search for in a quiz.</param>
+        /// <returns>The quiz with the given name or null if not existing.</returns>
         Task<Quiz?> GetQuizByName(string name);
 
         /// <summary>
-        /// Checks whether or not the given title already exists as a title for a quiz. 
+        /// Checks whether or not the given name already exists as a name for a quiz. 
         /// </summary>
-        /// <param name="name">The title to check for existence.</param>
-        /// <returns>True, if there is already a quiz with the given title.</returns>
+        /// <param name="name">The name to check for existence.</param>
+        /// <returns>True, if there is already a quiz with the given name.</returns>
         Task<bool> DoesQuizNameExists(string name); 
 
         #endregion

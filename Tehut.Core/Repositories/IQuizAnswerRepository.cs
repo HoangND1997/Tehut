@@ -10,7 +10,7 @@ namespace Tehut.Core.Repositories
         /// <param name="quizQuestion">The question to which the answer is attached.</param>
         /// <param name="answer">The text of the quiz answer.</param>
         /// <returns>The newly created answer.</returns>
-        Task<QuizAnswer> CreateAnswer(QuizQuestion quizQuestion, string answer);
+        Task<QuizAnswer?> CreateAnswer(QuizQuestion quizQuestion, string answer);
 
         /// <summary>
         /// Edits the text of the quiz answer in the database to the new given text.

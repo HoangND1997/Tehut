@@ -7,18 +7,18 @@ namespace Tehut.Core.Services
         #region  Write Methods 
 
         /// <summary>
-        /// Creates a new quiz with the given title. 
+        /// Creates a new quiz with the given name. 
         /// </summary>
-        /// <param name="title">The title of the new quiz.</param>
+        /// <param name="name">The name of the new quiz.</param>
         /// <returns>The newly created quiz.</returns>
-        Task<Quiz> CreateQuiz(string title);
+        Task<Quiz> CreateQuiz(string name);
 
         /// <summary>
-        /// Edits the title of the quiz to the new given title. 
+        /// Edits the name of the quiz to the new given name. 
         /// </summary>
         /// <param name="quiz">The quiz to be added.</param>
-        /// <param name="newTitle">The new title of the quiz.</param>
-        Task EditQuiz(Quiz quiz, string newTitle);
+        /// <param name="newName">The new name of the quiz.</param>
+        Task EditQuiz(Quiz quiz, string newName);
 
         /// <summary>
         /// Deletes the quiz. 
@@ -38,11 +38,11 @@ namespace Tehut.Core.Services
         Task<IEnumerable<Quiz>> GetAllQuizzes();
 
         /// <summary>
-        /// Gets a quiz by its name or its title. 
+        /// Gets a quiz by its name or its name. 
         /// </summary>
-        /// <param name="title">The name or title of the quiz to search for.</param>
-        /// <returns>The quiz with the given title.</returns>
-        Task<Quiz?> GetQuizByName(string title);
+        /// <param name="name">The name or name of the quiz to search for.</param>
+        /// <returns>The quiz with the given name.</returns>
+        Task<Quiz?> GetQuizByName(string name);
 
         #endregion
 
