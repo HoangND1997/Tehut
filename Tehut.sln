@@ -9,13 +9,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{A4EC3C72-E92B-4100-B63F-D338E70739CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tehut.UI", "Tehut.UI\Tehut.UI.csproj", "{F52E70F9-F082-4022-9B07-81DEE1137080}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tehut.UI", "Tehut.UI\Tehut.UI.csproj", "{F52E70F9-F082-4022-9B07-81DEE1137080}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tehut.Database", "Tehut.Database\Tehut.Database.csproj", "{15B30A58-8422-4EAD-8FE5-F93C8AB8C79D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tehut.Database", "Tehut.Database\Tehut.Database.csproj", "{15B30A58-8422-4EAD-8FE5-F93C8AB8C79D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tehut.Core", "Tehut.Core\Tehut.Core.csproj", "{0E7A9627-DF11-4A4E-A3EE-8BD21B8C3C25}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tehut.Core", "Tehut.Core\Tehut.Core.csproj", "{0E7A9627-DF11-4A4E-A3EE-8BD21B8C3C25}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tehut.Core.Tests", "Tehut.Core.Tests\Tehut.Core.Tests.csproj", "{B03BFC04-63C9-4581-B6DC-2746B60CBBA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tehut.Core.Tests", "Tehut.Core.Tests\Tehut.Core.Tests.csproj", "{B03BFC04-63C9-4581-B6DC-2746B60CBBA7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tehut.Integration.Tests", "Tehut.Integration.Tests\Tehut.Integration.Tests.csproj", "{120D0B57-67B2-463C-B841-BC25ACBF93E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{B03BFC04-63C9-4581-B6DC-2746B60CBBA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B03BFC04-63C9-4581-B6DC-2746B60CBBA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B03BFC04-63C9-4581-B6DC-2746B60CBBA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{120D0B57-67B2-463C-B841-BC25ACBF93E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{120D0B57-67B2-463C-B841-BC25ACBF93E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{120D0B57-67B2-463C-B841-BC25ACBF93E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{120D0B57-67B2-463C-B841-BC25ACBF93E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +54,7 @@ Global
 		{15B30A58-8422-4EAD-8FE5-F93C8AB8C79D} = {8E8AC512-EC85-4F4F-B52D-3F844E0C63D4}
 		{0E7A9627-DF11-4A4E-A3EE-8BD21B8C3C25} = {A4EC3C72-E92B-4100-B63F-D338E70739CB}
 		{B03BFC04-63C9-4581-B6DC-2746B60CBBA7} = {A4EC3C72-E92B-4100-B63F-D338E70739CB}
+		{120D0B57-67B2-463C-B841-BC25ACBF93E6} = {A4EC3C72-E92B-4100-B63F-D338E70739CB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {725869CB-BF25-41AD-9E83-3549C8FAF23D}

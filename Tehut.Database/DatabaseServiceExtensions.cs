@@ -15,6 +15,7 @@ namespace Tehut.Database
             serviceCollection.AddTransient<IQuizRepository, QuizRepository>();
             serviceCollection.AddTransient<IQuizQuestionRepository, QuizQuestionRepository>();
             serviceCollection.AddTransient<IQuizAnswerRepository, QuizAnswerRepository>();
+            serviceCollection.AddTransient<IDatabaseFactory, DatabaseFactory>();    
 
             serviceCollection.AddSingleton<IDatabaseMigrator, DatabaseMigrator>();
             serviceCollection.AddFluentMigratorCore()

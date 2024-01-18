@@ -4,7 +4,7 @@ using Tehut.Core.Repositories;
 
 namespace Tehut.Core.Services
 {
-    internal class QuizService : IQuizService
+    public class QuizService : IQuizService
     {
         private readonly IQuizRepository repository;
 

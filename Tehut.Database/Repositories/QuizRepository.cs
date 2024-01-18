@@ -18,11 +18,11 @@ namespace Tehut.Database.Repositories
         {
             using var connection = databaseFactory.CreateConnection();
 
-            await connection.ExecuteAsync(new CommandDefinition($"Insert into {QuizTable.TableName} ({QuizTable.Name}) Values (@name);", new { name }));
+            var createdId = await connection.QuerySingleAsync<int>(new CommandDefinition($"Insert into {QuizTable.TableName} ({QuizTable.Name}) Values (@name) Returning {QuizTable.Id};", new { name }));
 
             return new Quiz
             {
-                Id = 0,
+                Id = createdId,
                 Name = name,
             };
         }
@@ -48,7 +48,7 @@ namespace Tehut.Database.Repositories
 
             using var connection = databaseFactory.CreateConnection();
 
-            await connection.ExecuteAsync(new CommandDefinition($"Delete from {QuizTable.TableName} where id = @id;", new { id = quiz.Id })); 
+            await connection.ExecuteAsync(new CommandDefinition($"Delete from {QuizTable.TableName} where id = @id;", new { id = quiz.Id }));
         }
 
         public async Task<bool> DoesQuizNameExists(string name)
@@ -62,7 +62,7 @@ namespace Tehut.Database.Repositories
 
             var exists = await connection.ExecuteScalarAsync<int>(new CommandDefinition($"Select Exists (Select 1 from {QuizTable.TableName} where {QuizTable.Name} = @name) as name_exists;", new { name }));
 
-            return exists == 1; 
+            return exists == 1;
         }
 
 
@@ -70,13 +70,13 @@ namespace Tehut.Database.Repositories
         {
             using var connection = databaseFactory.CreateConnection();
 
-            return await connection.QueryAsync<Quiz>(new CommandDefinition($"Select * from {QuizTable.TableName};")); 
+                return await connection.QueryAsync<Quiz>(new CommandDefinition($"Select * from {QuizTable.TableName};"));
         }
 
         public async Task<Quiz?> GetQuizByName(string name)
         {
             using var connection = databaseFactory.CreateConnection();
-
+            
             return await connection.QueryFirstOrDefaultAsync<Quiz>(new CommandDefinition($"Select * from {QuizTable.TableName} where {QuizTable.Name} = @name;", new { name })); 
         }
 
@@ -89,7 +89,7 @@ namespace Tehut.Database.Repositories
             }
 
             using var connection = databaseFactory.CreateConnection();
-
+            
             return await connection.QueryAsync<QuizQuestion>(new CommandDefinition($"Select * from {QuizQuestionTable.TableName} where {QuizQuestionTable.Quiz} = @quizId;", new { quizId = quiz.Id }));
         }
     }
