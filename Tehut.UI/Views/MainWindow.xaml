@@ -5,11 +5,30 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Tehut.UI"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:views="clr-namespace:Tehut.UI.Views"
     Title="MainWindow"
-    Width="800"
-    Height="450"
+    Width="1920"
+    Height="1080"
     mc:Ignorable="d">
+    
+    <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness="0" CaptionHeight="0" />
+    </WindowChrome.WindowChrome>
+
     <Window.Resources>
+
     </Window.Resources>
-    <Grid Background="{StaticResource BaseColor}"/>
+
+    <Grid Background="{StaticResource BaseColor}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <views:Titlebar x:Name="titleBar"/>
+
+    </Grid>
+
 </Window>
