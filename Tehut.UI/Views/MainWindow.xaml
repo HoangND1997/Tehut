@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:views="clr-namespace:Tehut.UI.Views"
+    xmlns:components="clr-namespace:Tehut.UI.Views.Components"
     Title="MainWindow"
     Width="1920"
     Height="1080"
@@ -29,6 +30,20 @@
 
         <views:Titlebar x:Name="titleBar"/>
 
+        <!-- Content -->
+        <Grid Grid.Row="1">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="120" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <components:NavigationHeader />
+
+            <ContentPresenter Grid.Row="1" />
+
+        </Grid>
+        
     </Grid>
 
 </Window>

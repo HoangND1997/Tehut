@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="Tehut.UI.Views.Components.SearchBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Tehut.UI.Views.Components"
+             xmlns:custom="clr-namespace:Tehut.UI.Views.Components.Custom"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Border Background="{StaticResource Base3Color}" BorderBrush="{StaticResource SecondaryTextColor}" BorderThickness="0" CornerRadius="20">
+
+        <Grid>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <materialDesign:PackIcon Kind="Search" Foreground="{StaticResource PrimaryTextColor}" Width="25" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center">
+            </materialDesign:PackIcon>
+            
+            <custom:TextEdit 
+                Grid.Column="1"
+                Hint="Search" 
+                HintColor="{StaticResource SecondaryTextColor}" 
+                Foreground="{StaticResource PrimaryTextColor}" 
+                BorderBrush="{x:Null}"
+                FontSize="18"
+                Margin="0 8"/> 
+        </Grid>
+    </Border>
+</UserControl>

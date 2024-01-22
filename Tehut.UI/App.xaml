@@ -6,6 +6,9 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Views/Themes/DarkTheme/Colors.xaml" />
+                <ResourceDictionary Source="/Views/Themes/General/Buttons.xaml" />
+                
+                <ResourceDictionary Source="/Views/Components/Custom/TextEditStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
