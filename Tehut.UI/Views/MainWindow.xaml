@@ -18,7 +18,7 @@
     </WindowChrome.WindowChrome>
 
     <Window.Resources>
-
+        <ResourceDictionary Source="/Views/ViewDefinitions.xaml" />
     </Window.Resources>
 
     <Grid Background="{StaticResource BaseColor}">
@@ -30,7 +30,6 @@
 
         <views:Titlebar x:Name="titleBar"/>
 
-        <!-- Content -->
         <Grid Grid.Row="1">
 
             <Grid.RowDefinitions>
@@ -38,10 +37,14 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <components:NavigationHeader />
+            <!-- Header Section -->
+            <ContentControl Content="{Binding Header}" />
 
+            <!-- Main View -->
+            <ContentControl Grid.Row="1" Content="{Binding Navigation.CurrentView}" />
+            
         </Grid>
-        
+
     </Grid>
 
 </Window>

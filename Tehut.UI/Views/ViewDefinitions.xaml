@@ -1,0 +1,32 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vm="clr-namespace:Tehut.UI.ViewModels"
+                    xmlns:view="clr-namespace:Tehut.UI.Views"
+                    xmlns:component="clr-namespace:Tehut.UI.Views.Components">
+
+
+    <DataTemplate DataType="{x:Type vm:HeaderViewModel}">
+        <component:Header />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:QuizOverviewViewModel}">
+        <view:QuizOverviewView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:QuizEditViewModel}">
+        <view:QuizEditView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:QuizQuestionEditViewModel}">
+        <view:QuizQuestionEditView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:QuizQuestionViewModel}">
+        <view:QuizQuestionView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:QuizRunSummaryViewModel}">
+        <view:QuizRunSummaryView />
+    </DataTemplate>
+
+</ResourceDictionary>

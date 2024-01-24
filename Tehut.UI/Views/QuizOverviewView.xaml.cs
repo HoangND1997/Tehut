@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Tehut.UI.Views.Components
+namespace Tehut.UI.Views
 {
     /// <summary>
-    /// Interaction logic for NavigationHeader.xaml
+    /// Interaction logic for QuizOverviewView.xaml
     /// </summary>
-    public partial class NavigationHeader : UserControl
+    public partial class QuizOverviewView : UserControl
     {
-        public NavigationHeader()
+        public QuizOverviewView()
         {
             InitializeComponent();
         }
