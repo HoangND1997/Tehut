@@ -40,8 +40,6 @@
 
             <components:NavigationHeader />
 
-            <ContentPresenter Grid.Row="1" />
-
         </Grid>
         
     </Grid>
