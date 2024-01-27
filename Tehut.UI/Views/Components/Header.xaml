@@ -24,12 +24,6 @@
             </Button.Content>
         </Button>
 
-        <Button Margin="5 0 0 0" Content="Quiz Overview" Command="{Binding QuizOverviewCommand}" />
-        <Button Margin="5 0 0 0" Content="Quiz Edit" Command="{Binding QuizEditCommand}" />
-        <Button Margin="5 0 0 0" Content="Quiz Question" Command="{Binding QuizQuestionCommand}" />
-        <Button Margin="5 0 0 0" Content="Quiz Question Edit" Command="{Binding QuizQuestionEditCommand}" />
-        <Button Margin="5 0 0 0" Content="Quiz Run Summary" Command="{Binding QuizRunSummaryCommand}" />
-
         <local:SearchBar Width="300" Height="40" FontSize="40"/>
 
     </StackPanel>

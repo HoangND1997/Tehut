@@ -32,8 +32,8 @@
             <TextBlock Text="?" FontWeight="DemiBold" Foreground="{StaticResource SecondaryTextColor}" FontSize="70" VerticalAlignment="Center" HorizontalAlignment="Center" />
 
             <StackPanel Grid.Row="1" Margin="10 0" >
-                <TextBlock Text="Egyptian Gods" FontSize="20" Foreground="{StaticResource PrimaryTextColor}" HorizontalAlignment="Center"/>
-                <TextBlock Text="18 Questions" FontSize="14" Margin="0 5 0 0" Foreground="{StaticResource SecondaryTextColor}" HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding Name}" FontSize="20" Foreground="{StaticResource PrimaryTextColor}" HorizontalAlignment="Center" MaxWidth="250"/>
+                <TextBlock Text="{Binding QuestionCount, StringFormat={}{0:#} Questions}" FontSize="14" Margin="0 5 0 0" Foreground="{StaticResource SecondaryTextColor}" HorizontalAlignment="Center"/>
             </StackPanel>
 
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
