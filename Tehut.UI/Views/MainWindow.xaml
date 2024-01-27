@@ -21,6 +21,7 @@
         <ResourceDictionary Source="/Views/ViewDefinitions.xaml" />
     </Window.Resources>
 
+    
     <Grid Background="{StaticResource BaseColor}">
 
         <Grid.RowDefinitions>
@@ -30,20 +31,22 @@
 
         <views:Titlebar x:Name="titleBar"/>
 
-        <Grid Grid.Row="1">
+        <ScrollViewer Style="{StaticResource ScrollViewerStyle}" Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <Grid Grid.Row="1">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="120" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="120" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
 
-            <!-- Header Section -->
-            <ContentControl Content="{Binding Header}" />
+                <!-- Header Section -->
+                <ContentControl Content="{Binding Header}" />
 
-            <!-- Main View -->
-            <ContentControl Grid.Row="1" Content="{Binding Navigation.CurrentView}" />
-            
-        </Grid>
+                <!-- Main View -->
+                <ContentControl Grid.Row="1" Content="{Binding Navigation.CurrentView}" />
+
+            </Grid>
+        </ScrollViewer>
 
     </Grid>
 

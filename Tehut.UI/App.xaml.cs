@@ -2,7 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using System.IO;
 using System.Windows;
-using System.Windows.Navigation;
 using Tehut.Core;
 using Tehut.Database;
 using Tehut.UI.ViewModels;
@@ -67,6 +66,9 @@ namespace Tehut.UI
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
+            var navigationService = serviceProvider.GetRequiredService<ViewModels.Services.INavigationService>();
+            navigationService.NavigateTo<QuizOverviewViewModel>(); 
 
             var mainWindow = serviceProvider.GetRequiredService<MainWindow>();
 
