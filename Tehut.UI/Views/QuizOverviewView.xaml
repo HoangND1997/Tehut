@@ -5,24 +5,42 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Tehut.UI.Views"
              xmlns:component="clr-namespace:Tehut.UI.Views.Components"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:vm="clr-namespace:Tehut.UI.ViewModels.Entities"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="QuizCardCollectionSource" Source="{Binding Quizzes}"  />
+    </UserControl.Resources>
+
     <Grid>
-        <ItemsControl ItemsSource="{Binding Quizzes}" Margin="50 0">
+        <ItemsControl Margin="50 0">
 
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemsSource>
+                    <CompositeCollection>
+                        
+                        <!-- Actual quiz collection of the user-->
+                        <CollectionContainer Collection="{Binding Source={StaticResource QuizCardCollectionSource}}" />
+                        
+                        <!-- Custom button to add quiz -->
+                        <component:QuizAdderCard Width="250" Height="350" Margin="0 50 50 0"/>
+                        
+                    </CompositeCollection>
+                </ItemsControl.ItemsSource>
 
-            <ItemsControl.ItemTemplate>
-                <DataTemplate DataType="{x:Type vm:QuizCardViewModel}">
-                    <component:QuizCard Width="250" Height="350" Margin="0 50 50 0"/>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel /> 
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
 
-        </ItemsControl>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type vm:QuizCardViewModel}">
+                        <component:QuizCard Width="250" Height="350" Margin="0 50 50 0"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+
+            </ItemsControl>
     </Grid>
 </UserControl>
