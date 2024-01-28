@@ -22,9 +22,21 @@ namespace Tehut.UI.ViewModels.Services
             this.viewModelFactory = viewModelFactory;
         }
 
-        public void NavigateTo<T>() where T : ViewModelBase
+        public async Task NavigateTo<T>() where T : ViewModelBase
         {
-            CurrentView = viewModelFactory(typeof(T));    
+            if (CurrentView is INavigationPage previousPage)
+            { 
+                await previousPage.OnExitPage();
+            }
+
+            var newView = viewModelFactory(typeof(T));
+
+            if (newView is INavigationPage nextPage)
+            {
+                await nextPage.OnEnterPage(); 
+            }
+
+            CurrentView = newView;  
         }
     }
 }

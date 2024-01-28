@@ -5,6 +5,7 @@ using System.Windows;
 using Tehut.Core;
 using Tehut.Database;
 using Tehut.UI.ViewModels;
+using Tehut.UI.ViewModels.Services;
 using Tehut.UI.Views;
 using Tehut.UI.Views.Components;
 
@@ -59,6 +60,7 @@ namespace Tehut.UI
 
         private static void RegisterOtherServices(IServiceCollection serviceCollection)
         {
+            serviceCollection.AddSingleton<IActionBarService, ActionBarService>(); 
             serviceCollection.AddSingleton<ViewModels.Services.INavigationService, ViewModels.Services.NavigationService>();
             serviceCollection.AddSingleton<Func<Type, ViewModelBase>>(s => (viewModelType) => (ViewModelBase)s.GetRequiredService(viewModelType));
         }

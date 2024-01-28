@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModels\Selectors\" />
     <Folder Include="Views\Themes\LightTheme\" />
   </ItemGroup>
 

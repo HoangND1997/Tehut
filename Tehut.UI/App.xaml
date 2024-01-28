@@ -8,6 +8,7 @@
                 <ResourceDictionary Source="/Views/Themes/DarkTheme/Colors.xaml" />
                 <ResourceDictionary Source="/Views/Themes/General/Buttons.xaml" />
                 <ResourceDictionary Source="/Views/Themes/General/ScrollViewer.xaml" />
+                <ResourceDictionary Source="/Views/Themes/General/Tooltips.xaml" />
                 
                 <ResourceDictionary Source="/Views/Components/Custom/TextEditStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>

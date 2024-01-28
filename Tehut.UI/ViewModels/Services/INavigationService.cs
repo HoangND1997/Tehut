@@ -6,6 +6,6 @@ namespace Tehut.UI.ViewModels.Services
     {
         ViewModelBase CurrentView { get; }
 
-        void NavigateTo<T>() where T : ViewModelBase; 
+        Task NavigateTo<T>() where T : ViewModelBase; 
     }
 }
