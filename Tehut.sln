@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tehut.Core", "Tehut.Core\Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tehut.Core.Tests", "Tehut.Core.Tests\Tehut.Core.Tests.csproj", "{B03BFC04-63C9-4581-B6DC-2746B60CBBA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tehut.Integration.Tests", "Tehut.Integration.Tests\Tehut.Integration.Tests.csproj", "{120D0B57-67B2-463C-B841-BC25ACBF93E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tehut.Integration.Tests", "Tehut.Integration.Tests\Tehut.Integration.Tests.csproj", "{120D0B57-67B2-463C-B841-BC25ACBF93E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tehut.UI.Tests", "Tehut.UI.Tests\Tehut.UI.Tests.csproj", "{D0E68B38-08EB-49F3-AB14-9D235BEA521D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{120D0B57-67B2-463C-B841-BC25ACBF93E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{120D0B57-67B2-463C-B841-BC25ACBF93E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{120D0B57-67B2-463C-B841-BC25ACBF93E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0E68B38-08EB-49F3-AB14-9D235BEA521D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0E68B38-08EB-49F3-AB14-9D235BEA521D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0E68B38-08EB-49F3-AB14-9D235BEA521D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0E68B38-08EB-49F3-AB14-9D235BEA521D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +61,7 @@ Global
 		{0E7A9627-DF11-4A4E-A3EE-8BD21B8C3C25} = {A4EC3C72-E92B-4100-B63F-D338E70739CB}
 		{B03BFC04-63C9-4581-B6DC-2746B60CBBA7} = {A4EC3C72-E92B-4100-B63F-D338E70739CB}
 		{120D0B57-67B2-463C-B841-BC25ACBF93E6} = {A4EC3C72-E92B-4100-B63F-D338E70739CB}
+		{D0E68B38-08EB-49F3-AB14-9D235BEA521D} = {CCAFA5CB-819C-4095-B3B0-FE3D42D1D073}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {725869CB-BF25-41AD-9E83-3549C8FAF23D}

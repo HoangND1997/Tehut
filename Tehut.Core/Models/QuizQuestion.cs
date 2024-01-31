@@ -8,7 +8,10 @@
 
         public int QuizId { get; set; }
 
-        public Quiz? Quiz { get; set; } = null!; 
+        public Quiz? Quiz { get; set; } = null!;
+        
+
+        public List<string> Answers { get; set; } = new();
 
         public int CorrectAnswerId { get; set; }
 

@@ -5,15 +5,18 @@ namespace Tehut.UI.ViewModels
 {
     public class HeaderViewModel : ViewModelBase
     {
-        private readonly Services.INavigationService navigationService;
-
         public IActionBarService ActionBarService { get; }
 
-        public HeaderViewModel(Services.INavigationService navigationService, IActionBarService actionBarService) 
-        {
-            this.navigationService = navigationService;
+        public AsyncCommand NavigateToPreviousPageCommand { get; set; }
 
+        public AsyncCommand NavigateToNextPageCommand { get; set; }
+
+        public HeaderViewModel(Services.Navigation.INavigationService navigationService, IActionBarService actionBarService) 
+        {
             ActionBarService = actionBarService;
+
+            NavigateToPreviousPageCommand = new AsyncCommand(navigationService.NavigateToPreviousPage, navigationService.CanNavigateToPreviousPage);
+            NavigateToNextPageCommand = new AsyncCommand(navigationService.NavigateToNextPage, navigationService.CanNavigateToNextPage); 
         }
     }
 }

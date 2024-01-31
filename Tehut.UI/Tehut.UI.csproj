@@ -30,4 +30,10 @@
     <ProjectReference Include="..\Tehut.Database\Tehut.Database.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Views\Components\QuestionCard.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
 </Project>

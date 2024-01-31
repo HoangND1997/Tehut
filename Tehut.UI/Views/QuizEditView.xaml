@@ -4,9 +4,42 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Tehut.UI.Views"
+             xmlns:component="clr-namespace:Tehut.UI.Views.Components"
+             xmlns:vm="clr-namespace:Tehut.UI.ViewModels.Entities"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="QuestionCardCollectionSource" Source="{Binding Questions}"  />
+    </UserControl.Resources>
+
     <Grid>
-        <TextBlock FontSize="72" Text="Quiz Edit" Foreground="{StaticResource SecondaryTextColor}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <ItemsControl Margin="50 0">
+
+            <ItemsControl.ItemsSource>
+                <CompositeCollection>
+
+                    <!-- Actual quiz collection of the user-->
+                    <CollectionContainer Collection="{Binding Source={StaticResource QuestionCardCollectionSource}}" />
+
+                    <!-- Custom button to add quiz -->
+                    <Button Style="{StaticResource AdderCardButtonStyle}" Width="250" Height="350" Margin="0 50 50 0"/>
+
+                </CompositeCollection>
+            </ItemsControl.ItemsSource>
+
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type vm:QuestionCardViewModel}">
+                    <component:QuestionCard Width="250" Height="350" Margin="0 50 50 0"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+
+        </ItemsControl>
     </Grid>
 </UserControl>

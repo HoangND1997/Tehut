@@ -4,7 +4,7 @@ namespace Tehut.UI.ViewModels.Actions
 {
     public class ActionBarItemViewModel : ViewModelBase
     {
-        private readonly Services.INavigationService navigationService;
+        private readonly Services.Navigation.INavigationService navigationService;
         private readonly IActionBarItem actionBarItem;
 
         public string Name => actionBarItem.Name;
@@ -13,7 +13,7 @@ namespace Tehut.UI.ViewModels.Actions
 
         public AsyncCommand ExecuteActionCommand { get; }
 
-        public ActionBarItemViewModel(Services.INavigationService navigationService, IActionBarItem actionBarItem)
+        public ActionBarItemViewModel(Services.Navigation.INavigationService navigationService, IActionBarItem actionBarItem)
         {
             this.navigationService = navigationService;
             this.actionBarItem = actionBarItem;

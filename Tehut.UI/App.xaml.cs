@@ -6,6 +6,7 @@ using Tehut.Core;
 using Tehut.Database;
 using Tehut.UI.ViewModels;
 using Tehut.UI.ViewModels.Services;
+using Tehut.UI.ViewModels.Services.Navigation;
 using Tehut.UI.Views;
 using Tehut.UI.Views.Components;
 
@@ -61,7 +62,7 @@ namespace Tehut.UI
         private static void RegisterOtherServices(IServiceCollection serviceCollection)
         {
             serviceCollection.AddSingleton<IActionBarService, ActionBarService>(); 
-            serviceCollection.AddSingleton<ViewModels.Services.INavigationService, ViewModels.Services.NavigationService>();
+            serviceCollection.AddSingleton<ViewModels.Services.Navigation.INavigationService, NavigationService>();
             serviceCollection.AddSingleton<Func<Type, ViewModelBase>>(s => (viewModelType) => (ViewModelBase)s.GetRequiredService(viewModelType));
         }
 
@@ -69,7 +70,7 @@ namespace Tehut.UI
         {
             base.OnStartup(e);
 
-            var navigationService = serviceProvider.GetRequiredService<ViewModels.Services.INavigationService>();
+            var navigationService = serviceProvider.GetRequiredService<ViewModels.Services.Navigation.INavigationService>();
             navigationService.NavigateTo<QuizOverviewViewModel>(); 
 
             var mainWindow = serviceProvider.GetRequiredService<MainWindow>();

@@ -10,17 +10,17 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20 0 0 0">
 
-        <Button Style="{StaticResource GeneralButtonStyle}" VerticalAlignment="Center">
+        <Button Style="{StaticResource GeneralButtonStyle}" VerticalAlignment="Center" Command="{Binding NavigateToPreviousPageCommand}">
             <Button.Content>
-                <materialDesign:PackIcon Kind="ChevronLeft" Width="40" Height="40" Foreground="{StaticResource PrimaryTextColor}" Margin="10"/>
+                <materialDesign:PackIcon Kind="ChevronLeft" Width="40" Height="40"  Margin="10"/>
             </Button.Content>            
         </Button>
         
         <TextBlock Margin="15 0" Text="Home" FontSize="48" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" Padding="0 0 0 10"/>
-        
-        <Button Style="{StaticResource GeneralButtonStyle}" VerticalAlignment="Center">
+
+        <Button Style="{StaticResource GeneralButtonStyle}" VerticalAlignment="Center" Command="{Binding NavigateToNextPageCommand}">
             <Button.Content>
-                <materialDesign:PackIcon Kind="ChevronRight" Width="40" Height="40" Foreground="{StaticResource PrimaryTextColor}" Margin="10"/>
+                <materialDesign:PackIcon Kind="ChevronRight" Width="40" Height="40" Margin="10"/>
             </Button.Content>
         </Button>
 

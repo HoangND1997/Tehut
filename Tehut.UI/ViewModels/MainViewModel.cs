@@ -5,11 +5,11 @@ namespace Tehut.UI.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        public Services.INavigationService Navigation { get; }
+        public Services.Navigation.INavigationService Navigation { get; }
 
         public HeaderViewModel Header { get; }
 
-        public MainViewModel(Services.INavigationService navigation, HeaderViewModel header)
+        public MainViewModel(Services.Navigation.INavigationService navigation, HeaderViewModel header)
         {
             Navigation = navigation;
             Header = header;

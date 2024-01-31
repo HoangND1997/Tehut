@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Tehut.UI.Views.Components
 {
     /// <summary>
-    /// Interaction logic for QuizAdderCard.xaml
+    /// Interaction logic for QuizCard.xaml
     /// </summary>
-    public partial class QuizAdderCard : UserControl
+    public partial class QuestionCard : UserControl
     {
-        public QuizAdderCard()
+        public QuestionCard()
         {
             InitializeComponent();
         }
