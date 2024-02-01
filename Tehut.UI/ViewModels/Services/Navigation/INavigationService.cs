@@ -6,6 +6,10 @@ namespace Tehut.UI.ViewModels.Services.Navigation
     {
         ViewModelBase CurrentView { get; }
 
+        string NavigationTitle { get; }
+
+        event EventHandler NavigationTitleChanged;
+
         Task NavigateTo<T>(NavigationInformation? navigationInformation = null) where T : ViewModelBase;
 
         Task NavigateToPreviousPage();
@@ -14,6 +18,8 @@ namespace Tehut.UI.ViewModels.Services.Navigation
 
         bool CanNavigateToPreviousPage(); 
 
-        bool CanNavigateToNextPage(); 
+        bool CanNavigateToNextPage();
+
+        void SetNavigationTitle(string title); 
     }
 }

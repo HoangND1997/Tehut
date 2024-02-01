@@ -16,7 +16,7 @@
             </Button.Content>            
         </Button>
         
-        <TextBlock Margin="15 0" Text="Home" FontSize="48" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" Padding="0 0 0 10"/>
+        <TextBlock Margin="15 0" Text="{Binding HeaderTitle}" FontSize="48" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" Padding="0 0 0 10"/>
 
         <Button Style="{StaticResource GeneralButtonStyle}" VerticalAlignment="Center" Command="{Binding NavigateToNextPageCommand}">
             <Button.Content>

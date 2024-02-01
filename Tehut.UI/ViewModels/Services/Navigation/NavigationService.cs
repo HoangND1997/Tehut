@@ -4,8 +4,6 @@ namespace Tehut.UI.ViewModels.Services.Navigation
 {
     public class NavigationService : ViewModelBase, INavigationService
     {
-        private readonly Func<Type, ViewModelBase> viewModelFactory;
-
         private ViewModelBase currentView = null!; 
         public ViewModelBase CurrentView
         {
@@ -16,6 +14,12 @@ namespace Tehut.UI.ViewModels.Services.Navigation
                 RaisePropertyChanged(nameof(CurrentView));
             }
         }
+
+        public string NavigationTitle { get; private set; } = string.Empty;
+
+        public event EventHandler NavigationTitleChanged; 
+
+        private readonly Func<Type, ViewModelBase> viewModelFactory;
 
         private List<(Type, NavigationInformation)> navigationHistory = [];
 
@@ -28,6 +32,11 @@ namespace Tehut.UI.ViewModels.Services.Navigation
 
         public async Task NavigateTo<T>(NavigationInformation? navigationInformation = null) where T : ViewModelBase
         {
+            if (CurrentView is T)
+            {
+                return;
+            }
+
              await NavigateTo(typeof(T), navigationInformation, saveHistory: true);
         }
 
@@ -76,6 +85,15 @@ namespace Tehut.UI.ViewModels.Services.Navigation
 
         public bool CanNavigateToPreviousPage() => navigationHistoryPosition > 0 && navigationHistory.Count > 0;
 
-        public bool CanNavigateToNextPage() => navigationHistoryPosition < navigationHistory.Count - 1; 
+        public bool CanNavigateToNextPage() => navigationHistoryPosition < navigationHistory.Count - 1;
+
+        public void SetNavigationTitle(string title) 
+        {
+            if (NavigationTitle != title)
+            {
+                NavigationTitle = title; 
+                NavigationTitleChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
     }
 }
