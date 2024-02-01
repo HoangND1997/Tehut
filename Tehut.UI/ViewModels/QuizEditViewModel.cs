@@ -13,14 +13,14 @@ namespace Tehut.UI.ViewModels
         private static readonly List<IActionBarItem> actions = new();
 
         private readonly Services.Navigation.INavigationService navigationService;
-        private readonly IActionBarService actionBarService;
+        private readonly IHeaderService headerService;
 
         public ObservableCollection<QuestionCardViewModel> Questions { get; private set; } = new(); 
 
-        public QuizEditViewModel(Services.Navigation.INavigationService navigationService, IActionBarService actionBarService)
+        public QuizEditViewModel(Services.Navigation.INavigationService navigationService, IHeaderService headerService)
         {
             this.navigationService = navigationService;
-            this.actionBarService = actionBarService;
+            this.headerService = headerService;
 
             actions.Add(new ActionBarItem("Add Question", (viewModelBase) => { }, ActionBarType.Add));
             actions.Add(new ActionBarItem("Run Quiz", (viewModelBase) => { }, ActionBarType.Play));
@@ -49,7 +49,8 @@ namespace Tehut.UI.ViewModels
                 }, navigationService));
             }
 
-            actionBarService.SetActions(actions);
+            headerService.SetActions(actions);
+            headerService.IsSearchBarActive = true; 
 
             return Task.CompletedTask;
         }

@@ -63,7 +63,7 @@
             
             <Border Grid.Row="0" Grid.Column="0">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding AnswerText1, StringFormat='1.   {0:#}'}" />
+                    <TextBox Background="Transparent" BorderThickness="0" Text="{Binding AnswerText1, StringFormat='1.   {0:#}'}" />
                     <Button Content="H" Width="40" Height="40"></Button>
                 </StackPanel>
             </Border>

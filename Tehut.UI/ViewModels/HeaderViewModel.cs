@@ -7,7 +7,7 @@ namespace Tehut.UI.ViewModels
     {
         private readonly Services.Navigation.INavigationService navigationService;
 
-        public IActionBarService ActionBarService { get; }
+        public IHeaderService HeaderService { get; }
 
         public AsyncCommand NavigateToPreviousPageCommand { get; set; }
 
@@ -17,10 +17,10 @@ namespace Tehut.UI.ViewModels
 
         public string HeaderTitle => navigationService?.NavigationTitle ?? string.Empty;  
 
-        public HeaderViewModel(Services.Navigation.INavigationService navigationService, IActionBarService actionBarService) 
+        public HeaderViewModel(Services.Navigation.INavigationService navigationService, IHeaderService headerService) 
         {
             this.navigationService = navigationService;
-            ActionBarService = actionBarService;
+            HeaderService = headerService;
 
             navigationService.NavigationTitleChanged += (s, e) => RaisePropertyChanged(nameof(HeaderTitle)); 
             

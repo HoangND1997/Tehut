@@ -7,7 +7,7 @@ namespace Tehut.UI.ViewModels
 {
     public class QuizQuestionEditViewModel : ViewModelBase, INavigationPage
     {
-        private readonly IActionBarService actionBarService;
+        private readonly IHeaderService headerService;
         private readonly Services.Navigation.INavigationService navigationService;
 
         private string questionText; 
@@ -65,9 +65,9 @@ namespace Tehut.UI.ViewModels
             }
         }
 
-        public QuizQuestionEditViewModel(IActionBarService actionBarService, Services.Navigation.INavigationService navigationService)
+        public QuizQuestionEditViewModel(IHeaderService headerService, Services.Navigation.INavigationService navigationService)
         {
-            this.actionBarService = actionBarService;
+            this.headerService = headerService;
             this.navigationService = navigationService;
         }
 
@@ -87,7 +87,8 @@ namespace Tehut.UI.ViewModels
                 AnswerText4 = answers.Count >= 4 ? answers[3] : string.Empty;
             }  
 
-            actionBarService.SetActions(new List<IActionBarItem> { new ActionBarItem("Delete Quiz", (viewModelBase) => { }, ActionBarType.Delete) }); 
+            headerService.SetActions(new List<IActionBarItem> { new ActionBarItem("Delete Quiz", (viewModelBase) => { }, ActionBarType.Delete) });
+            headerService.IsSearchBarActive = false; 
 
             return Task.CompletedTask;
         }

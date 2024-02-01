@@ -61,7 +61,7 @@ namespace Tehut.UI
 
         private static void RegisterOtherServices(IServiceCollection serviceCollection)
         {
-            serviceCollection.AddSingleton<IActionBarService, ActionBarService>(); 
+            serviceCollection.AddSingleton<IHeaderService, HeaderService>(); 
             serviceCollection.AddSingleton<ViewModels.Services.Navigation.INavigationService, NavigationService>();
             serviceCollection.AddSingleton<Func<Type, ViewModelBase>>(s => (viewModelType) => (ViewModelBase)s.GetRequiredService(viewModelType));
         }

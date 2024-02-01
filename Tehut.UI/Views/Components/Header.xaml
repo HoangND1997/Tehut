@@ -8,6 +8,11 @@
              xmlns:custom="clr-namespace:Tehut.UI.Views.Components.Custom"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </UserControl.Resources>
+    
     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20 0 0 0">
 
         <Button Style="{StaticResource GeneralButtonStyle}" VerticalAlignment="Center" Command="{Binding NavigateToPreviousPageCommand}">
@@ -24,7 +29,7 @@
             </Button.Content>
         </Button>
 
-        <local:SearchBar x:Name="searchBar" Width="300" Height="40" FontSize="40"/>
+        <local:SearchBar x:Name="searchBar" Width="300" Height="40" FontSize="40" Visibility="{Binding HeaderService.IsSearchBarActive, Converter={StaticResource BoolToVisibilityConverter}}"/>
 
         <local:ActionBar Margin="20" Height="40" />
         

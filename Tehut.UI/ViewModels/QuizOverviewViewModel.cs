@@ -11,7 +11,7 @@ namespace Tehut.UI.ViewModels
     public class QuizOverviewViewModel : ViewModelBase, INavigationPage
     {
         private readonly Services.Navigation.INavigationService navigationService;
-        private readonly IActionBarService actionBarService;
+        private readonly IHeaderService headerService;
 
         private const string navigationTitle = "Home"; 
 
@@ -19,7 +19,7 @@ namespace Tehut.UI.ViewModels
 
         public AsyncCommand AddQuizCommand { get; }
 
-        public QuizOverviewViewModel(Services.Navigation.INavigationService navigationService, IActionBarService actionBarService)
+        public QuizOverviewViewModel(Services.Navigation.INavigationService navigationService, IHeaderService headerService)
         {
             Quizzes.Add(new QuizCardViewModel(new Quiz { Id = 0, Name = "Egyptian Gods" }, navigationService)); 
             Quizzes.Add(new QuizCardViewModel(new Quiz { Id = 1, Name = "Greek Gods" }, navigationService)); 
@@ -35,7 +35,7 @@ namespace Tehut.UI.ViewModels
             Quizzes.Add(new QuizCardViewModel(new Quiz { Id = 11, Name = "Architecture" }, navigationService));
 
             this.navigationService = navigationService;
-            this.actionBarService = actionBarService;
+            this.headerService = headerService;
 
             AddQuizCommand = new AsyncCommand(AddQuiz);
         }
@@ -49,10 +49,12 @@ namespace Tehut.UI.ViewModels
         {
             navigationService.SetNavigationTitle(navigationTitle); 
 
-            actionBarService.SetActions(new List<IActionBarItem> 
+            headerService.SetActions(new List<IActionBarItem> 
             { 
                 new ActionBarItem("Add Quiz", (viewModelBase) => Quizzes.Add(new QuizCardViewModel(new Quiz { Name = "Added quiz" }, navigationService)), ActionBarType.Add),
             });
+
+            headerService.IsSearchBarActive = true; 
 
             return Task.CompletedTask; 
         }
