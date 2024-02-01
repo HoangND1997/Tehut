@@ -56,4 +56,13 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="TextCardButtonStyle" TargetType="Button" BasedOn="{StaticResource GeneralButtonStyle}">
+        <Setter Property="Foreground" Value="{StaticResource SecondaryTextColor}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
 </ResourceDictionary>

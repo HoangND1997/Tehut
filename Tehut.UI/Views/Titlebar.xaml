@@ -36,9 +36,11 @@
         </Style>
 
     </UserControl.Resources>
+
+    <Grid>
     
-    <DockPanel HorizontalAlignment="Stretch" 
-          Background="{StaticResource Base3Color}" 
+    <DockPanel HorizontalAlignment="Stretch"
+          Background="{StaticResource Base3Color}"
           MouseLeftButtonDown="TitleBar_MouseLeftButtonDown"
           MouseLeftButtonUp="TitleBar_MouseLeftButtonUp"
           MouseMove="TitleBar_MouseMove">
@@ -59,7 +61,7 @@
                HorizontalAlignment="Right"
                DockPanel.Dock="Right">
             
-            <Button Width="40" Style="{StaticResource TitlebarButtonStyle}" Click="MinimizeButton_Click" Focusable="False">
+            <Button Width="40" Style="{StaticResource TitlebarButtonStyle}" Click="MinimizeButton_Click" Focusable="False" ClipToBounds="True">
                 <Button.Content>
                     <materialDesign:PackIcon Kind="Minimize" Width="16" Height="16"/>
                 </Button.Content>
@@ -76,6 +78,10 @@
             </Button>
             
         </StackPanel>
+
     </DockPanel>
     
+    <Rectangle Height="3" Fill="#1A1A1A" VerticalAlignment="Bottom" />
+
+    </Grid>
 </UserControl>

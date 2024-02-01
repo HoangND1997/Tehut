@@ -4,84 +4,59 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Tehut.UI.Views"
+             xmlns:component="clr-namespace:Tehut.UI.Views.Components"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <Style x:Key="AnswerEditCardStyle" TargetType="{x:Type component:EditableTextCard}">
+            <Setter Property="Margin" Value="50 50" />
+            <Setter Property="TextAlignment" Value="Left" />
+            <Setter Property="MaxWidth" Value="800" />
+            <Setter Property="FontSize" Value="28" />
+            <Setter Property="ShowNumbering" Value="True" />
+        </Style>
+    </UserControl.Resources>
+    
     <Grid>
 
-        <Grid.Resources>
-            <Style TargetType="TextBlock">
-                <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}" />
-                <Setter Property="FontSize" Value="32" />
-                <Setter Property="TextWrapping" Value="Wrap" />
-                <Setter Property="Margin" Value="50 0" />
-                <Setter Property="VerticalAlignment" Value="Center" />
-                <Setter Property="Margin" Value="50 0" />
-            </Style>
-            <Style TargetType="Border">
-                <Setter Property="Background" Value="{StaticResource Base2Color}" />
-                <Setter Property="CornerRadius" Value="20" />
-                <Setter Property="Margin" Value="100 120" />
-            </Style>
-        </Grid.Resources>
-        
         <Grid.RowDefinitions>
             <RowDefinition Height="0.4*" />
             <RowDefinition Height="0.6*" />
         </Grid.RowDefinitions>
 
-        <Border Background="{StaticResource Base2Color}" Margin="70" MaxWidth="1200">
-            <TextBlock Text="{Binding QuestionText}" HorizontalAlignment="Center" />
-        </Border>
-        
-        <Grid Grid.Row="1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.1*" MinWidth="60"/>
+            <ColumnDefinition Width="0.8*" />
+            <ColumnDefinition Width="0.1*" MinWidth="60"/>
+        </Grid.ColumnDefinitions>
+
+        <component:EditableTextCard Margin="50" 
+                                    TextAlignment="Center" 
+                                    Text="{Binding QuestionText}" 
+                                    MaxWidth="1200" 
+                                    MaxHeight="300"
+                                    FontSize="32"
+                                    Grid.Column="1"/>
+
+        <Grid Grid.Row="1" Grid.Column="1">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.5*" />
-                <RowDefinition Height="0.5*" />
+                <RowDefinition Height="0.5*" MaxHeight="220"/>
+                <RowDefinition Height="0.5*" MaxHeight="220"/>
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.5*" />
-                <ColumnDefinition Width="0.5*" />
+                <ColumnDefinition Width="0.5*"/>
+                <ColumnDefinition Width="0.5*"/>
             </Grid.ColumnDefinitions>
 
-            <Grid.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="Background" Value="{StaticResource Base2Color}" />
-                    <Setter Property="CornerRadius" Value="20" />
-                    <Setter Property="Margin" Value="100 120" />
-                    <Setter Property="BorderThickness" Value="2" />
-                    <Setter Property="BorderBrush" Value="{StaticResource Base2Color}" />
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="BorderBrush" Value="{StaticResource SecondaryTextColor}" />
-                            
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </Grid.Resources>
-            
-            <Border Grid.Row="0" Grid.Column="0">
-                <StackPanel Orientation="Horizontal">
-                    <TextBox Background="Transparent" BorderThickness="0" Text="{Binding AnswerText1, StringFormat='1.   {0:#}'}" />
-                    <Button Content="H" Width="40" Height="40"></Button>
-                </StackPanel>
-            </Border>
-
-            <Border Grid.Row="0" Grid.Column="1">
-                <TextBlock Text="{Binding AnswerText2, StringFormat='2.   {0:#}'}" />
-            </Border>
-
-            <Border Grid.Row="1" Grid.Column="0">
-                <TextBlock Text="{Binding AnswerText3, StringFormat='3.   {0:#}'}" />
-            </Border>
-
-            <Border Grid.Row="1" Grid.Column="1">
-                <TextBlock Text="{Binding AnswerText4, StringFormat='4.   {0:#}'}" />
-            </Border>
+            <component:EditableTextCard Text="{Binding AnswerText1}" Style="{StaticResource AnswerEditCardStyle}" NumberingText="1." Grid.Column="0" Grid.Row="0"/>
+            <component:EditableTextCard Text="{Binding AnswerText2}" Style="{StaticResource AnswerEditCardStyle}" NumberingText="2." Grid.Column="1" Grid.Row="0"/>
+            <component:EditableTextCard Text="{Binding AnswerText3}" Style="{StaticResource AnswerEditCardStyle}" NumberingText="3." Grid.Column="0" Grid.Row="1"/>
+            <component:EditableTextCard Text="{Binding AnswerText4}" Style="{StaticResource AnswerEditCardStyle}" NumberingText="4." Grid.Column="1" Grid.Row="1"/>
 
         </Grid>
-        
         
     </Grid>
 </UserControl>

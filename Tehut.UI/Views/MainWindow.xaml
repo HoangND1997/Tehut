@@ -14,13 +14,12 @@
     mc:Ignorable="d">
     
     <WindowChrome.WindowChrome>
-        <WindowChrome GlassFrameThickness="0" CaptionHeight="0" />
+        <WindowChrome GlassFrameThickness="0" CaptionHeight="0" CornerRadius="14" />
     </WindowChrome.WindowChrome>
 
     <Window.Resources>
         <ResourceDictionary Source="/Views/ViewDefinitions.xaml" />
     </Window.Resources>
-
     
     <Grid Background="{StaticResource BaseColor}">
 

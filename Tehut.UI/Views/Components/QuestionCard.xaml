@@ -9,18 +9,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="280">
 
-    <UserControl.Resources>
-        <Style x:Key="QuestionCardButtonStyle" TargetType="Button" BasedOn="{StaticResource GeneralButtonStyle}">
-            <Setter Property="Foreground" Value="{StaticResource SecondaryTextColor}" />
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-    </UserControl.Resources>
-    
-    <Border Background="{StaticResource Base2Color}" CornerRadius="20">
+    <Border Background="{StaticResource Base2Color}" CornerRadius="20" BorderThickness="2" BorderBrush="{StaticResource Base3Color}">
         <Grid Margin="30 20 30 10">
 
             <Grid.RowDefinitions>
@@ -41,7 +30,7 @@
             </StackPanel>
 
             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-                <Button Style="{StaticResource QuestionCardButtonStyle}" Width="40" Height="40" Command="{Binding EditQuestionCommand}">
+                <Button Style="{StaticResource TextCardButtonStyle}" Width="40" Height="40" Command="{Binding EditQuestionCommand}">
                     <Button.Content>
                         <materialDesign:PackIcon Kind="Edit" 
                                                  Width="25" Height="25" 
@@ -49,7 +38,7 @@
                                                  HorizontalAlignment="Center"/>
                     </Button.Content>
                 </Button>
-                <Button Style="{StaticResource QuestionCardButtonStyle}" Width="40" Height="40" Command="{Binding DeleteQuestionCommand}">
+                <Button Style="{StaticResource TextCardButtonStyle}" Width="40" Height="40" Command="{Binding DeleteQuestionCommand}">
                     <Button.Content>
                         <materialDesign:PackIcon Kind="Delete" 
                                                  Width="25" Height="25" 
@@ -58,7 +47,7 @@
                     </Button.Content>
                 </Button>
             </StackPanel>
-            
         </Grid>
     </Border>
+
 </UserControl>

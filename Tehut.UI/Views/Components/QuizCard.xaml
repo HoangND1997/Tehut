@@ -8,18 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="280">
 
-    <UserControl.Resources>
-        <Style x:Key="QuizCardButtonStyle" TargetType="Button" BasedOn="{StaticResource GeneralButtonStyle}">
-            <Setter Property="Foreground" Value="{StaticResource SecondaryTextColor}" />
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-    </UserControl.Resources>
-    
-    <Border Background="{StaticResource Base2Color}" CornerRadius="20">
+    <Border Background="{StaticResource Base2Color}" CornerRadius="20" BorderThickness="2" BorderBrush="{StaticResource Base3Color}">
         <Grid>
 
             <Grid.RowDefinitions>
@@ -37,7 +26,7 @@
             </StackPanel>
 
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-                <Button Style="{StaticResource QuizCardButtonStyle}" Width="40" Height="40" Command="{Binding RunQuizCommand}">
+                <Button Style="{StaticResource TextCardButtonStyle}" Width="40" Height="40" Command="{Binding RunQuizCommand}">
                     <Button.Content>
                             <materialDesign:PackIcon Kind="Play" 
                                                      Width="25" Height="25" 
@@ -45,7 +34,7 @@
                                                      HorizontalAlignment="Center"/>
                     </Button.Content>
                 </Button>
-                <Button Style="{StaticResource QuizCardButtonStyle}" Width="40" Height="40" Command="{Binding EditQuizCommand}">
+                <Button Style="{StaticResource TextCardButtonStyle}" Width="40" Height="40" Command="{Binding EditQuizCommand}">
                     <Button.Content>
                         <materialDesign:PackIcon Kind="Edit" 
                                                  Width="25" Height="25" 
@@ -53,7 +42,7 @@
                                                  HorizontalAlignment="Center"/>
                     </Button.Content>
                 </Button>
-                <Button Style="{StaticResource QuizCardButtonStyle}" Width="40" Height="40" Command="{Binding DeleteQuizCommand}">
+                <Button Style="{StaticResource TextCardButtonStyle}" Width="40" Height="40" Command="{Binding DeleteQuizCommand}">
                     <Button.Content>
                         <materialDesign:PackIcon Kind="Delete" 
                                                  Width="25" Height="25" 
@@ -62,7 +51,7 @@
                     </Button.Content>
                 </Button>
             </StackPanel>
-            
         </Grid>
     </Border>
+
 </UserControl>

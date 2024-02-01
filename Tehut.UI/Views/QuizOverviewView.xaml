@@ -15,7 +15,7 @@
     </UserControl.Resources>
 
     <Grid>
-        <ItemsControl Margin="50 0">
+        <ItemsControl>
 
                 <ItemsControl.ItemsSource>
                     <CompositeCollection>
@@ -24,7 +24,7 @@
                         <CollectionContainer Collection="{Binding Source={StaticResource QuizCardCollectionSource}}" />
 
                         <!-- Custom button to add quiz -->
-                        <Button Style="{StaticResource AdderCardButtonStyle}" Width="250" Height="350" Margin="0 50 50 0" Command="{Binding AddQuizCommand}"/>
+                        <Button Style="{StaticResource AdderCardButtonStyle}" Width="250" Height="350" Margin="50 50 0 0" Command="{Binding AddQuizCommand}"/>
 
                 </CompositeCollection>
                 </ItemsControl.ItemsSource>
@@ -37,7 +37,7 @@
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type vm:QuizCardViewModel}">
-                        <component:QuizCard Width="250" Height="350" Margin="0 50 50 0"/>
+                        <component:QuizCard Width="250" Height="350" Margin="50 50 0 0"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
 
