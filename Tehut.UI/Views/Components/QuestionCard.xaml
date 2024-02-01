@@ -34,14 +34,14 @@
                 <ItemsControl ItemsSource="{Binding Answers}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type system:String}">
-                            <TextBlock Text="{Binding}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" Margin="0 0 0 10"/>
+                            <TextBlock Text="{Binding}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" Margin="0 0 0 10" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </StackPanel>
 
             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-                <Button Style="{StaticResource QuestionCardButtonStyle}" Width="40" Height="40">
+                <Button Style="{StaticResource QuestionCardButtonStyle}" Width="40" Height="40" Command="{Binding EditQuestionCommand}">
                     <Button.Content>
                         <materialDesign:PackIcon Kind="Edit" 
                                                  Width="25" Height="25" 
@@ -49,7 +49,7 @@
                                                  HorizontalAlignment="Center"/>
                     </Button.Content>
                 </Button>
-                <Button Style="{StaticResource QuestionCardButtonStyle}" Width="40" Height="40">
+                <Button Style="{StaticResource QuestionCardButtonStyle}" Width="40" Height="40" Command="{Binding DeleteQuestionCommand}">
                     <Button.Content>
                         <materialDesign:PackIcon Kind="Delete" 
                                                  Width="25" Height="25" 

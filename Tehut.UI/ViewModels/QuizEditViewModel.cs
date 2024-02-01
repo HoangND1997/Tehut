@@ -30,20 +30,26 @@ namespace Tehut.UI.ViewModels
 
         public Task OnEnterPage(NavigationInformation navigationInformation)
         {
-            actionBarService.SetActions(actions);
+            if (navigationInformation is QuizEditNavigationInformation quizInfo)
+            { 
+                navigationService.SetNavigationTitle(quizInfo.QuizToEdit?.Name ?? string.Empty);
 
-            Questions.Clear();
-            Questions.Add(new QuestionCardViewModel(new QuizQuestion
-            {
-                Question = "What is the name of the egyptian god known as the god of moon and wisdom?",
-                Answers = new List<string> 
+                Questions.Clear();
+                Questions.Add(new QuestionCardViewModel(new QuizQuestion
                 {
-                    "Anubis",
-                    "Tehut",
-                    "Osiris",
-                    "Seth"
-                }
-            }));
+                    Question = "What is the name of the egyptian god known as the god of moon and wisdom?",
+                    Answers = new List<string>
+                    {
+                        "Anubis",
+                        "Tehut",
+                        "Osiris",
+                        "Seth"
+                    },
+                    Quiz = quizInfo.QuizToEdit
+                }, navigationService));
+            }
+
+            actionBarService.SetActions(actions);
 
             return Task.CompletedTask;
         }

@@ -13,6 +13,8 @@ namespace Tehut.UI.ViewModels
         private readonly Services.Navigation.INavigationService navigationService;
         private readonly IActionBarService actionBarService;
 
+        private const string navigationTitle = "Home"; 
+
         public ObservableCollection<QuizCardViewModel> Quizzes { get; } = new();
 
         public AsyncCommand AddQuizCommand { get; }
@@ -45,6 +47,8 @@ namespace Tehut.UI.ViewModels
 
         public Task OnEnterPage(NavigationInformation navigationInformation)
         {
+            navigationService.SetNavigationTitle(navigationTitle); 
+
             actionBarService.SetActions(new List<IActionBarItem> 
             { 
                 new ActionBarItem("Add Quiz", (viewModelBase) => Quizzes.Add(new QuizCardViewModel(new Quiz { Name = "Added quiz" }, navigationService)), ActionBarType.Add),
