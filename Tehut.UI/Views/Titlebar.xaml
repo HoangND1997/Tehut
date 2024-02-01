@@ -47,7 +47,7 @@
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Right"
                     DockPanel.Dock="Left">
-            <Button Width="40" Style="{StaticResource TitlebarButtonStyle}" Focusable="False">
+            <Button Width="40" Style="{StaticResource TitlebarButtonStyle}" Focusable="False" Command="{Binding NavigateToHomeCommand}">
                 <Button.Content>
                     <materialDesign:PackIcon Kind="Home" Width="16" Height="16"/>
                 </Button.Content>

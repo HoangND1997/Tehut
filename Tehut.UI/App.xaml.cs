@@ -17,7 +17,7 @@ namespace Tehut.UI
     /// </summary>
     public partial class App : Application
     {
-        private readonly ServiceProvider serviceProvider; 
+        public static ServiceProvider? ServiceProvider { get; private set; }
 
         public App()
         {
@@ -32,7 +32,7 @@ namespace Tehut.UI
             RegisterViews(serviceCollection);
             RegisterOtherServices(serviceCollection);
 
-            serviceProvider = serviceCollection.BuildServiceProvider();
+            ServiceProvider = serviceCollection.BuildServiceProvider();
         }
 
         private static void RegisterViewModels(IServiceCollection serviceCollection)
@@ -70,12 +70,12 @@ namespace Tehut.UI
         {
             base.OnStartup(e);
 
-            var navigationService = serviceProvider.GetRequiredService<ViewModels.Services.Navigation.INavigationService>();
-            navigationService.NavigateTo<QuizOverviewViewModel>(); 
+            var navigationService = ServiceProvider?.GetRequiredService<ViewModels.Services.Navigation.INavigationService>();
+            navigationService?.NavigateTo<QuizOverviewViewModel>(); 
 
-            var mainWindow = serviceProvider.GetRequiredService<MainWindow>();
+            var mainWindow = ServiceProvider?.GetRequiredService<MainWindow>();
 
-            mainWindow.Show(); 
+            mainWindow?.Show(); 
         }
     }
 

@@ -1,6 +1,8 @@
-﻿using System.Windows;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Tehut.UI.ViewModels;
 
 namespace Tehut.UI.Views
 {
@@ -16,6 +18,8 @@ namespace Tehut.UI.Views
         public Titlebar()
         {
             InitializeComponent();
+
+            DataContext = App.ServiceProvider?.GetRequiredService<HeaderViewModel>(); 
         }
 
         public void SetMainWindow(MainWindow mainWindow)
