@@ -21,7 +21,8 @@ namespace Tehut.UI
 
         public App()
         {
-            var databasePath = Path.Combine(Path.Combine(Path.GetTempPath(), "Tehut"), "quiz.db"); 
+            var applicationFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var databasePath = Path.Combine(Path.Combine(applicationFolder, "Tehut"), "appdata.db"); 
 
             var serviceCollection = new ServiceCollection();
 
