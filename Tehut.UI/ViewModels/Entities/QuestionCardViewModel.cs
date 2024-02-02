@@ -21,8 +21,6 @@ namespace Tehut.UI.ViewModels.Entities
         {
             QuestionText = question.Question; 
 
-            Answers = question.Answers.Select((a, i) => $"{i+1}. {a}").ToList();
-
             EditQuestionCommand = new AsyncCommand(EditQuestion);
             DeleteQuestionCommand = new AsyncCommand(DeleteQuestion);
 

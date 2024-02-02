@@ -77,17 +77,20 @@ namespace Tehut.UI.ViewModels
             {
                 navigationService.SetNavigationTitle(questionEditInformation?.QuestionToEdit?.Quiz?.Name ?? string.Empty);
 
-                var answers = questionEditInformation?.QuestionToEdit?.Answers ?? new List<string>();
-
                 QuestionText = questionEditInformation?.QuestionToEdit?.Question ?? string.Empty; 
 
-                AnswerText1 = answers.Count >= 1 ? answers[0] : string.Empty;
-                AnswerText2 = answers.Count >= 2 ? answers[1] : string.Empty;
-                AnswerText3 = answers.Count >= 3 ? answers[2] : string.Empty;
-                AnswerText4 = answers.Count >= 4 ? answers[3] : string.Empty;
+                AnswerText1 = questionEditInformation?.QuestionToEdit?.Answer1 ?? string.Empty;
+                AnswerText2 = questionEditInformation?.QuestionToEdit?.Answer2 ?? string.Empty;
+                AnswerText3 = questionEditInformation?.QuestionToEdit?.Answer3 ?? string.Empty;
+                AnswerText4 = questionEditInformation?.QuestionToEdit?.Answer4 ?? string.Empty;
             }  
 
-            headerService.SetActions(new List<IActionBarItem> { new ActionBarItem("Delete Quiz", (viewModelBase) => { }, ActionBarType.Delete) });
+            headerService.SetActions(new List<IActionBarItem> 
+            { 
+                new ActionBarItem("Set Correct Answer", (viewModelBase) => { }, ActionBarType.SetCorrect), 
+                new ActionBarItem("Delete Quiz", (viewModelBase) => { }, ActionBarType.Delete),
+            });
+
             headerService.IsSearchBarActive = false; 
 
             return Task.CompletedTask;

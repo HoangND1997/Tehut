@@ -38,13 +38,10 @@ namespace Tehut.UI.ViewModels
                 Questions.Add(new QuestionCardViewModel(new QuizQuestion
                 {
                     Question = "What is the name of the egyptian god known as the god of moon and wisdom?",
-                    Answers = new List<string>
-                    {
-                        "Anubis",
-                        "Tehut",
-                        "Osiris",
-                        "Seth"
-                    },
+                    Answer1 = "Anubis",
+                    Answer2 = "Tehut",
+                    Answer3 = "Osiris",
+                    Answer4 = "Seth",
                     Quiz = quizInfo.QuizToEdit
                 }, navigationService));
             }

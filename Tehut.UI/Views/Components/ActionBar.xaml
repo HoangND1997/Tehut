@@ -9,7 +9,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ItemsControl ItemsSource="{Binding ActionBarService.Actions}">
+        <ItemsControl ItemsSource="{Binding HeaderService.Actions}">
             
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -64,6 +64,13 @@
                                         <Setter Property="Content">
                                             <Setter.Value>
                                                 <materialDesign:PackIcon Kind="Play" Width="25" Height="25" />
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Type}" Value="{x:Static actionVm:ActionBarType.SetCorrect}">
+                                        <Setter Property="Content">
+                                            <Setter.Value>
+                                                <materialDesign:PackIcon Kind="EditCircleOutline" Width="25" Height="25" />
                                             </Setter.Value>
                                         </Setter>
                                     </DataTrigger>

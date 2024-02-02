@@ -6,6 +6,7 @@
         Play,
         Edit, 
         Add, 
-        Delete
+        Delete,
+        SetCorrect,
     }
 }
