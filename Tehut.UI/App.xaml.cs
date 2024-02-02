@@ -4,6 +4,7 @@ using System.IO;
 using System.Windows;
 using Tehut.Core;
 using Tehut.Database;
+using Tehut.Database.Migrator;
 using Tehut.UI.ViewModels;
 using Tehut.UI.ViewModels.Services;
 using Tehut.UI.ViewModels.Services.Navigation;
@@ -19,15 +20,19 @@ namespace Tehut.UI
     {
         public static ServiceProvider? ServiceProvider { get; private set; }
 
+        private DatabaseConfig databaseConfig; 
+
         public App()
         {
             var applicationFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var databasePath = Path.Combine(Path.Combine(applicationFolder, "Tehut"), "appdata.db"); 
+            var databasePath = Path.Combine(Path.Combine(applicationFolder, "Tehut"), "appdata.db");
+
+            databaseConfig = new DatabaseConfig { DatabasePath = databasePath };
 
             var serviceCollection = new ServiceCollection();
 
             serviceCollection.AddTehutApplication(); 
-            serviceCollection.AddTehutDatabase(new DatabaseConfig { DatabasePath = databasePath });
+            serviceCollection.AddTehutDatabase(databaseConfig);
 
             RegisterViewModels(serviceCollection);
             RegisterViews(serviceCollection);
@@ -71,12 +76,27 @@ namespace Tehut.UI
         {
             base.OnStartup(e);
 
+            EnsureDatabase(); 
+
             var navigationService = ServiceProvider?.GetRequiredService<ViewModels.Services.Navigation.INavigationService>();
             navigationService?.NavigateTo<QuizOverviewViewModel>(); 
 
             var mainWindow = ServiceProvider?.GetRequiredService<MainWindow>();
 
             mainWindow?.Show(); 
+        }
+
+        private void EnsureDatabase()
+        { 
+            var databaseDirectoryPath = Path.GetDirectoryName(databaseConfig.DatabasePath);
+
+            if (!Directory.Exists(databaseDirectoryPath))
+            { 
+                Directory.CreateDirectory(databaseDirectoryPath!);
+            }
+
+            var migrator = ServiceProvider?.GetRequiredService<IDatabaseMigrator>();
+            migrator?.MigrateUp(); 
         }
     }
 

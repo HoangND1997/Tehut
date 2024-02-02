@@ -1,8 +1,9 @@
 ﻿using DevExpress.Mvvm;
 using System.Collections.ObjectModel;
-using Tehut.Core.Models;
+using Tehut.Core.Services;
 using Tehut.UI.ViewModels.Actions;
 using Tehut.UI.ViewModels.Entities;
+using Tehut.UI.ViewModels.Messages;
 using Tehut.UI.ViewModels.Services;
 using Tehut.UI.ViewModels.Services.Navigation;
 
@@ -12,56 +13,85 @@ namespace Tehut.UI.ViewModels
     {
         private readonly Services.Navigation.INavigationService navigationService;
         private readonly IHeaderService headerService;
+        private readonly IQuizService quizService;
 
-        private const string navigationTitle = "Home"; 
+        private ActionBarItem addQuizActionBarItem;
+
+        private const string navigationTitle = "Home";
+        private const string emptyQuizName = "New Quiz"; 
 
         public ObservableCollection<QuizCardViewModel> Quizzes { get; } = new();
 
         public AsyncCommand AddQuizCommand { get; }
 
-        public QuizOverviewViewModel(Services.Navigation.INavigationService navigationService, IHeaderService headerService)
+        public QuizOverviewViewModel(Services.Navigation.INavigationService navigationService, IHeaderService headerService, IQuizService quizService)
         {
-            Quizzes.Add(new QuizCardViewModel(new Quiz { Id = 0, Name = "Egyptian Gods" }, navigationService)); 
-            Quizzes.Add(new QuizCardViewModel(new Quiz { Id = 1, Name = "Greek Gods" }, navigationService)); 
-            Quizzes.Add(new QuizCardViewModel(new Quiz { Id = 2, Name = "Roman Gods" }, navigationService));
-            Quizzes.Add(new QuizCardViewModel(new Quiz { Id = 3, Name = "U.S. Presidents" }, navigationService));
-            Quizzes.Add(new QuizCardViewModel(new Quiz { Id = 4, Name = "Basic Chemistry" }, navigationService));
-            Quizzes.Add(new QuizCardViewModel(new Quiz { Id = 5, Name = "German History" }, navigationService));
-            Quizzes.Add(new QuizCardViewModel(new Quiz { Id = 6, Name = "Swiss Mountains" }, navigationService));
-            Quizzes.Add(new QuizCardViewModel(new Quiz { Id = 7, Name = "Football" }, navigationService));
-            Quizzes.Add(new QuizCardViewModel(new Quiz { Id = 8, Name = "Coding" }, navigationService));
-            Quizzes.Add(new QuizCardViewModel(new Quiz { Id = 9, Name = "World Capitals" }, navigationService));
-            Quizzes.Add(new QuizCardViewModel(new Quiz { Id = 10, Name = "Animal Kingdom" }, navigationService));
-            Quizzes.Add(new QuizCardViewModel(new Quiz { Id = 11, Name = "Architecture" }, navigationService));
-
             this.navigationService = navigationService;
             this.headerService = headerService;
+            this.quizService = quizService;
 
             AddQuizCommand = new AsyncCommand(AddQuiz);
+
+            addQuizActionBarItem = new ActionBarItem("Add Quiz", async (viewModelBase) => await AddQuiz(), ActionBarType.Add);
+
+            Messenger.Default.Register<QuizDeletedMessage>(this, OnQuizDeleted);
         }
+
+        #region Quiz Handling
 
         private async Task AddQuiz()
         {
-            Quizzes.Add(new QuizCardViewModel(new Quiz { Name = "Added quiz" }, navigationService));
+            var createdQuiz = await quizService.CreateQuiz(emptyQuizName);    
+            
+            Quizzes.Add(new QuizCardViewModel(createdQuiz, navigationService, quizService));
         }
 
-        public Task OnEnterPage(NavigationInformation navigationInformation)
+        private async Task LoadQuizzes()
         {
-            navigationService.SetNavigationTitle(navigationTitle); 
+            Quizzes.Clear();
 
-            headerService.SetActions(new List<IActionBarItem> 
-            { 
-                new ActionBarItem("Add Quiz", (viewModelBase) => Quizzes.Add(new QuizCardViewModel(new Quiz { Name = "Added quiz" }, navigationService)), ActionBarType.Add),
-            });
+            var quizzes = await quizService.GetAllQuizzes(); 
 
-            headerService.IsSearchBarActive = true; 
+            foreach(var quiz in quizzes) 
+            {
+                Quizzes.Add(new QuizCardViewModel(quiz, navigationService, quizService));
+            }
+        }
 
-            return Task.CompletedTask; 
+        private void OnQuizDeleted(QuizDeletedMessage quizDeletedMessage)
+        {
+            if (quizDeletedMessage?.DeletedQuiz == null)
+            {
+                return; 
+            }
+
+            var quizViewModelToBeRemoved = Quizzes.FirstOrDefault(q => q.Quiz.Id == quizDeletedMessage.DeletedQuiz.Id);
+
+            if (quizViewModelToBeRemoved != null)
+            {
+                Quizzes.Remove(quizViewModelToBeRemoved);
+            }
+        }
+
+        #endregion
+
+        #region Page loading and closing
+
+        public async Task OnEnterPage(NavigationInformation navigationInformation)
+        {
+            navigationService.SetNavigationTitle(navigationTitle);
+
+            headerService.SetActions(new List<IActionBarItem> { addQuizActionBarItem });
+            headerService.IsSearchBarActive = true;
+
+            await LoadQuizzes();
         }
 
         public Task OnExitPage()
         {
             return Task.CompletedTask;
         }
+
+        #endregion 
     }
 }
