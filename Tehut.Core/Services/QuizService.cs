@@ -28,9 +28,9 @@ namespace Tehut.Core.Services
             return repository.DeleteQuiz(quiz);
         }
 
-        public Task EditQuiz(Quiz quiz, string newTitle)
+        public Task SaveQuiz(Quiz quiz)
         {
-            return repository.EditQuiz(quiz, newTitle); 
+            return repository.SaveQuiz(quiz); 
         }
 
         public Task<IEnumerable<Quiz>> GetAllQuizzes()
@@ -38,14 +38,9 @@ namespace Tehut.Core.Services
             return repository.GetAllQuizzes();
         }
 
-        public Task<IEnumerable<QuizQuestion>> GetQuestions(Quiz quiz)
+        public async Task LoadQuestionsFor(Quiz quiz)
         {
-            return repository.GetQuestions(quiz); 
-        }
-
-        public Task<Quiz?> GetQuizByName(string name)
-        {
-            return repository.GetQuizByName(name); 
+            quiz.Questions = (await repository.GetQuestions(quiz)).ToList(); 
         }
     }
 }

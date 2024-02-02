@@ -12,7 +12,12 @@ namespace Tehut.Database.Migrator.Migrations
         {
             Create.Table(QuizQuestionTable.TableName)
                 .WithColumn(QuizQuestionTable.Id).AsInt32().PrimaryKey().Identity()
-                .WithColumn(QuizQuestionTable.Question).AsString().Nullable()
+                .WithColumn(QuizQuestionTable.Question).AsString().NotNullable().WithDefaultValue("")
+                .WithColumn(QuizQuestionTable.Answer1).AsString().NotNullable().WithDefaultValue("")
+                .WithColumn(QuizQuestionTable.Answer2).AsString().NotNullable().WithDefaultValue("")
+                .WithColumn(QuizQuestionTable.Answer3).AsString().NotNullable().WithDefaultValue("")
+                .WithColumn(QuizQuestionTable.Answer4).AsString().NotNullable().WithDefaultValue("")
+                .WithColumn(QuizQuestionTable.CorrectAnswer).AsInt32().NotNullable().WithDefaultValue(0)
                 .WithColumn(QuizQuestionTable.Quiz).AsInt32().ForeignKey(quizForeignKeyName, QuizTable.TableName, QuizTable.Id).Nullable(); 
         }
 

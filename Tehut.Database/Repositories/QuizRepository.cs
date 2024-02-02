@@ -27,7 +27,7 @@ namespace Tehut.Database.Repositories
             };
         }
 
-        public async Task EditQuiz(Quiz quiz, string newName)
+        public async Task SaveQuiz(Quiz quiz)
         {
             if (quiz is null)
             {
@@ -36,7 +36,7 @@ namespace Tehut.Database.Repositories
 
             using var connection = databaseFactory.CreateConnection();
 
-            await connection.ExecuteAsync(new CommandDefinition($"Update {QuizTable.TableName} Set {QuizTable.Name} = @name;", new { name = newName })); 
+            await connection.ExecuteAsync(new CommandDefinition($"Update {QuizTable.TableName} Set {QuizTable.Name} = @name Where {QuizTable.Id} = @id;", new { name = quiz.Name, id = quiz.Id })); 
         }
 
         public async Task DeleteQuiz(Quiz quiz)
@@ -65,21 +65,12 @@ namespace Tehut.Database.Repositories
             return exists == 1;
         }
 
-
         public async Task<IEnumerable<Quiz>> GetAllQuizzes()
         {
             using var connection = databaseFactory.CreateConnection();
 
-                return await connection.QueryAsync<Quiz>(new CommandDefinition($"Select * from {QuizTable.TableName};"));
+            return await connection.QueryAsync<Quiz>(new CommandDefinition($"Select * from {QuizTable.TableName};"));
         }
-
-        public async Task<Quiz?> GetQuizByName(string name)
-        {
-            using var connection = databaseFactory.CreateConnection();
-            
-            return await connection.QueryFirstOrDefaultAsync<Quiz>(new CommandDefinition($"Select * from {QuizTable.TableName} where {QuizTable.Name} = @name;", new { name })); 
-        }
-
 
         public async Task<IEnumerable<QuizQuestion>> GetQuestions(Quiz quiz)
         {
@@ -90,7 +81,14 @@ namespace Tehut.Database.Repositories
 
             using var connection = databaseFactory.CreateConnection();
             
-            return await connection.QueryAsync<QuizQuestion>(new CommandDefinition($"Select * from {QuizQuestionTable.TableName} where {QuizQuestionTable.Quiz} = @quizId;", new { quizId = quiz.Id }));
+            var questions = await connection.QueryAsync<QuizQuestion>(new CommandDefinition($"Select * from {QuizQuestionTable.TableName} where {QuizQuestionTable.Quiz} = @quizId;", new { quizId = quiz.Id }));
+
+            foreach (var question in questions)
+            {
+                question.Quiz = quiz;
+            }
+
+            return questions; 
         }
     }
 }

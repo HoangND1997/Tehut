@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.DependencyInjection;
+using System.Data;
 using Tehut.Core;
 using Tehut.Core.Services;
 using Tehut.Database;
@@ -8,7 +9,7 @@ using Tehut.Database.Migrator;
 namespace Tehut.Integration.Tests.Services
 {
     [TestFixture]
-    internal class QuizServicesTests
+    internal class QuizServiceTests
     {
         private IQuizService sut;
         private string databasePath = string.Empty; 
@@ -61,12 +62,34 @@ namespace Tehut.Integration.Tests.Services
         {
             var createdQuiz = await sut.CreateQuiz("Egyptian Gods");
 
-            await sut.EditQuiz(createdQuiz, "Greek Gods");
+            createdQuiz.Name = "Greek Gods";
+
+            await sut.SaveQuiz(createdQuiz); 
 
             var allQuizzes = await sut.GetAllQuizzes();
 
             Assert.That(allQuizzes.Count, Is.EqualTo(1));
             Assert.That(allQuizzes.FirstOrDefault()?.Name, Is.EqualTo("Greek Gods")); 
+        }
+
+        [Test]
+        public async Task QuizService_WhenCreatingQuizWithExistingName_ShouldReturnAnError()
+        {
+            var createdQuiz1 = await sut.CreateQuiz("Egyptian Gods");
+
+            Assert.ThrowsAsync<DuplicateNameException>(async () => await sut.CreateQuiz("Egyptian Gods"));
+        }
+
+        [Test]
+        public async Task QuizService_WhenCreatingQuizzes_ShouldCreateQuizzesWithUniqueId()
+        {
+            var createdQuiz1 = await sut.CreateQuiz("Egyptian Gods"); 
+            var createdQuiz2 = await sut.CreateQuiz("Greek Gods"); 
+            var createdQuiz3 = await sut.CreateQuiz("Roman Gods");
+
+            Assert.That(createdQuiz1.Id, Is.EqualTo(1));
+            Assert.That(createdQuiz2.Id, Is.EqualTo(2));
+            Assert.That(createdQuiz3.Id, Is.EqualTo(3));
         }
     }
 }

@@ -9,6 +9,8 @@ namespace Tehut.Database
 
         public DatabaseFactory(DatabaseConfig config) 
         {
+            Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
+
             this.config = config;
         }
 

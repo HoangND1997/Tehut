@@ -9,7 +9,6 @@ namespace Tehut.Core
         {
             serviceCollection.AddTransient<IQuizService, QuizService>(); 
             serviceCollection.AddTransient<IQuizQuestionService, QuizQuestionService>(); 
-            serviceCollection.AddTransient<IQuizAnswerService, QuizAnswerService>(); 
         }
     }   
 }

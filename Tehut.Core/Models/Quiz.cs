@@ -1,4 +1,6 @@
-﻿namespace Tehut.Core.Models
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Tehut.Core.Models
 {
     public class Quiz
     {
@@ -6,6 +8,6 @@
 
         public string Name { get; set; } = string.Empty;
 
-        public List<QuizQuestion> Questions { get; set; } = new();   
+        public List<QuizQuestion> Questions { get; set; } = new();
     }
 }

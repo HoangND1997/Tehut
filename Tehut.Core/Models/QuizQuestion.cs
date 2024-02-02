@@ -6,15 +6,29 @@
 
         public string Question { get; set; } = string.Empty; 
 
-        public int QuizId { get; set; }
 
         public Quiz? Quiz { get; set; } = null!;
+
+
+        public string Answer1 { get; set; } = string.Empty; 
+
+        public string Answer2 { get; set; } = string.Empty;
+
+        public string Answer3 { get; set; } = string.Empty;
         
+        public string Answer4 { get; set; } = string.Empty;
 
-        public List<string> Answers { get; set; } = new();
 
-        public int CorrectAnswerId { get; set; }
+        public int CorrectAnswer { get; private set; }
 
-        public QuizAnswer? CorrectAnswer { get; set; } = null!; 
+        public void SetCorrectAnswer(int answerId)
+        {
+            if (answerId < 0 || answerId > 3)
+            {
+                throw new ArgumentException("Only answers from 0 to 3 can be chosen as correct!"); 
+            }
+
+            CorrectAnswer = answerId;
+        }
     }
 }
