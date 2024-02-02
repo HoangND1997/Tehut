@@ -5,9 +5,14 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Tehut.UI.Views.Components"
+             xmlns:converters="clr-namespace:Tehut.UI.Views.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="280">
 
+    <UserControl.Resources>
+        <converters:QuestionCountConverter x:Key="QuestionCountConverter" />
+    </UserControl.Resources>
+    
     <Border Background="{StaticResource Base2Color}" CornerRadius="20" BorderThickness="2" BorderBrush="{StaticResource Base3Color}">
         <Grid>
 
@@ -22,7 +27,7 @@
 
             <StackPanel Grid.Row="1" Margin="10 0" >
                 <TextBlock Text="{Binding Name}" FontSize="20" Foreground="{StaticResource PrimaryTextColor}" HorizontalAlignment="Center" MaxWidth="250"/>
-                <TextBlock Text="{Binding QuestionCount, StringFormat={}{0:#} Questions}" FontSize="14" Margin="0 5 0 0" Foreground="{StaticResource SecondaryTextColor}" HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding QuestionCount, Converter={StaticResource QuestionCountConverter}}" FontSize="14" Margin="0 5 0 0" Foreground="{StaticResource SecondaryTextColor}" HorizontalAlignment="Center"/>
             </StackPanel>
 
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
