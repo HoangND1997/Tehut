@@ -64,20 +64,12 @@ namespace Tehut.Integration.Tests.Services
 
             createdQuiz.Name = "Greek Gods";
 
-            await sut.SaveQuiz(createdQuiz); 
+            await sut.SaveQuiz(createdQuiz);
 
             var allQuizzes = await sut.GetAllQuizzes();
 
             Assert.That(allQuizzes.Count, Is.EqualTo(1));
-            Assert.That(allQuizzes.FirstOrDefault()?.Name, Is.EqualTo("Greek Gods")); 
-        }
-
-        [Test]
-        public async Task QuizService_WhenCreatingQuizWithExistingName_ShouldReturnAnError()
-        {
-            var createdQuiz1 = await sut.CreateQuiz("Egyptian Gods");
-
-            Assert.ThrowsAsync<DuplicateNameException>(async () => await sut.CreateQuiz("Egyptian Gods"));
+            Assert.That(allQuizzes.FirstOrDefault()?.Name, Is.EqualTo("Greek Gods"));
         }
 
         [Test]

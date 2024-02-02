@@ -1,5 +1,4 @@
-﻿using System.Data;
-using Tehut.Core.Models;
+﻿using Tehut.Core.Models;
 using Tehut.Core.Repositories;
 
 namespace Tehut.Core.Services
@@ -15,11 +14,6 @@ namespace Tehut.Core.Services
 
         public async Task<Quiz> CreateQuiz(string title)
         {
-            if (await repository.DoesQuizNameExists(title))
-            {
-                throw new DuplicateNameException($"There is already a quiz with the title \"{title}\"! Can not create new quiz.");
-            }
-
             return await repository.CreateQuiz(title);    
         }
 

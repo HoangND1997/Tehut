@@ -51,20 +51,6 @@ namespace Tehut.Database.Repositories
             await connection.ExecuteAsync(new CommandDefinition($"Delete from {QuizTable.TableName} where id = @id;", new { id = quiz.Id }));
         }
 
-        public async Task<bool> DoesQuizNameExists(string name)
-        {
-            if (name is null)
-            {
-                return false; 
-            }
-
-            using var connection = databaseFactory.CreateConnection();
-
-            var exists = await connection.ExecuteScalarAsync<int>(new CommandDefinition($"Select Exists (Select 1 from {QuizTable.TableName} where {QuizTable.Name} = @name) as name_exists;", new { name }));
-
-            return exists == 1;
-        }
-
         public async Task<IEnumerable<Quiz>> GetAllQuizzes()
         {
             using var connection = databaseFactory.CreateConnection();
