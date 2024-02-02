@@ -27,9 +27,16 @@ namespace Tehut.Core.Services
             return repository.SaveQuiz(quiz); 
         }
 
-        public Task<IEnumerable<Quiz>> GetAllQuizzes()
+        public async Task<IEnumerable<Quiz>> GetAllQuizzes()
         {
-            return repository.GetAllQuizzes();
+            var quizzes = await repository.GetAllQuizzes();
+
+            foreach(var quiz in quizzes) 
+            {
+                await LoadQuestionsFor(quiz);
+            }
+
+            return quizzes; 
         }
 
         public async Task LoadQuestionsFor(Quiz quiz)
