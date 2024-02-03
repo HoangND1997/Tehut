@@ -20,6 +20,12 @@ namespace Tehut.UI.ViewModels
         private readonly IQuizService quizService;
         private readonly IQuizQuestionService quizQuestionService;
 
+        private const string defaultQuestionText = "[Question]";
+        private const string defaultAnswerText1 = "[Option 1]";
+        private const string defaultAnswerText2 = "[Option 2]";
+        private const string defaultAnswerText3 = "[Option 3]";
+        private const string defaultAnswerText4 = "[Option 4]";
+
         public Quiz Quiz { get; private set; }
 
         public ObservableCollection<QuestionCardViewModel> Questions { get; private set; } = new(); 
@@ -48,6 +54,14 @@ namespace Tehut.UI.ViewModels
         private async Task AddQuestion()
         {
             var createdQuestion = await quizQuestionService.CreateQuestion(Quiz);
+
+            createdQuestion.Question = defaultQuestionText;
+            createdQuestion.Answer1 = defaultAnswerText1;
+            createdQuestion.Answer2 = defaultAnswerText2;
+            createdQuestion.Answer3 = defaultAnswerText3;
+            createdQuestion.Answer4 = defaultAnswerText4;
+
+            await quizQuestionService.SaveQuestion(createdQuestion); 
 
             Questions.Add(new QuestionCardViewModel(createdQuestion, navigationService, quizQuestionService));
         }
