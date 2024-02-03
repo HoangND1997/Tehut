@@ -17,17 +17,18 @@
 
         <Button Style="{StaticResource GeneralButtonStyle}" VerticalAlignment="Center" Command="{Binding NavigateToPreviousPageCommand}">
             <Button.Content>
-                <materialDesign:PackIcon Kind="ChevronLeft" Width="40" Height="40"  Margin="10"/>
+                <materialDesign:PackIcon Kind="ChevronLeft" Width="40" Height="40"  Margin="5"/>
             </Button.Content>            
         </Button>
         
-        <TextBlock Margin="15 0" Text="{Binding HeaderTitle}" FontSize="48" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" Padding="0 0 0 10"/>
 
         <Button Style="{StaticResource GeneralButtonStyle}" VerticalAlignment="Center" Command="{Binding NavigateToNextPageCommand}">
             <Button.Content>
-                <materialDesign:PackIcon Kind="ChevronRight" Width="40" Height="40" Margin="10"/>
+                <materialDesign:PackIcon Kind="ChevronRight" Width="40" Height="40" Margin="5"/>
             </Button.Content>
         </Button>
+        
+        <TextBlock Margin="10 0 30 0" Text="{Binding HeaderTitle}" FontSize="48" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" Padding="0 0 0 10"/>
 
         <local:SearchBar x:Name="searchBar" Width="300" Height="40" FontSize="40" Visibility="{Binding HeaderService.IsSearchBarActive, Converter={StaticResource BoolToVisibilityConverter}}"/>
 

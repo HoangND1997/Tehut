@@ -1,16 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace Tehut.UI.Views.Dialogs
 {
@@ -19,9 +7,67 @@ namespace Tehut.UI.Views.Dialogs
     /// </summary>
     public partial class DeleteDialog : Window
     {
-        public DeleteDialog()
+        private readonly string title;
+        private readonly string questionText;
+        private readonly string warningText;
+
+        private readonly Func<Task> deleteCallback;
+        private readonly Func<Task> cancelCallback;
+
+        public DeleteDialog(string title = "", string questionText = "", string warningText = "", Func<Task> deleteCallback = null!, Func<Task> cancelCallback = null!)
         {
             InitializeComponent();
+
+            Loaded += DeleteDialog_Loaded;
+
+            this.title = title;
+            this.questionText = questionText;
+            this.warningText = warningText;
+            this.deleteCallback = deleteCallback;
+            this.cancelCallback = cancelCallback;
+        }
+
+        private void DeleteDialog_Loaded(object sender, RoutedEventArgs e)
+        {
+            TitleBlock.Text = title;    
+
+            QuestionTextBlock.Text = questionText; 
+            WarningTextBlock.Text = warningText;    
+        }
+
+        private async Task Delete()
+        {
+            if (deleteCallback is not null)
+            { 
+                await deleteCallback();
+            }
+
+            Close();
+        }
+
+        private async Task Cancel()
+        {
+            if (cancelCallback is not null)
+            { 
+                await cancelCallback();
+            }
+
+            Close(); 
+        }
+
+        private async void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            await Delete(); 
+        }
+
+        private async void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            await Cancel();
+        }
+
+        private async void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            await Cancel();
         }
     }
 }

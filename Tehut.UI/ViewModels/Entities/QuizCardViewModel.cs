@@ -9,8 +9,9 @@ namespace Tehut.UI.ViewModels.Entities
     public class QuizCardViewModel
     {
         private readonly Services.Navigation.INavigationService navigationService;
+        private readonly Services.IDialogService dialogService;
         private readonly IQuizService quizService;
-        
+
         public Quiz Quiz { get; }
 
         public string Name { get; }
@@ -25,7 +26,7 @@ namespace Tehut.UI.ViewModels.Entities
         public AsyncCommand DeleteQuizCommand { get; }
 
         
-        public QuizCardViewModel(Quiz quiz, Services.Navigation.INavigationService navigationService, IQuizService quizService) 
+        public QuizCardViewModel(Quiz quiz, Services.Navigation.INavigationService navigationService, Services.IDialogService dialogService, IQuizService quizService) 
         {
             Name = quiz.Name;
             QuestionCount = quiz.Questions.Count; 
@@ -36,6 +37,7 @@ namespace Tehut.UI.ViewModels.Entities
 
             this.Quiz = quiz;
             this.navigationService = navigationService;
+            this.dialogService = dialogService;
             this.quizService = quizService;
         }
 
@@ -51,9 +53,21 @@ namespace Tehut.UI.ViewModels.Entities
 
         private async Task DeleteQuiz()
         {
-            await quizService.DeleteQuiz(Quiz);
+            if (Quiz.Questions.Count == 0)
+            { 
+                await quizService.DeleteQuiz(Quiz);
+            
+                Messenger.Default.Send(new QuizDeletedMessage { DeletedQuiz = Quiz });
 
-            Messenger.Default.Send(new QuizDeletedMessage { DeletedQuiz = Quiz }); 
+                return; 
+            }
+
+            dialogService.ShowDeleteDialog("Delete Quiz", StringTable.DeleteQuestionText, StringTable.DeleteWarningText, async () =>
+            {
+                await quizService.DeleteQuiz(Quiz);
+
+                Messenger.Default.Send(new QuizDeletedMessage { DeletedQuiz = Quiz });
+            });
         }
     }
 }

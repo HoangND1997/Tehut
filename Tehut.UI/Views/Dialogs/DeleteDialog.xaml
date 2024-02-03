@@ -3,10 +3,94 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:Tehut.UI.Views.Dialogs"
         mc:Ignorable="d"
-        Title="DeleteDialog" Height="450" Width="800">
+        Height="240" 
+        Width="460"
+        AllowsTransparency="True" 
+        Background="Transparent"
+        BorderThickness="8"
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False"
+        WindowStyle="None">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness="0" CaptionHeight="0" CornerRadius="20" />
+    </WindowChrome.WindowChrome>
+
+    <Window.Resources>
+        <Style TargetType="{x:Type Button}" x:Key="CloseButtonStyle">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}" />
+            <Setter Property="BorderBrush" Value="{x:Null}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="0 15 0 0">
+                            <ContentPresenter Content="{TemplateBinding Content}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource Base2Color}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
     <Grid>
-        
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+
+        <Border Grid.RowSpan="3" Background="{StaticResource BaseColor}" CornerRadius="20">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="15" RenderingBias="Performance" ShadowDepth="0" Opacity="0.3"/>
+            </Border.Effect>
+        </Border>
+
+        <!-- Window Titlebar-->
+        <Border Background="{StaticResource Base3Color}" CornerRadius="15 15 0 0">
+            <DockPanel>
+                <TextBlock x:Name="TitleBlock" Text="Delete" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" FontSize="24" Margin="20 0"/>
+                <Button HorizontalAlignment="Right" Style="{StaticResource CloseButtonStyle}" Width="40" Height="40" Click="CloseButton_Click">
+                    <Button.Content>
+                        <materialDesign:PackIcon Kind="Close" Height="25" Width="25" />
+                    </Button.Content>
+                </Button>
+            </DockPanel>
+        </Border>
+
+        <StackPanel Grid.Row="1" Margin="20 20">
+            <TextBlock x:Name="QuestionTextBlock" Foreground="{StaticResource PrimaryTextColor}" Text="Question Text"  FontSize="18"/>
+            <TextBlock x:Name="WarningTextBlock" Foreground="{StaticResource WrongColor}" Text="Warning Text" FontSize="18" Margin="0 20 0 0"/>
+        </StackPanel>
+
+        <!-- Delete and Cancel button -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <Button Content="Delete" Height="40" Width="80" Style="{StaticResource DialogButtonStyle}" 
+                    Foreground="{StaticResource PrimaryTextColor}" 
+                    Background="{StaticResource WrongColor}"
+                    FontSize="16" 
+                    Click="DeleteButton_Click"/>
+            <Button Content="Cancel" Height="40" Width="80" Style="{StaticResource DialogButtonStyle}" 
+                    Foreground="{StaticResource PrimaryTextColor}" 
+                    Background="{StaticResource Base2Color}"
+                    FontSize="16"
+                    Margin="10 0"
+                    Click="CancelButton_Click"/>
+        </StackPanel>
+
     </Grid>
 </Window>

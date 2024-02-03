@@ -71,6 +71,8 @@ namespace Tehut.UI.ViewModels
             await quizQuestionService.SaveQuestion(createdQuestion); 
 
             Questions.Add(new QuestionCardViewModel(createdQuestion, navigationService, quizQuestionService));
+
+            await quizService.LoadQuestionsFor(Quiz);
         }
 
         private void EditQuiz()
@@ -87,9 +89,21 @@ namespace Tehut.UI.ViewModels
 
         private async Task DeleteQuestion()
         {
-            await quizService.DeleteQuiz(Quiz);
+            if (Quiz.Questions.Count == 0)
+            {
+                await quizService.DeleteQuiz(Quiz);
 
-            await navigationService.NavigateTo<QuizOverviewViewModel>();
+                await navigationService.NavigateTo<QuizOverviewViewModel>();
+
+                return;
+            }
+
+            dialogService.ShowDeleteDialog("Delete Quiz", StringTable.DeleteQuestionText, StringTable.DeleteWarningText, async () =>
+            {
+                await quizService.DeleteQuiz(Quiz);
+
+                await navigationService.NavigateTo<QuizOverviewViewModel>();
+            });
         }
 
         #endregion

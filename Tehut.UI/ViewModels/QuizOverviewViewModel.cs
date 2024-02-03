@@ -13,6 +13,7 @@ namespace Tehut.UI.ViewModels
     {
         private readonly Services.Navigation.INavigationService navigationService;
         private readonly IHeaderService headerService;
+        private readonly Services.IDialogService dialogService;
         private readonly IQuizService quizService;
 
         private ActionBarItem addQuizActionBarItem;
@@ -24,10 +25,11 @@ namespace Tehut.UI.ViewModels
 
         public AsyncCommand AddQuizCommand { get; }
 
-        public QuizOverviewViewModel(Services.Navigation.INavigationService navigationService, IHeaderService headerService, IQuizService quizService)
+        public QuizOverviewViewModel(Services.Navigation.INavigationService navigationService, IHeaderService headerService, Services.IDialogService dialogService, IQuizService quizService)
         {
             this.navigationService = navigationService;
             this.headerService = headerService;
+            this.dialogService = dialogService;
             this.quizService = quizService;
 
             AddQuizCommand = new AsyncCommand(AddQuiz);
@@ -43,7 +45,7 @@ namespace Tehut.UI.ViewModels
         {
             var createdQuiz = await quizService.CreateQuiz(emptyQuizName);    
             
-            Quizzes.Add(new QuizCardViewModel(createdQuiz, navigationService, quizService));
+            Quizzes.Add(new QuizCardViewModel(createdQuiz, navigationService, dialogService, quizService));
         }
 
         private async Task LoadQuizzes()
@@ -54,7 +56,7 @@ namespace Tehut.UI.ViewModels
 
             foreach(var quiz in quizzes) 
             {
-                Quizzes.Add(new QuizCardViewModel(quiz, navigationService, quizService));
+                Quizzes.Add(new QuizCardViewModel(quiz, navigationService, dialogService, quizService));
             }
         }
 
