@@ -4,6 +4,7 @@ using Tehut.Core.Models;
 using Tehut.Core.Services;
 using Tehut.UI.ViewModels.Actions;
 using Tehut.UI.ViewModels.Entities;
+using Tehut.UI.ViewModels.Messages;
 using Tehut.UI.ViewModels.Services;
 using Tehut.UI.ViewModels.Services.Navigation;
 
@@ -38,6 +39,8 @@ namespace Tehut.UI.ViewModels
             actions.Add(new ActionBarItem("Delete Quiz", async (viewModelBase) => await DeleteQuestion(), ActionBarType.Delete));
 
             AddQuestionCommand = new AsyncCommand(AddQuestion);
+
+            Messenger.Default.Register<QuestionDeletedMessage>(this, OnQuestionDeleted);
         }
 
         #region Actions 
@@ -46,24 +49,32 @@ namespace Tehut.UI.ViewModels
         {
             var createdQuestion = await quizQuestionService.CreateQuestion(Quiz);
 
-            Questions.Add(new QuestionCardViewModel(createdQuestion, navigationService));
+            Questions.Add(new QuestionCardViewModel(createdQuestion, navigationService, quizQuestionService));
         }
 
         private async Task DeleteQuestion()
         {
-            try
-            {
-                await quizService.DeleteQuiz(Quiz);
+            await quizService.DeleteQuiz(Quiz);
 
-                await navigationService.NavigateTo<QuizOverviewViewModel>();
-            }
-            catch (Exception ex) 
-            { 
-            
-            }
+            await navigationService.NavigateTo<QuizOverviewViewModel>();
         }
 
         #endregion
+
+        private void OnQuestionDeleted(QuestionDeletedMessage questionDeletedMessage)
+        {
+            if (questionDeletedMessage?.DeletedQuestion is null)
+            {
+                return; 
+            }
+
+            var questionCardToBeRemoved = Questions.FirstOrDefault(q => q.Question.Id == questionDeletedMessage.DeletedQuestion.Id);
+
+            if (questionCardToBeRemoved != null)
+            {
+                Questions.Remove(questionCardToBeRemoved); 
+            }
+        }
 
         private async Task LoadQuestions()
         {
@@ -78,7 +89,7 @@ namespace Tehut.UI.ViewModels
 
             foreach (var question in Quiz.Questions)
             {
-                Questions.Add(new QuestionCardViewModel(question, navigationService)); 
+                Questions.Add(new QuestionCardViewModel(question, navigationService, quizQuestionService)); 
             }
         }
 

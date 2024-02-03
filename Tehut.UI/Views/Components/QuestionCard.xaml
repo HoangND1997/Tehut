@@ -20,13 +20,12 @@
             <StackPanel>
                 <TextBlock Text="{Binding QuestionText}" FontSize="20" Foreground="{StaticResource PrimaryTextColor}" TextWrapping="WrapWithOverflow" MaxHeight="200"/>
                 <Separator Margin="0 20" Background="{StaticResource SecondaryTextColor}"/>
-                <ItemsControl ItemsSource="{Binding Answers}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate DataType="{x:Type system:String}">
-                            <TextBlock Text="{Binding}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" Margin="0 0 0 10" />
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                <StackPanel>
+                    <TextBlock Text="{Binding AnswerText1, StringFormat='1.  {0:#}'}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" Margin="0 0 0 10" />
+                    <TextBlock Text="{Binding AnswerText2, StringFormat='2.  {0:#}'}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" Margin="0 0 0 10" />
+                    <TextBlock Text="{Binding AnswerText3, StringFormat='3.  {0:#}'}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" Margin="0 0 0 10" />
+                    <TextBlock Text="{Binding AnswerText4, StringFormat='4.  {0:#}'}" Foreground="{StaticResource PrimaryTextColor}" FontSize="16" Margin="0 0 0 10" />
+                </StackPanel>
             </StackPanel>
 
             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
