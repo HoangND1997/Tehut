@@ -40,7 +40,7 @@
                         TextWrapping="Wrap"
                         Background="Transparent"
                         VerticalAlignment="Center"
-                        Text="{Binding Text, RelativeSource={RelativeSource AncestorType={x:Type local:EditableTextCard}}}"
+                        Text="{Binding Text, RelativeSource={RelativeSource AncestorType={x:Type local:EditableTextCard}}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         HorizontalAlignment="{Binding TextAlignment, RelativeSource={RelativeSource AncestorType={x:Type local:EditableTextCard}}}"
                         BorderThickness="0"
                         Padding="10"

@@ -33,11 +33,12 @@
 
         <component:EditableTextCard Margin="50" 
                                     TextAlignment="Center" 
-                                    Text="{Binding QuestionText}" 
+                                    Text="{Binding QuestionText, Mode=TwoWay}" 
                                     MaxWidth="1200" 
                                     MaxHeight="300"
                                     FontSize="32"
-                                    Grid.Column="1"/>
+                                    Grid.Column="1"
+                                    TextChanged="EditableTextCard_TextChanged"/>
 
         <Grid Grid.Row="1" Grid.Column="1">
 
@@ -51,10 +52,10 @@
                 <ColumnDefinition Width="0.5*"/>
             </Grid.ColumnDefinitions>
 
-            <component:EditableTextCard Text="{Binding AnswerText1}" Style="{StaticResource AnswerEditCardStyle}" NumberingText="1." Grid.Column="0" Grid.Row="0"/>
-            <component:EditableTextCard Text="{Binding AnswerText2}" Style="{StaticResource AnswerEditCardStyle}" NumberingText="2." Grid.Column="1" Grid.Row="0"/>
-            <component:EditableTextCard Text="{Binding AnswerText3}" Style="{StaticResource AnswerEditCardStyle}" NumberingText="3." Grid.Column="0" Grid.Row="1"/>
-            <component:EditableTextCard Text="{Binding AnswerText4}" Style="{StaticResource AnswerEditCardStyle}" NumberingText="4." Grid.Column="1" Grid.Row="1"/>
+            <component:EditableTextCard Text="{Binding AnswerText1, Mode=TwoWay}" Style="{StaticResource AnswerEditCardStyle}" NumberingText="1." Grid.Column="0" Grid.Row="0" TextChanged="EditableTextCard_TextChanged"/>
+            <component:EditableTextCard Text="{Binding AnswerText2, Mode=TwoWay}" Style="{StaticResource AnswerEditCardStyle}" NumberingText="2." Grid.Column="1" Grid.Row="0" TextChanged="EditableTextCard_TextChanged"/>
+            <component:EditableTextCard Text="{Binding AnswerText3, Mode=TwoWay}" Style="{StaticResource AnswerEditCardStyle}" NumberingText="3." Grid.Column="0" Grid.Row="1" TextChanged="EditableTextCard_TextChanged"/>
+            <component:EditableTextCard Text="{Binding AnswerText4, Mode=TwoWay}" Style="{StaticResource AnswerEditCardStyle}" NumberingText="4." Grid.Column="1" Grid.Row="1" TextChanged="EditableTextCard_TextChanged"/>
 
         </Grid>
         

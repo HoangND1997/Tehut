@@ -15,6 +15,7 @@ namespace Tehut.UI.Views.Components
         public static readonly DependencyProperty TextAlignmentProperty = DependencyProperty.Register("TextAlignment", typeof(HorizontalAlignment), typeof(EditableTextCard), new PropertyMetadata(HorizontalAlignment.Left));
         public static readonly DependencyProperty ShowNumberingProperty = DependencyProperty.Register("ShowNumbering", typeof(bool), typeof(EditableTextCard), new PropertyMetadata(false));
         public static readonly DependencyProperty NumberingTextProperty = DependencyProperty.Register("NumberingText", typeof(string), typeof(EditableTextCard), new PropertyMetadata(""));
+        public static RoutedEvent TextChangedEvent = EventManager.RegisterRoutedEvent("TextChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(EditableTextCard));
 
         public string Text
         {
@@ -39,6 +40,14 @@ namespace Tehut.UI.Views.Components
             get { return (string)GetValue(NumberingTextProperty); }
             set { SetValue(ShowNumberingProperty, value); }
         }
+
+        public event RoutedEventHandler TextChanged
+        {
+            add { AddHandler(TextChangedEvent, value); }
+            remove { RemoveHandler(TextChangedEvent, value); }
+        }
+
+        private string textOnOpen; 
 
         public EditableTextCard()
         {
@@ -72,6 +81,8 @@ namespace Tehut.UI.Views.Components
             EditableTextBoxBorder.BorderBrush = FindResource("SecondaryTextColor") as SolidColorBrush;
             EditableTextBoxBorder.BorderThickness = new Thickness(2);
             EditableTextBoxBorder.Cursor = Cursors.Arrow;
+
+            textOnOpen = EditableTextBox.Text;
         }
 
         private void CloseTextBox() 
@@ -84,6 +95,11 @@ namespace Tehut.UI.Views.Components
             EditableTextBoxBorder.BorderBrush = FindResource("Base3Color") as SolidColorBrush;
             EditableTextBoxBorder.BorderThickness = new Thickness(1);
             EditableTextBoxBorder.Cursor = Cursors.Hand;
+
+            if (EditableTextBox.Text != textOnOpen)
+            { 
+                RaiseEvent(new RoutedEventArgs(TextChangedEvent));
+            }
         }
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
