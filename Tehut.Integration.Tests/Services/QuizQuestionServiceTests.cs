@@ -99,5 +99,20 @@ namespace Tehut.Integration.Tests.Services
             Assert.That(quiz.Questions.Count, Is.EqualTo(2));
             Assert.That(!quiz.Questions.Any(q => q.Id == question1.Id));
         }
+
+        [Test]
+        public async Task QuizQuestionService_WhenAddingQuestionsAndDeletingQuiz_ShouldDeleteAllConnectedQuestions()
+        {
+            var quiz = await quizService.CreateQuiz("Math Quiz");
+
+            var question1 = await sut.CreateQuestion(quiz);
+            var question2 = await sut.CreateQuestion(quiz);
+
+            await quizService.DeleteQuiz(quiz);
+
+            var quizzes = await quizService.GetAllQuizzes(); 
+
+            Assert.That(quizzes.Count, Is.EqualTo(0));
+        }
     }
 }

@@ -41,6 +41,11 @@ namespace Tehut.Core.Services
 
         public async Task LoadQuestionsFor(Quiz quiz)
         {
+            if (quiz == null)
+            {
+                return; 
+            }
+
             quiz.Questions = (await repository.GetQuestions(quiz)).ToList(); 
         }
     }

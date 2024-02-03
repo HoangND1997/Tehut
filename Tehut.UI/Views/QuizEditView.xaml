@@ -23,7 +23,7 @@
                     <CollectionContainer Collection="{Binding Source={StaticResource QuestionCardCollectionSource}}" />
 
                     <!-- Custom button to add quiz -->
-                    <Button Style="{StaticResource AdderCardButtonStyle}" Width="250" Height="350" Margin="0 50 50 0"/>
+                    <Button Style="{StaticResource AdderCardButtonStyle}" Width="250" Height="350" Margin="0 50 50 0" Command="{Binding AddQuestionCommand}"/>
 
                 </CompositeCollection>
             </ItemsControl.ItemsSource>
