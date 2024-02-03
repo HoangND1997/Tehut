@@ -11,10 +11,10 @@ namespace Tehut.UI.Views.Dialogs
         private readonly string title;
         private readonly string initialValue;
 
-        private readonly Action<string> confirmAction;
-        private readonly Action cancelAction;
+        private readonly Func<string, Task> confirmAction;
+        private readonly Func<Task> cancelAction;
 
-        public TextEditDialog(string title = "Edit Quiz", string initialValue = "intial Value", Action<string> confirmAction = null!, Action cancelAction = null!)
+        public TextEditDialog(string title = "Edit Quiz", string initialValue = "intial Value", Func<string, Task> confirmAction = null!, Func<Task> cancelAction = null!)
         {
             InitializeComponent();
 
@@ -41,25 +41,47 @@ namespace Tehut.UI.Views.Dialogs
             Keyboard.Focus(TextEdit);
         }
 
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        private async void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            cancelAction?.Invoke();
-
-            Close(); 
+            await Cancel(); 
         }
 
-        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
+        private async void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            confirmAction?.Invoke(TextEdit.Text);
-
-            Close(); 
+            await Confirm(); 
         }
 
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        private async void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            cancelAction?.Invoke(); 
+            await Cancel(); 
+        }
 
-            Close(); 
+        private async void TextEdit_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key is Key.Enter)
+            { 
+                await Confirm(); 
+            }
+        }
+
+        private async Task Cancel()
+        {
+            if (cancelAction != null)
+            {
+                await cancelAction();
+            }
+
+            Close();
+        }
+
+        private async Task Confirm()
+        {
+            if (confirmAction != null)
+            {
+                await confirmAction(TextEdit.Text);
+            }
+
+            Close();
         }
     }
 }

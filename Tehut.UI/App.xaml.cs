@@ -57,9 +57,6 @@ namespace Tehut.UI
         private static void RegisterViews(IServiceCollection serviceCollection)
         {
             serviceCollection.AddSingleton(s => new MainWindow { DataContext = s.GetRequiredService<MainViewModel>() });
-            serviceCollection.AddSingleton<TextEditDialog>();
-            serviceCollection.AddSingleton<DeleteDialog>();
-
             serviceCollection.AddSingleton(s => new Header { DataContext = s.GetRequiredService<HeaderViewModel>() }); 
 
             serviceCollection.AddSingleton(s => new QuizOverviewView { DataContext = s.GetRequiredService<QuizOverviewViewModel>() });
@@ -72,6 +69,7 @@ namespace Tehut.UI
         private static void RegisterOtherServices(IServiceCollection serviceCollection)
         {
             serviceCollection.AddSingleton<IHeaderService, HeaderService>(); 
+            serviceCollection.AddSingleton<ViewModels.Services.IDialogService, DialogService>(); 
             serviceCollection.AddSingleton<ViewModels.Services.Navigation.INavigationService, NavigationService>();
             serviceCollection.AddSingleton<Func<Type, ViewModelBase>>(s => (viewModelType) => (ViewModelBase)s.GetRequiredService(viewModelType));
         }
@@ -82,16 +80,12 @@ namespace Tehut.UI
 
             EnsureDatabase(); 
 
-            /*var navigationService = ServiceProvider?.GetRequiredService<ViewModels.Services.Navigation.INavigationService>();
+            var navigationService = ServiceProvider?.GetRequiredService<ViewModels.Services.Navigation.INavigationService>();
             navigationService?.NavigateTo<QuizOverviewViewModel>(); 
 
             var mainWindow = ServiceProvider?.GetRequiredService<MainWindow>();
 
-            mainWindow?.Show(); */
-
-            var textEditDialog = ServiceProvider?.GetRequiredService<TextEditDialog>();
-
-            textEditDialog?.Show(); 
+            mainWindow?.Show();
         }
 
         private void EnsureDatabase()

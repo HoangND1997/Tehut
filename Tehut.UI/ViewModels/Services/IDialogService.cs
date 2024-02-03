@@ -1,9 +1,9 @@
 ﻿namespace Tehut.UI.ViewModels.Services
 {
-    internal interface IDialogService
+    public interface IDialogService
     {
-        void ShowTextEditDialog(string initialText = "", Action<string> confirmAction = null!, Action cancelAction = null!);
+        void ShowTextEditDialog(string title = "", string initialText = "", Func<string, Task> confirmCallback = null!, Func<Task> cancelCallback = null!);
 
-        void ShowDeleteDialog(Action confirmAction = null!, Action cancelAction = null!);
+        void ShowDeleteDialog(string title="", Func<Task> confirmCallback = null!, Func<Task> cancelCallback = null!);
     }
 }

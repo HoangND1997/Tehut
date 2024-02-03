@@ -6,30 +6,66 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:Tehut.UI.Views.Dialogs"
         mc:Ignorable="d"
-        Height="200" 
-        Width="450"
+        Height="210" 
+        Width="460"
         ShowInTaskbar="False"
-        Topmost="True"
         WindowStartupLocation="CenterOwner"
-        WindowStyle="None">
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        AllowsTransparency="True" 
+        Background="Transparent"
+        BorderThickness="8">
 
     <WindowChrome.WindowChrome>
-        <WindowChrome GlassFrameThickness="0" CaptionHeight="0" CornerRadius="15" />
+        <WindowChrome GlassFrameThickness="0" CaptionHeight="0" CornerRadius="20" />
     </WindowChrome.WindowChrome>
 
-    <Grid Background="{StaticResource BaseColor}">
-
+    <Window.Resources>
+        <Style TargetType="{x:Type Button}" x:Key="CloseButtonStyle">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}" />
+            <Setter Property="BorderBrush" Value="{x:Null}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="0 15 0 0">      
+                            <ContentPresenter Content="{TemplateBinding Content}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource Base2Color}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    
+    <Grid>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
             <RowDefinition Height="*" />
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
 
+        <Border Grid.RowSpan="3" Background="{StaticResource BaseColor}" CornerRadius="20">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="15" RenderingBias="Performance" ShadowDepth="0" Opacity="0.3"/>
+            </Border.Effect>
+        </Border>
+
         <!-- Window Titlebar-->
-        <Border Background="{StaticResource Base3Color}">
+        <Border Background="{StaticResource Base3Color}" CornerRadius="15 15 0 0">
             <DockPanel>
                 <TextBlock x:Name="TitleBlock" Text="Edit" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" FontSize="24" Margin="20 0"/>
-                <Button HorizontalAlignment="Right" Style="{StaticResource TitlebarButtonStyle}" Width="40" Height="40" Click="CloseButton_Click">
+                <Button HorizontalAlignment="Right" Style="{StaticResource CloseButtonStyle}" Width="40" Height="40" Click="CloseButton_Click">
                     <Button.Content>
                         <materialDesign:PackIcon Kind="Close" Height="25" Width="25" />
                     </Button.Content>
@@ -63,7 +99,8 @@
                         FontSize="18"
                         VerticalAlignment="Center"
                         BorderThickness="0"
-                        CaretBrush="{StaticResource SecondaryTextColor}"/>
+                        CaretBrush="{StaticResource SecondaryTextColor}"
+                        KeyUp="TextEdit_KeyUp"/>
             </Grid>
         </Border>
 
@@ -79,8 +116,8 @@
                     Background="{StaticResource Base2Color}"
                     FontSize="16"
                     Margin="10 0"
-                    Click="CancelButton_Click"/>        
+                    Click="CancelButton_Click"/>
         </StackPanel>
-        
+
     </Grid>
 </Window>
