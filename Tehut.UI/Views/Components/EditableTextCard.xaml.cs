@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace Tehut.UI.Views.Components
 {
@@ -44,11 +45,6 @@ namespace Tehut.UI.Views.Components
             InitializeComponent();
         }
 
-        private void EditableTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            OpenTextBox();
-        }
-
         private void EditableTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             CloseTextBox();
@@ -65,13 +61,17 @@ namespace Tehut.UI.Views.Components
         private void OpenTextBox()
         {
             EditableTextBox.IsReadOnly = false;
-            EditableTextBox.SelectAll();
 
-            Keyboard.Focus(EditableTextBox);
-            EditableTextBox.Focus();
+            Dispatcher.BeginInvoke(DispatcherPriority.Input, new Action(() =>
+            {
+                Keyboard.Focus(EditableTextBox);
+                EditableTextBox.Focus();
+                EditableTextBox.SelectAll();
+            }));
 
             EditableTextBoxBorder.BorderBrush = FindResource("SecondaryTextColor") as SolidColorBrush;
             EditableTextBoxBorder.BorderThickness = new Thickness(2);
+            EditableTextBoxBorder.Cursor = Cursors.Arrow;
         }
 
         private void CloseTextBox() 
@@ -82,7 +82,8 @@ namespace Tehut.UI.Views.Components
             Focus();
 
             EditableTextBoxBorder.BorderBrush = FindResource("Base3Color") as SolidColorBrush;
-            EditableTextBoxBorder.BorderThickness = new Thickness(1); 
+            EditableTextBoxBorder.BorderThickness = new Thickness(1);
+            EditableTextBoxBorder.Cursor = Cursors.Hand;
         }
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
@@ -91,6 +92,19 @@ namespace Tehut.UI.Views.Components
             {
                 OpenTextBox();
             }
+        }
+
+        private void EditableTextBoxBorder_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount == 2)
+            { 
+                OpenTextBox();
+            }
+        }
+
+        private void EditableTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            OpenTextBox();
         }
     }
 }
