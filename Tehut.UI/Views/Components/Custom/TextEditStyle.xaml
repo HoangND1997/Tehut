@@ -15,7 +15,9 @@
                                  Foreground="{TemplateBinding Foreground}"
                                  VerticalAlignment="Center" 
                                  Padding="{TemplateBinding Padding}"
-                                 CaretBrush="{TemplateBinding Foreground}"/>
+                                 CaretBrush="{TemplateBinding Foreground}"
+                                 Text="{TemplateBinding Text}"
+                                 SelectionBrush="{TemplateBinding SelectionBrush}"/>
                         
                         <TextBlock x:Name="PART_Hint" 
                                    Background="Transparent" 

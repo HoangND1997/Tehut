@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace Tehut.UI.Views.Components.Custom
@@ -61,6 +62,8 @@ namespace Tehut.UI.Views.Components.Custom
             if (hint != null)
             {
                 hint.Visibility = Visibility.Collapsed;
+
+                Keyboard.Focus(textBox);
             }
         }
     }

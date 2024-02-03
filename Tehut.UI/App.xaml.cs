@@ -10,6 +10,7 @@ using Tehut.UI.ViewModels.Services;
 using Tehut.UI.ViewModels.Services.Navigation;
 using Tehut.UI.Views;
 using Tehut.UI.Views.Components;
+using Tehut.UI.Views.Dialogs;
 
 namespace Tehut.UI
 {
@@ -56,6 +57,9 @@ namespace Tehut.UI
         private static void RegisterViews(IServiceCollection serviceCollection)
         {
             serviceCollection.AddSingleton(s => new MainWindow { DataContext = s.GetRequiredService<MainViewModel>() });
+            serviceCollection.AddSingleton<TextEditDialog>();
+            serviceCollection.AddSingleton<DeleteDialog>();
+
             serviceCollection.AddSingleton(s => new Header { DataContext = s.GetRequiredService<HeaderViewModel>() }); 
 
             serviceCollection.AddSingleton(s => new QuizOverviewView { DataContext = s.GetRequiredService<QuizOverviewViewModel>() });
@@ -78,12 +82,16 @@ namespace Tehut.UI
 
             EnsureDatabase(); 
 
-            var navigationService = ServiceProvider?.GetRequiredService<ViewModels.Services.Navigation.INavigationService>();
+            /*var navigationService = ServiceProvider?.GetRequiredService<ViewModels.Services.Navigation.INavigationService>();
             navigationService?.NavigateTo<QuizOverviewViewModel>(); 
 
             var mainWindow = ServiceProvider?.GetRequiredService<MainWindow>();
 
-            mainWindow?.Show(); 
+            mainWindow?.Show(); */
+
+            var textEditDialog = ServiceProvider?.GetRequiredService<TextEditDialog>();
+
+            textEditDialog?.Show(); 
         }
 
         private void EnsureDatabase()

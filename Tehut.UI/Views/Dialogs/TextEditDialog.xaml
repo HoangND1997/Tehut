@@ -1,0 +1,86 @@
+﻿<Window x:Class="Tehut.UI.Views.Dialogs.TextEditDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:Tehut.UI.Views.Dialogs"
+        mc:Ignorable="d"
+        Height="200" 
+        Width="450"
+        ShowInTaskbar="False"
+        Topmost="True"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="None">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness="0" CaptionHeight="0" CornerRadius="15" />
+    </WindowChrome.WindowChrome>
+
+    <Grid Background="{StaticResource BaseColor}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+
+        <!-- Window Titlebar-->
+        <Border Background="{StaticResource Base3Color}">
+            <DockPanel>
+                <TextBlock x:Name="TitleBlock" Text="Edit" Foreground="{StaticResource PrimaryTextColor}" VerticalAlignment="Center" FontSize="24" Margin="20 0"/>
+                <Button HorizontalAlignment="Right" Style="{StaticResource TitlebarButtonStyle}" Width="40" Height="40" Click="CloseButton_Click">
+                    <Button.Content>
+                        <materialDesign:PackIcon Kind="Close" Height="25" Width="25" />
+                    </Button.Content>
+                </Button>
+            </DockPanel>
+        </Border>
+
+        <!-- Edit Textbox -->
+        <Border Grid.Row="1" 
+                Background="{StaticResource Base3Color}" 
+                BorderBrush="{StaticResource Base2Color}" 
+                BorderThickness="1" 
+                CornerRadius="20"
+                Margin="30"
+                Width="380">
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <materialDesign:PackIcon Kind="Edit" Foreground="{StaticResource SecondaryTextColor}" Width="25" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" />
+
+                <TextBox x:Name="TextEdit"
+                        Background="Transparent"
+                        Grid.Column="1"
+                        Foreground="{StaticResource PrimaryTextColor}" 
+                        SelectionBrush="{StaticResource PrimaryTextColor}"
+                        BorderBrush="{x:Null}"
+                        FontSize="18"
+                        VerticalAlignment="Center"
+                        BorderThickness="0"
+                        CaretBrush="{StaticResource SecondaryTextColor}"/>
+            </Grid>
+        </Border>
+
+        <!-- Confirm and Cancel button -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <Button Content="Confirm" Height="40" Width="80" Style="{StaticResource DialogButtonStyle}" 
+                    Foreground="{StaticResource PrimaryTextColor}" 
+                    Background="{StaticResource CorrectColor}"
+                    FontSize="16" 
+                    Click="ConfirmButton_Click"/>
+            <Button Content="Cancel" Height="40" Width="80" Style="{StaticResource DialogButtonStyle}" 
+                    Foreground="{StaticResource PrimaryTextColor}" 
+                    Background="{StaticResource Base2Color}"
+                    FontSize="16"
+                    Margin="10 0"
+                    Click="CancelButton_Click"/>        
+        </StackPanel>
+        
+    </Grid>
+</Window>
