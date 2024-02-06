@@ -10,6 +10,6 @@
     <SolidColorBrush x:Key="SecondaryTextColor" Color="#827E7C" />
 
     <SolidColorBrush x:Key="CorrectColor" Color="#2C9A44" />
-    <SolidColorBrush x:Key="WrongColor" Color="#CC3636" />
+    <SolidColorBrush x:Key="WrongColor" Color="#ad171c" />
     
 </ResourceDictionary>

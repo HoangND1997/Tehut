@@ -11,11 +11,16 @@ namespace Tehut.UI.Views.Components
     /// </summary>
     public partial class EditableTextCard : UserControl
     {
-        public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(EditableTextCard), new PropertyMetadata(""));
-        public static readonly DependencyProperty TextAlignmentProperty = DependencyProperty.Register("TextAlignment", typeof(HorizontalAlignment), typeof(EditableTextCard), new PropertyMetadata(HorizontalAlignment.Left));
-        public static readonly DependencyProperty ShowNumberingProperty = DependencyProperty.Register("ShowNumbering", typeof(bool), typeof(EditableTextCard), new PropertyMetadata(false));
-        public static readonly DependencyProperty NumberingTextProperty = DependencyProperty.Register("NumberingText", typeof(string), typeof(EditableTextCard), new PropertyMetadata(""));
-        public static RoutedEvent TextChangedEvent = EventManager.RegisterRoutedEvent("TextChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(EditableTextCard));
+        public static readonly DependencyProperty TextProperty = DependencyProperty.Register(nameof(Text), typeof(string), typeof(EditableTextCard), new PropertyMetadata(""));
+        public static readonly DependencyProperty TextAlignmentProperty = DependencyProperty.Register(nameof(TextAlignment), typeof(HorizontalAlignment), typeof(EditableTextCard), new PropertyMetadata(HorizontalAlignment.Left));
+        
+        public static readonly DependencyProperty ShowNumberingProperty = DependencyProperty.Register(nameof(ShowNumbering), typeof(bool), typeof(EditableTextCard), new PropertyMetadata(false));
+        public static readonly DependencyProperty NumberingTextProperty = DependencyProperty.Register(nameof(NumberingText), typeof(string), typeof(EditableTextCard), new PropertyMetadata(""));
+
+        public static readonly DependencyProperty ShowCorrectIndicatorProperty = DependencyProperty.Register(nameof(ShowCorrectIndicator), typeof(bool), typeof(EditableTextCard), new PropertyMetadata(false));
+        public static readonly DependencyProperty IsCorrectProperty = DependencyProperty.Register(nameof(IsCorrect), typeof(bool), typeof(EditableTextCard), new PropertyMetadata(false));
+
+        public static RoutedEvent TextChangedEvent = EventManager.RegisterRoutedEvent(nameof(TextChanged), RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(EditableTextCard));
 
         public string Text
         {
@@ -45,6 +50,18 @@ namespace Tehut.UI.Views.Components
         {
             add { AddHandler(TextChangedEvent, value); }
             remove { RemoveHandler(TextChangedEvent, value); }
+        }
+
+        public bool ShowCorrectIndicator
+        {
+            get { return (bool)GetValue(ShowCorrectIndicatorProperty); }
+            set { SetValue(ShowCorrectIndicatorProperty, value); }
+        }
+
+        public bool IsCorrect
+        {
+            get { return (bool)GetValue(IsCorrectProperty); }
+            set { SetValue(IsCorrectProperty, value); }
         }
 
         private string textOnOpen; 
@@ -121,6 +138,11 @@ namespace Tehut.UI.Views.Components
         private void EditableTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             OpenTextBox();
+        }
+
+        private void CorrectButton_Click(object sender, RoutedEventArgs e)
+        {
+            IsCorrect = !IsCorrect; 
         }
     }
 }

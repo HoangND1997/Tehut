@@ -13,6 +13,10 @@ namespace Tehut.UI.ViewModels
         private readonly Services.Navigation.INavigationService navigationService;
         private readonly IQuizQuestionService questionService;
 
+        private readonly List<IActionBarItem> actions;
+
+        private event EventHandler<int> CorrectAnswerChanged; 
+
         public QuizQuestion? Question { get; private set; }
 
         public string QuestionText  
@@ -90,11 +94,91 @@ namespace Tehut.UI.ViewModels
             }
         }
 
+        public bool IsAnswer1Correct
+        {
+            get => Question?.CorrectAnswer is 0;
+            set 
+            {
+                if (IsAnswer1Correct && !value)
+                {
+                    return; 
+                }
+
+                CorrectAnswerChanged?.Invoke(this, 0); 
+            }
+        }
+
+        public bool IsAnswer2Correct
+        {
+            get => Question?.CorrectAnswer is 1;
+            set
+            {
+                if (IsAnswer2Correct && !value)
+                {
+                    return;
+                }
+
+                CorrectAnswerChanged?.Invoke(this, 1);
+            }
+        }
+
+        public bool IsAnswer3Correct
+        {
+            get => Question?.CorrectAnswer is 2;
+            set
+            {
+                if (IsAnswer3Correct && !value)
+                {
+                    return;
+                }
+
+                CorrectAnswerChanged?.Invoke(this, 2);
+            }
+        }
+
+        public bool IsAnswer4Correct
+        {
+            get => Question?.CorrectAnswer is 3;
+            set
+            {
+                if (IsAnswer4Correct && !value)
+                {
+                    return;
+                }
+
+                CorrectAnswerChanged?.Invoke(this, 3);
+            }
+        }
+
         public QuizQuestionEditViewModel(IHeaderService headerService, Services.Navigation.INavigationService navigationService, IQuizQuestionService questionService)
         {
             this.headerService = headerService;
             this.navigationService = navigationService;
             this.questionService = questionService;
+
+            actions = new List<IActionBarItem>
+            {
+                new ActionBarItem("Delete Question", (viewModelBase) => DeleteQuestion(), ActionBarType.Delete),
+            };
+
+            CorrectAnswerChanged += OnCorrectAnswerChanged;
+        }
+
+        private async void OnCorrectAnswerChanged(object? sender, int correctAnswer)
+        {
+            if (Question == null)
+            {
+                return; 
+            }
+
+            Question.SetCorrectAnswer(correctAnswer);
+
+            await questionService.SaveQuestion(Question); 
+
+            RaisePropertyChanged(nameof(IsAnswer1Correct));
+            RaisePropertyChanged(nameof(IsAnswer2Correct));
+            RaisePropertyChanged(nameof(IsAnswer3Correct));
+            RaisePropertyChanged(nameof(IsAnswer4Correct));
         }
 
         public async Task SaveQuestion()
@@ -102,6 +186,16 @@ namespace Tehut.UI.ViewModels
             if (Question != null)
             {
                 await questionService.SaveQuestion(Question); 
+            }
+        }
+
+        private async Task DeleteQuestion()
+        { 
+            if (Question != null) 
+            { 
+                await questionService.DeleteQuestion(Question);
+
+                await navigationService.NavigateTo<QuizEditViewModel>(new QuizEditNavigationInformation { QuizToEdit = Question.Quiz });
             }
         }
 
@@ -120,11 +214,7 @@ namespace Tehut.UI.ViewModels
                 RaisePropertyChanged(nameof(AnswerText4));
             }  
 
-            headerService.SetActions(new List<IActionBarItem> 
-            { 
-                new ActionBarItem("Set Correct Answer", (viewModelBase) => { }, ActionBarType.SetCorrect), 
-                new ActionBarItem("Delete Question", (viewModelBase) => { }, ActionBarType.Delete),
-            });
+            headerService.SetActions(actions);
 
             headerService.IsSearchBarActive = false; 
 
