@@ -160,7 +160,7 @@ namespace Tehut.UI.ViewModels
             headerService.IsSearchBarActive = true; 
         }
 
-        public Task OnExitPage()
+        public Task OnExitPage<T>(T nextView) where T : ViewModelBase
         {
             return Task.CompletedTask; 
         }

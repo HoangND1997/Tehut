@@ -221,7 +221,7 @@ namespace Tehut.UI.ViewModels
             return Task.CompletedTask;
         }
 
-        public Task OnExitPage()
+        public Task OnExitPage<T>(T nextView) where T : ViewModelBase
         {
             return Task.CompletedTask; 
         }

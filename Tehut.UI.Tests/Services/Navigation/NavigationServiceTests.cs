@@ -1,4 +1,4 @@
-﻿using DevExpress.Mvvm;
+using DevExpress.Mvvm; 
 using NSubstitute;
 using Tehut.UI.ViewModels.Services.Navigation;
 
@@ -7,19 +7,19 @@ namespace Tehut.UI.Tests.Services.Navigation
     public abstract class Page1 : ViewModelBase, INavigationPage
     {
         public abstract Task OnEnterPage(NavigationInformation navigationInformation);
-        public abstract Task OnExitPage();
+        public abstract Task OnExitPage<T>(T nextView) where T : ViewModelBase;
     }
 
     public abstract class Page2 : ViewModelBase, INavigationPage
     {
         public abstract Task OnEnterPage(NavigationInformation navigationInformation);
-        public abstract Task OnExitPage();
+        public abstract Task OnExitPage<T>(T nextView) where T : ViewModelBase;
     }
 
     public abstract class Page3 : ViewModelBase, INavigationPage
     {
         public abstract Task OnEnterPage(NavigationInformation navigationInformation);
-        public abstract Task OnExitPage();
+        public abstract Task OnExitPage<T>(T nextView) where T : ViewModelBase;
     }
 
     internal class NavigationServiceTests

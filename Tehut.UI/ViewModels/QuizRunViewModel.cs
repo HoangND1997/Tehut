@@ -85,6 +85,9 @@ namespace Tehut.UI.ViewModels
             dialogService.ShowWarningDialog(StringTable.LeaveTitle, StringTable.LeaveQuestionText, StringTable.LeaveWarningText, StringTable.LeaveWarningButtonText, async () =>
             {
                 await navigationService.NavigateTo<QuizOverviewViewModel>();
+            }, async () =>
+            {
+                await navigationService.NavigateTo<QuizRunViewModel>(runInformation, saveHistory: false);
             });
         }
 
@@ -169,8 +172,13 @@ namespace Tehut.UI.ViewModels
             return Task.CompletedTask; 
         }
 
-        public Task OnExitPage()
+        public Task OnExitPage<T>(T nextView) where T : ViewModelBase
         {
+            if (nextView is not QuizRunViewModel)
+            {
+                LeaveQuiz(); 
+            }
+
             return Task.CompletedTask;
         }
     }

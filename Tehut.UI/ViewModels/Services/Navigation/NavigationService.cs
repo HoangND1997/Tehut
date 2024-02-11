@@ -55,12 +55,12 @@ namespace Tehut.UI.ViewModels.Services.Navigation
 
         private async Task NavigateTo(Type viewType, NavigationInformation? navigationInformation = null, bool saveHistory = true)
         {
+            var newView = viewModelFactory(viewType);
+
             if (CurrentView is INavigationPage previousPage)
             {
-                await previousPage.OnExitPage();
+                await previousPage.OnExitPage(newView);
             }
-
-            var newView = viewModelFactory(viewType);
 
             if (newView is INavigationPage nextPage)
             {

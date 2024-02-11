@@ -89,7 +89,7 @@ namespace Tehut.UI.ViewModels
             await LoadQuizzes();
         }
 
-        public Task OnExitPage()
+        public Task OnExitPage<T>(T nextView) where T : ViewModelBase
         {
             return Task.CompletedTask;
         }

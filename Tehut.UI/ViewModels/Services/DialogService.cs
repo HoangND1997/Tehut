@@ -14,9 +14,9 @@ namespace Tehut.UI.ViewModels.Services
 
         public void ShowWarningDialog(string title = "", string questionText = "", string warningText = "", string warningButtonText = "", Func<Task> confirmCallback = null!, Func<Task> cancelCallback = null!)
         {
-            var deleteDialog = new WarningDialog(title, questionText, warningText, warningButtonText, confirmCallback, cancelCallback) { Owner = owner };  
+            var warningDialog = new WarningDialog(title, questionText, warningText, warningButtonText, confirmCallback, cancelCallback) { Owner = owner };  
 
-            deleteDialog.ShowDialog();  
+            warningDialog.ShowDialog();  
         }
 
         public void ShowTextEditDialog(string title = "", string initialText = "", Func<string, Task> confirmCallback = null!, Func<Task> cancelCallback = null!)
