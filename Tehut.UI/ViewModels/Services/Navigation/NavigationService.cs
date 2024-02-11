@@ -30,14 +30,9 @@ namespace Tehut.UI.ViewModels.Services.Navigation
             this.viewModelFactory = viewModelFactory;
         }
 
-        public async Task NavigateTo<T>(NavigationInformation? navigationInformation = null) where T : ViewModelBase
+        public async Task NavigateTo<T>(NavigationInformation? navigationInformation = null, bool saveHistory = true) where T : ViewModelBase
         {
-            if (CurrentView is T)
-            {
-                return;
-            }
-
-             await NavigateTo(typeof(T), navigationInformation, saveHistory: true);
+             await NavigateTo(typeof(T), navigationInformation, saveHistory: saveHistory);
         }
 
         public async Task NavigateToPreviousPage()

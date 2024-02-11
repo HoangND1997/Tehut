@@ -26,7 +26,7 @@ namespace Tehut.UI.ViewModels
             
             NavigateToPreviousPageCommand = new AsyncCommand(navigationService.NavigateToPreviousPage, navigationService.CanNavigateToPreviousPage);
             NavigateToNextPageCommand = new AsyncCommand(navigationService.NavigateToNextPage, navigationService.CanNavigateToNextPage);
-            NavigateToHomeCommand = new AsyncCommand(async () => await navigationService.NavigateTo<QuizOverviewViewModel>());
+            NavigateToHomeCommand = new AsyncCommand(async () => await navigationService.NavigateTo<QuizOverviewViewModel>(saveHistory: navigationService.CurrentView is not QuizOverviewViewModel));
         }
     }
 }

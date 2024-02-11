@@ -5,6 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Tehut.UI.Views"
              xmlns:component="clr-namespace:Tehut.UI.Views.Components"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -17,48 +19,42 @@
             <Setter Property="ShowNumbering" Value="True" />
             <Setter Property="IsEditable" Value="False" />
         </Style>
+
+        <dxmvvm:BooleanNegationConverter x:Key="BooleanNegationConverter" />
+        <dxmvvm:BooleanToVisibilityConverter x:Key="BooleanVisibilityConverter" />
     </UserControl.Resources>
 
     <Grid>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.4*" />
-            <RowDefinition Height="0.6*" />
+            <RowDefinition Height="0.4*" MaxHeight="400"/>
+            <RowDefinition Height="0.3*" MaxHeight="220"/>
+            <RowDefinition Height="0.3*" MaxHeight="220"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.1*" MinWidth="60"/>
-            <ColumnDefinition Width="0.8*" />
+            <ColumnDefinition Width="0.4*" />
+            <ColumnDefinition Width="0.4*" />
             <ColumnDefinition Width="0.1*" MinWidth="60"/>
         </Grid.ColumnDefinitions>
 
-        <component:QuestionTextCard Margin="50" 
-                            TextAlignment="Center" 
-                            Text="{Binding QuestionText}" 
-                            MaxWidth="1200" 
-                            MaxHeight="300"
-                            FontSize="32"
-                            Grid.Column="1"
-                            Cursor="Arrow"
-                            ForceCursor="True"/>
+        <component:QuestionTextCard Text="{Binding QuestionText}" 
+                                    MaxWidth="1200" 
+                                    Margin="0 50"
+                                    FontSize="32"
+                                    Grid.Column="1"
+                                    Grid.ColumnSpan="2"/>
 
-        <Grid Grid.Row="1" Grid.Column="1">
+        <component:QuestionTextCard Text="{Binding AnswerText1}" Style="{StaticResource AnswerCardStyle}" NumberingText="1." Grid.Column="1" Grid.Row="1" IsCorrect="{Binding IsAnswer1Correct}" Selected="QuestionTextCard1_Selected" ShowCorrectIndicator="{Binding IsQuestionAnswered}" IsSelectable="{Binding IsQuestionAnswered, Converter={StaticResource BooleanNegationConverter}}" IsSelected="{Binding IsAnswer1Selected}"/>
+        <component:QuestionTextCard Text="{Binding AnswerText2}" Style="{StaticResource AnswerCardStyle}" NumberingText="2." Grid.Column="2" Grid.Row="1" IsCorrect="{Binding IsAnswer2Correct}" Selected="QuestionTextCard2_Selected" ShowCorrectIndicator="{Binding IsQuestionAnswered}" IsSelectable="{Binding IsQuestionAnswered, Converter={StaticResource BooleanNegationConverter}}" IsSelected="{Binding IsAnswer2Selected}"/>
+        <component:QuestionTextCard Text="{Binding AnswerText3}" Style="{StaticResource AnswerCardStyle}" NumberingText="3." Grid.Column="1" Grid.Row="2" IsCorrect="{Binding IsAnswer3Correct}" Selected="QuestionTextCard3_Selected" ShowCorrectIndicator="{Binding IsQuestionAnswered}" IsSelectable="{Binding IsQuestionAnswered, Converter={StaticResource BooleanNegationConverter}}" IsSelected="{Binding IsAnswer3Selected}"/>
+        <component:QuestionTextCard Text="{Binding AnswerText4}" Style="{StaticResource AnswerCardStyle}" NumberingText="4." Grid.Column="2" Grid.Row="2" IsCorrect="{Binding IsAnswer4Correct}" Selected="QuestionTextCard4_Selected" ShowCorrectIndicator="{Binding IsQuestionAnswered}" IsSelectable="{Binding IsQuestionAnswered, Converter={StaticResource BooleanNegationConverter}}" IsSelected="{Binding IsAnswer4Selected}"/>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="0.5*" MaxHeight="220"/>
-                <RowDefinition Height="0.5*" MaxHeight="220"/>
-            </Grid.RowDefinitions>
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.5*"/>
-                <ColumnDefinition Width="0.5*"/>
-            </Grid.ColumnDefinitions>
-
-            <component:QuestionTextCard Text="{Binding AnswerText1}" Style="{StaticResource AnswerCardStyle}" NumberingText="1." Grid.Column="0" Grid.Row="0" IsCorrect="{Binding IsAnswer1Correct}" Selected="QuestionTextCard1_Selected" ShowCorrectIndicator="{Binding ShowCorrectIndicator}" IsSelectable="{Binding IsAnswerSelectable}" IsSelected="{Binding IsAnswer1Selected}"/>
-            <component:QuestionTextCard Text="{Binding AnswerText2}" Style="{StaticResource AnswerCardStyle}" NumberingText="2." Grid.Column="1" Grid.Row="0" IsCorrect="{Binding IsAnswer2Correct}" Selected="QuestionTextCard2_Selected" ShowCorrectIndicator="{Binding ShowCorrectIndicator}" IsSelectable="{Binding IsAnswerSelectable}" IsSelected="{Binding IsAnswer2Selected}"/>
-            <component:QuestionTextCard Text="{Binding AnswerText3}" Style="{StaticResource AnswerCardStyle}" NumberingText="3." Grid.Column="0" Grid.Row="1" IsCorrect="{Binding IsAnswer3Correct}" Selected="QuestionTextCard3_Selected" ShowCorrectIndicator="{Binding ShowCorrectIndicator}" IsSelectable="{Binding IsAnswerSelectable}" IsSelected="{Binding IsAnswer3Selected}"/>
-            <component:QuestionTextCard Text="{Binding AnswerText4}" Style="{StaticResource AnswerCardStyle}" NumberingText="4." Grid.Column="1" Grid.Row="1" IsCorrect="{Binding IsAnswer4Correct}" Selected="QuestionTextCard4_Selected" ShowCorrectIndicator="{Binding ShowCorrectIndicator}" IsSelectable="{Binding IsAnswerSelectable}" IsSelected="{Binding IsAnswer4Selected}"/>
-
-        </Grid>
+        <Button Grid.Column="3" Grid.RowSpan="3" Style="{StaticResource GeneralButtonStyle}" Margin="50" Command="{Binding NextQuestionCommand}" Visibility="{Binding IsQuestionAnswered, Converter={StaticResource BooleanVisibilityConverter}}">
+            <Button.Content>
+                <materialDesign:PackIcon Kind="ArrowRight" Height="40" Width="40" />
+            </Button.Content>
+        </Button>
     </Grid>
 </UserControl>

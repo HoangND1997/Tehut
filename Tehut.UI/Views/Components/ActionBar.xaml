@@ -67,10 +67,17 @@
                                             </Setter.Value>
                                         </Setter>
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding Type}" Value="{x:Static actionVm:ActionBarType.SetCorrect}">
+                                    <DataTrigger Binding="{Binding Type}" Value="{x:Static actionVm:ActionBarType.Reveal}">
                                         <Setter Property="Content">
                                             <Setter.Value>
-                                                <materialDesign:PackIcon Kind="EditCircleOutline" Width="25" Height="25" />
+                                                <materialDesign:PackIcon Kind="EyeOutline" Width="25" Height="25" />
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Type}" Value="{x:Static actionVm:ActionBarType.Exit}">
+                                        <Setter Property="Content">
+                                            <Setter.Value>
+                                                <materialDesign:PackIcon Kind="ExitToApp" Width="25" Height="25" />
                                             </Setter.Value>
                                         </Setter>
                                     </DataTrigger>

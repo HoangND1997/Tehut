@@ -47,8 +47,8 @@ namespace Tehut.UI.ViewModels
             this.quizQuestionService = quizQuestionService;
 
             actions.Add(new ActionBarItem("Add Question", async (viewModelBase) => await AddQuestion(), ActionBarType.Add));
-            actions.Add(new ActionBarItem("Run Quiz", (viewModelBase) => { }, ActionBarType.Play));
-            actions.Add(new ActionBarItem("Edit Quiz Name", (viewModelBase) => { EditQuiz(); }, ActionBarType.Edit));
+            actions.Add(new ActionBarItem("Run Quiz", async (viewModelBase) => await RunQuiz(), ActionBarType.Play));
+            actions.Add(new ActionBarItem("Edit Quiz Name", (viewModelBase) => EditQuiz(), ActionBarType.Edit));
             actions.Add(new ActionBarItem("Delete Quiz", async (viewModelBase) => await DeleteQuestion(), ActionBarType.Delete));
 
             AddQuestionCommand = new AsyncCommand(AddQuestion);
@@ -57,6 +57,11 @@ namespace Tehut.UI.ViewModels
         }
 
         #region Actions 
+
+        private async Task RunQuiz()
+        {
+            await navigationService.NavigateTo<QuizRunViewModel>(new QuizRunNavigationInformation { Run = QuizRun.CreateFrom(Quiz) }); 
+        }
 
         private async Task AddQuestion()
         {

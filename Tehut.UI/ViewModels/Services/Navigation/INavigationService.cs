@@ -10,7 +10,7 @@ namespace Tehut.UI.ViewModels.Services.Navigation
 
         event EventHandler NavigationTitleChanged;
 
-        Task NavigateTo<T>(NavigationInformation? navigationInformation = null) where T : ViewModelBase;
+        Task NavigateTo<T>(NavigationInformation? navigationInformation = null, bool saveHistory = true) where T : ViewModelBase;
 
         Task NavigateToPreviousPage();
 

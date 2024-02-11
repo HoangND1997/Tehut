@@ -7,6 +7,7 @@
         Edit, 
         Add, 
         Delete,
-        SetCorrect,
+        Reveal,
+        Exit, 
     }
 }

@@ -11,6 +11,7 @@ namespace Tehut.UI.ViewModels
         private QuizRunNavigationInformation runInformation;
         private readonly Services.Navigation.INavigationService navigationService;
         private readonly IHeaderService headerService;
+        private List<IActionBarItem> actions = new();
 
         #region Properties 
 
@@ -21,32 +22,31 @@ namespace Tehut.UI.ViewModels
         public string QuestionText => CurrentQuestion?.Question ?? "";
 
         public string AnswerText1 => CurrentQuestion?.Answer1 ?? "";
-        
+
         public string AnswerText2 => CurrentQuestion?.Answer2 ?? "";
-        
+
         public string AnswerText3 => CurrentQuestion?.Answer3 ?? "";
-        
+
         public string AnswerText4 => CurrentQuestion?.Answer4 ?? "";
 
         public bool IsAnswer1Correct => CurrentQuestion?.CorrectAnswer is 0;
-        
-        public bool IsAnswer2Correct => CurrentQuestion?.CorrectAnswer is 1; 
-        
-        public bool IsAnswer3Correct => CurrentQuestion?.CorrectAnswer is 2; 
-        
+
+        public bool IsAnswer2Correct => CurrentQuestion?.CorrectAnswer is 1;
+
+        public bool IsAnswer3Correct => CurrentQuestion?.CorrectAnswer is 2;
+
         public bool IsAnswer4Correct => CurrentQuestion?.CorrectAnswer is 3;
 
         public bool IsAnswer1Selected { get; set; }
-        
+
         public bool IsAnswer2Selected { get; set; }
 
         public bool IsAnswer3Selected { get; set; }
-        
+
         public bool IsAnswer4Selected { get; set; }
+        public bool IsQuestionAnswered { get; set; }
 
-        public bool IsAnswerSelectable { get; set; } = true; 
-
-        public bool ShowCorrectIndicator { get; set; }
+        public AsyncCommand NextQuestionCommand { get; set; }
 
         #endregion 
 
@@ -54,22 +54,53 @@ namespace Tehut.UI.ViewModels
         {
             this.navigationService = navigationService;
             this.headerService = headerService;
+
+            NextQuestionCommand = new AsyncCommand(ToNextQuestion);
+
+            actions = new List<IActionBarItem>
+            {
+                new ActionBarItem("Reveal Answer", (viewModelBase) => RevealAnswer(), ActionBarType.Reveal),
+                new ActionBarItem("Leave", async (viewModelBase) => await LeaveQuiz(), ActionBarType.Exit)
+            };
         }
 
         public void SetAnswer(int userSelection)
         {
-            runInformation?.Run?.UserAnswerPerQuestion.Add(runInformation.Run.CurrentQuestionIndex, userSelection);
+            runInformation?.Run?.UserAnswerPerQuestion.Add(runInformation.CurrentQuestionIndex, userSelection);
 
             ShowAnswer(userSelection); 
         }
 
+        #region Actions 
+
+        private void RevealAnswer()
+        {
+            SetAnswer(-1);
+        }
+
+        private async Task LeaveQuiz()
+        {
+            await navigationService.NavigateTo<QuizOverviewViewModel>();
+        }
+
+        #endregion 
+
+
+        private async Task ToNextQuestion()
+        {
+            if (runInformation.Run is null)
+            {
+                return; 
+            }
+
+            await navigationService.NavigateTo<QuizRunViewModel>(runInformation.GetNextQuestion());
+        }
+
         private void ShowAnswer(int userSelection)
         {
-            IsAnswerSelectable = false;
-            ShowCorrectIndicator = true;
+            IsQuestionAnswered = true; 
 
-            RaisePropertyChanged(nameof(IsAnswerSelectable));
-            RaisePropertyChanged(nameof(ShowCorrectIndicator));
+            RaisePropertyChanged(nameof(IsQuestionAnswered));
 
             IsAnswer1Selected = userSelection == 0;
             IsAnswer2Selected = userSelection == 1;
@@ -81,11 +112,9 @@ namespace Tehut.UI.ViewModels
 
         private void ShowQuestion()
         {
-            IsAnswerSelectable = true;
-            ShowCorrectIndicator = false;
+            IsQuestionAnswered = false; 
 
-            RaisePropertyChanged(nameof(IsAnswerSelectable));
-            RaisePropertyChanged(nameof(ShowCorrectIndicator));
+            RaisePropertyChanged(nameof(IsQuestionAnswered));
 
             IsAnswer1Selected = false;
             IsAnswer2Selected = false;
@@ -102,31 +131,33 @@ namespace Tehut.UI.ViewModels
                 this.runInformation = quizRunInformation;
 
                 Quiz = quizRunInformation.Run.Quiz; 
-                CurrentQuestion = Quiz?.Questions[quizRunInformation.Run.CurrentQuestionIndex];
+                CurrentQuestion = Quiz?.Questions[quizRunInformation.CurrentQuestionIndex];
 
                 RaisePropertyChanged(nameof(QuestionText));
+
                 RaisePropertyChanged(nameof(AnswerText1));
                 RaisePropertyChanged(nameof(AnswerText2));
                 RaisePropertyChanged(nameof(AnswerText3));
                 RaisePropertyChanged(nameof(AnswerText4));
+
                 RaisePropertyChanged(nameof(IsAnswer1Correct));
                 RaisePropertyChanged(nameof(IsAnswer2Correct));
                 RaisePropertyChanged(nameof(IsAnswer3Correct));
                 RaisePropertyChanged(nameof(IsAnswer4Correct));
 
-                if (quizRunInformation.Run.IsCurrentQuestionAnswered)
+                if (quizRunInformation.Run.IsCurrentQuestionAnswered(runInformation.CurrentQuestionIndex))
                 {
-                    ShowAnswer(quizRunInformation.Run.UserAnswerPerQuestion[quizRunInformation.Run.CurrentQuestionIndex]);
+                    ShowAnswer(quizRunInformation.Run.UserAnswerPerQuestion[quizRunInformation.CurrentQuestionIndex]);
                 }
                 else 
                 {
                     ShowQuestion(); 
                 }
+
+                navigationService.SetNavigationTitle($"{Quiz?.Name} ({quizRunInformation.CurrentQuestionIndex + 1}/{Quiz?.Questions.Count})");
             }
 
-            navigationService.SetNavigationTitle($"{Quiz?.Name}");
-
-            headerService.SetActions(Enumerable.Empty<IActionBarItem>());
+            headerService.SetActions(actions);
 
             headerService.IsSearchBarActive = false; 
 
