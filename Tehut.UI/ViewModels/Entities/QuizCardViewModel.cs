@@ -62,7 +62,7 @@ namespace Tehut.UI.ViewModels.Entities
                 return; 
             }
 
-            dialogService.ShowDeleteDialog("Delete Quiz", StringTable.DeleteQuestionText, StringTable.DeleteWarningText, async () =>
+            dialogService.ShowWarningDialog(StringTable.DeleteTitle, StringTable.DeleteQuestionText, StringTable.DeleteWarningText, StringTable.DeleteWarningButtonText, async () =>
             {
                 await quizService.DeleteQuiz(Quiz);
 

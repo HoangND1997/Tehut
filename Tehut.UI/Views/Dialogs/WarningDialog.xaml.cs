@@ -5,41 +5,43 @@ namespace Tehut.UI.Views.Dialogs
     /// <summary>
     /// Interaction logic for DeleteDialog.xaml
     /// </summary>
-    public partial class DeleteDialog : Window
+    public partial class WarningDialog : Window
     {
         private readonly string title;
         private readonly string questionText;
         private readonly string warningText;
-
-        private readonly Func<Task> deleteCallback;
+        private readonly string warningButtonText;
+        private readonly Func<Task> confirmCallback;
         private readonly Func<Task> cancelCallback;
 
-        public DeleteDialog(string title = "", string questionText = "", string warningText = "", Func<Task> deleteCallback = null!, Func<Task> cancelCallback = null!)
+        public WarningDialog(string title = "", string questionText = "", string warningText = "", string warningButtonText = "", Func<Task> confirmCallback = null!, Func<Task> cancelCallback = null!)
         {
             InitializeComponent();
 
-            Loaded += DeleteDialog_Loaded;
+            Loaded += WarningDialog_Loaded;
 
             this.title = title;
             this.questionText = questionText;
             this.warningText = warningText;
-            this.deleteCallback = deleteCallback;
+            this.warningButtonText = warningButtonText;
+            this.confirmCallback = confirmCallback;
             this.cancelCallback = cancelCallback;
         }
 
-        private void DeleteDialog_Loaded(object sender, RoutedEventArgs e)
+        private void WarningDialog_Loaded(object sender, RoutedEventArgs e)
         {
             TitleBlock.Text = title;    
 
             QuestionTextBlock.Text = questionText; 
             WarningTextBlock.Text = warningText;    
+            WarningButtonText.Content = warningButtonText;
         }
 
-        private async Task Delete()
+        private async Task Confirm()
         {
-            if (deleteCallback is not null)
+            if (confirmCallback is not null)
             { 
-                await deleteCallback();
+                await confirmCallback();
             }
 
             Close();
@@ -55,9 +57,9 @@ namespace Tehut.UI.Views.Dialogs
             Close(); 
         }
 
-        private async void DeleteButton_Click(object sender, RoutedEventArgs e)
+        private async void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            await Delete(); 
+            await Confirm(); 
         }
 
         private async void CancelButton_Click(object sender, RoutedEventArgs e)

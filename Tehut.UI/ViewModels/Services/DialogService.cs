@@ -12,9 +12,9 @@ namespace Tehut.UI.ViewModels.Services
             this.owner = owner;
         }
 
-        public void ShowDeleteDialog(string title = "", string questionText = "", string warningText = "", Func<Task> deleteCallback = null!, Func<Task> cancelCallback = null!)
+        public void ShowWarningDialog(string title = "", string questionText = "", string warningText = "", string warningButtonText = "", Func<Task> confirmCallback = null!, Func<Task> cancelCallback = null!)
         {
-            var deleteDialog = new DeleteDialog(title, questionText, warningText, deleteCallback, cancelCallback) { Owner = owner };  
+            var deleteDialog = new WarningDialog(title, questionText, warningText, warningButtonText, confirmCallback, cancelCallback) { Owner = owner };  
 
             deleteDialog.ShowDialog();  
         }

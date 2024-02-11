@@ -1,4 +1,4 @@
-﻿<Window x:Class="Tehut.UI.Views.Dialogs.DeleteDialog"
+﻿<Window x:Class="Tehut.UI.Views.Dialogs.WarningDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -79,11 +79,11 @@
 
         <!-- Delete and Cancel button -->
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
-            <Button Content="Delete" Height="40" Width="80" Style="{StaticResource DialogButtonStyle}" 
+            <Button x:Name="WarningButtonText" Content="Delete" Height="40" Width="80" Style="{StaticResource DialogButtonStyle}" 
                     Foreground="{StaticResource PrimaryTextColor}" 
                     Background="{StaticResource WrongColor}"
                     FontSize="16" 
-                    Click="DeleteButton_Click"/>
+                    Click="ConfirmButton_Click"/>
             <Button Content="Cancel" Height="40" Width="80" Style="{StaticResource DialogButtonStyle}" 
                     Foreground="{StaticResource PrimaryTextColor}" 
                     Background="{StaticResource Base2Color}"

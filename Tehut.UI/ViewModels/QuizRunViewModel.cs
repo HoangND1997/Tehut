@@ -11,6 +11,7 @@ namespace Tehut.UI.ViewModels
         private QuizRunNavigationInformation runInformation;
         private readonly Services.Navigation.INavigationService navigationService;
         private readonly IHeaderService headerService;
+        private readonly Services.IDialogService dialogService;
         private List<IActionBarItem> actions = new();
 
         #region Properties 
@@ -50,17 +51,18 @@ namespace Tehut.UI.ViewModels
 
         #endregion 
 
-        public QuizRunViewModel(Services.Navigation.INavigationService navigationService, IHeaderService headerService) 
+        public QuizRunViewModel(Services.Navigation.INavigationService navigationService, IHeaderService headerService, Services.IDialogService dialogService) 
         {
             this.navigationService = navigationService;
             this.headerService = headerService;
+            this.dialogService = dialogService;
 
             NextQuestionCommand = new AsyncCommand(ToNextQuestion);
 
             actions = new List<IActionBarItem>
             {
                 new ActionBarItem("Reveal Answer", (viewModelBase) => RevealAnswer(), ActionBarType.Reveal),
-                new ActionBarItem("Leave", async (viewModelBase) => await LeaveQuiz(), ActionBarType.Exit)
+                new ActionBarItem("Leave", (viewModelBase) => LeaveQuiz(), ActionBarType.Exit)
             };
         }
 
@@ -78,9 +80,12 @@ namespace Tehut.UI.ViewModels
             SetAnswer(-1);
         }
 
-        private async Task LeaveQuiz()
+        private void LeaveQuiz()
         {
-            await navigationService.NavigateTo<QuizOverviewViewModel>();
+            dialogService.ShowWarningDialog(StringTable.LeaveTitle, StringTable.LeaveQuestionText, StringTable.LeaveWarningText, StringTable.LeaveWarningButtonText, async () =>
+            {
+                await navigationService.NavigateTo<QuizOverviewViewModel>();
+            });
         }
 
         #endregion 
