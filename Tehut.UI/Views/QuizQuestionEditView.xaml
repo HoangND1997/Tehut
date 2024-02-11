@@ -9,13 +9,14 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
-        <Style x:Key="AnswerEditCardStyle" TargetType="{x:Type component:EditableTextCard}">
+        <Style x:Key="AnswerEditCardStyle" TargetType="{x:Type component:QuestionTextCard}">
             <Setter Property="Margin" Value="50 50" />
             <Setter Property="TextAlignment" Value="Left" />
             <Setter Property="MaxWidth" Value="800" />
             <Setter Property="FontSize" Value="28" />
             <Setter Property="ShowNumbering" Value="True" />
             <Setter Property="ShowCorrectIndicator" Value="True" />
+            <Setter Property="IsEditable" Value="True" />
         </Style>
     </UserControl.Resources>
     
@@ -32,13 +33,14 @@
             <ColumnDefinition Width="0.1*" MinWidth="60"/>
         </Grid.ColumnDefinitions>
 
-        <component:EditableTextCard Margin="50" 
+        <component:QuestionTextCard Margin="50" 
                                     TextAlignment="Center" 
                                     Text="{Binding QuestionText, Mode=TwoWay}" 
                                     MaxWidth="1200" 
                                     MaxHeight="300"
                                     FontSize="32"
                                     Grid.Column="1"
+                                    IsEditable="True"
                                     TextChanged="EditableTextCard_TextChanged"/>
 
         <Grid Grid.Row="1" Grid.Column="1">
@@ -53,10 +55,10 @@
                 <ColumnDefinition Width="0.5*"/>
             </Grid.ColumnDefinitions>
 
-            <component:EditableTextCard Text="{Binding AnswerText1, Mode=TwoWay}" Style="{StaticResource AnswerEditCardStyle}" NumberingText="1." Grid.Column="0" Grid.Row="0" IsCorrect="{Binding IsAnswer1Correct, Mode=TwoWay}" TextChanged="EditableTextCard_TextChanged"/>
-            <component:EditableTextCard Text="{Binding AnswerText2, Mode=TwoWay}" Style="{StaticResource AnswerEditCardStyle}" NumberingText="2." Grid.Column="1" Grid.Row="0" IsCorrect="{Binding IsAnswer2Correct, Mode=TwoWay}" TextChanged="EditableTextCard_TextChanged"/>
-            <component:EditableTextCard Text="{Binding AnswerText3, Mode=TwoWay}" Style="{StaticResource AnswerEditCardStyle}" NumberingText="3." Grid.Column="0" Grid.Row="1" IsCorrect="{Binding IsAnswer3Correct, Mode=TwoWay}" TextChanged="EditableTextCard_TextChanged"/>
-            <component:EditableTextCard Text="{Binding AnswerText4, Mode=TwoWay}" Style="{StaticResource AnswerEditCardStyle}" NumberingText="4." Grid.Column="1" Grid.Row="1" IsCorrect="{Binding IsAnswer4Correct, Mode=TwoWay}" TextChanged="EditableTextCard_TextChanged"/>
+            <component:QuestionTextCard Text="{Binding AnswerText1, Mode=TwoWay}" Style="{StaticResource AnswerEditCardStyle}" NumberingText="1." Grid.Column="0" Grid.Row="0" IsCorrect="{Binding IsAnswer1Correct, Mode=TwoWay}" TextChanged="EditableTextCard_TextChanged"/>
+            <component:QuestionTextCard Text="{Binding AnswerText2, Mode=TwoWay}" Style="{StaticResource AnswerEditCardStyle}" NumberingText="2." Grid.Column="1" Grid.Row="0" IsCorrect="{Binding IsAnswer2Correct, Mode=TwoWay}" TextChanged="EditableTextCard_TextChanged"/>
+            <component:QuestionTextCard Text="{Binding AnswerText3, Mode=TwoWay}" Style="{StaticResource AnswerEditCardStyle}" NumberingText="3." Grid.Column="0" Grid.Row="1" IsCorrect="{Binding IsAnswer3Correct, Mode=TwoWay}" TextChanged="EditableTextCard_TextChanged"/>
+            <component:QuestionTextCard Text="{Binding AnswerText4, Mode=TwoWay}" Style="{StaticResource AnswerEditCardStyle}" NumberingText="4." Grid.Column="1" Grid.Row="1" IsCorrect="{Binding IsAnswer4Correct, Mode=TwoWay}" TextChanged="EditableTextCard_TextChanged"/>
 
         </Grid>
         

@@ -43,7 +43,7 @@ namespace Tehut.UI.ViewModels.Entities
 
         private async Task RunQuiz()
         {
-            await navigationService.NavigateTo<QuizQuestionViewModel>(new QuizRunNavigationInformation { QuestionToShow = Quiz.Questions.FirstOrDefault() });
+            await navigationService.NavigateTo<QuizRunViewModel>(new QuizRunNavigationInformation { Run = QuizRun.CreateFrom(Quiz) });
         }
 
         private async Task EditQuiz()

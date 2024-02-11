@@ -50,7 +50,7 @@ namespace Tehut.UI
             serviceCollection.AddSingleton<QuizOverviewViewModel>();
             serviceCollection.AddSingleton<QuizEditViewModel>();
             serviceCollection.AddSingleton<QuizQuestionEditViewModel>();
-            serviceCollection.AddSingleton<QuizQuestionViewModel>();
+            serviceCollection.AddSingleton<QuizRunViewModel>();
             serviceCollection.AddSingleton<QuizRunSummaryViewModel>();
         }
 
@@ -62,7 +62,7 @@ namespace Tehut.UI
             serviceCollection.AddSingleton(s => new QuizOverviewView { DataContext = s.GetRequiredService<QuizOverviewViewModel>() });
             serviceCollection.AddSingleton(s => new QuizEditView { DataContext = s.GetRequiredService<QuizEditViewModel>() });
             serviceCollection.AddSingleton(s => new QuizQuestionEditView { DataContext = s.GetRequiredService<QuizQuestionEditViewModel>() });
-            serviceCollection.AddSingleton(s => new QuizQuestionView { DataContext = s.GetRequiredService<QuizQuestionViewModel>() });
+            serviceCollection.AddSingleton(s => new QuizRunView { DataContext = s.GetRequiredService<QuizRunViewModel>() });
             serviceCollection.AddSingleton(s => new QuizRunSummaryView { DataContext = s.GetRequiredService<QuizRunSummaryViewModel>() });
         }
 

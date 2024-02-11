@@ -21,8 +21,8 @@
         <view:QuizQuestionEditView />
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type vm:QuizQuestionViewModel}">
-        <view:QuizQuestionView />
+    <DataTemplate DataType="{x:Type vm:QuizRunViewModel}">
+        <view:QuizRunView />
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type vm:QuizRunSummaryViewModel}">

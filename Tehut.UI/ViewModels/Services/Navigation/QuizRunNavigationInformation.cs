@@ -4,6 +4,6 @@ namespace Tehut.UI.ViewModels.Services.Navigation
 {
     internal class QuizRunNavigationInformation : NavigationInformation
     {
-        public QuizQuestion? QuestionToShow { get; set; }
+        public QuizRun? Run { get; set; }
     }
 }

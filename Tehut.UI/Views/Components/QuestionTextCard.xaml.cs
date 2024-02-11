@@ -9,18 +9,23 @@ namespace Tehut.UI.Views.Components
     /// <summary>
     /// Interaction logic for EditableTextCard.xaml
     /// </summary>
-    public partial class EditableTextCard : UserControl
+    public partial class QuestionTextCard : UserControl
     {
-        public static readonly DependencyProperty TextProperty = DependencyProperty.Register(nameof(Text), typeof(string), typeof(EditableTextCard), new PropertyMetadata(""));
-        public static readonly DependencyProperty TextAlignmentProperty = DependencyProperty.Register(nameof(TextAlignment), typeof(HorizontalAlignment), typeof(EditableTextCard), new PropertyMetadata(HorizontalAlignment.Left));
+        public static readonly DependencyProperty TextProperty = DependencyProperty.Register(nameof(Text), typeof(string), typeof(QuestionTextCard), new PropertyMetadata(""));
+        public static readonly DependencyProperty TextAlignmentProperty = DependencyProperty.Register(nameof(TextAlignment), typeof(HorizontalAlignment), typeof(QuestionTextCard), new PropertyMetadata(HorizontalAlignment.Left));
         
-        public static readonly DependencyProperty ShowNumberingProperty = DependencyProperty.Register(nameof(ShowNumbering), typeof(bool), typeof(EditableTextCard), new PropertyMetadata(false));
-        public static readonly DependencyProperty NumberingTextProperty = DependencyProperty.Register(nameof(NumberingText), typeof(string), typeof(EditableTextCard), new PropertyMetadata(""));
+        public static readonly DependencyProperty ShowNumberingProperty = DependencyProperty.Register(nameof(ShowNumbering), typeof(bool), typeof(QuestionTextCard), new PropertyMetadata(false));
+        public static readonly DependencyProperty NumberingTextProperty = DependencyProperty.Register(nameof(NumberingText), typeof(string), typeof(QuestionTextCard), new PropertyMetadata(""));
 
-        public static readonly DependencyProperty ShowCorrectIndicatorProperty = DependencyProperty.Register(nameof(ShowCorrectIndicator), typeof(bool), typeof(EditableTextCard), new PropertyMetadata(false));
-        public static readonly DependencyProperty IsCorrectProperty = DependencyProperty.Register(nameof(IsCorrect), typeof(bool), typeof(EditableTextCard), new PropertyMetadata(false));
+        public static readonly DependencyProperty ShowCorrectIndicatorProperty = DependencyProperty.Register(nameof(ShowCorrectIndicator), typeof(bool), typeof(QuestionTextCard), new PropertyMetadata(false));
+        public static readonly DependencyProperty IsCorrectProperty = DependencyProperty.Register(nameof(IsCorrect), typeof(bool), typeof(QuestionTextCard), new PropertyMetadata(false));
+        
+        public static readonly DependencyProperty IsEditableProperty = DependencyProperty.Register(nameof(IsEditable), typeof(bool), typeof(QuestionTextCard), new PropertyMetadata(false));
+        public static readonly DependencyProperty IsSelectableProperty = DependencyProperty.Register(nameof(IsSelectable), typeof(bool), typeof(QuestionTextCard), new PropertyMetadata(false));
+        public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register(nameof(IsSelected), typeof(bool), typeof(QuestionTextCard), new PropertyMetadata(false));
 
-        public static RoutedEvent TextChangedEvent = EventManager.RegisterRoutedEvent(nameof(TextChanged), RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(EditableTextCard));
+        public static RoutedEvent TextChangedEvent = EventManager.RegisterRoutedEvent(nameof(TextChanged), RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(QuestionTextCard));
+        public static RoutedEvent SelectedEvent = EventManager.RegisterRoutedEvent(nameof(Selected), RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(QuestionTextCard));
 
         public string Text
         {
@@ -52,6 +57,12 @@ namespace Tehut.UI.Views.Components
             remove { RemoveHandler(TextChangedEvent, value); }
         }
 
+        public event RoutedEventHandler Selected
+        {
+            add { AddHandler(SelectedEvent, value); }
+            remove { RemoveHandler(SelectedEvent, value); }
+        }
+
         public bool ShowCorrectIndicator
         {
             get { return (bool)GetValue(ShowCorrectIndicatorProperty); }
@@ -64,9 +75,27 @@ namespace Tehut.UI.Views.Components
             set { SetValue(IsCorrectProperty, value); }
         }
 
+        public bool IsEditable
+        {
+            get { return (bool)GetValue(IsEditableProperty); }
+            set { SetValue(IsEditableProperty, value); }
+        }
+
+        public bool IsSelectable
+        {
+            get { return (bool)GetValue(IsSelectableProperty); }
+            set { SetValue(IsSelectableProperty, value); }
+        }   
+
+        public bool IsSelected
+        {
+            get { return (bool)GetValue(IsSelectedProperty); }
+            set { SetValue(IsSelectedProperty, value); }
+        }   
+
         private string textOnOpen; 
 
-        public EditableTextCard()
+        public QuestionTextCard()
         {
             InitializeComponent();
         }
@@ -86,6 +115,11 @@ namespace Tehut.UI.Views.Components
 
         private void OpenTextBox()
         {
+            if (!IsEditable)
+            {
+                return;
+            }
+
             EditableTextBox.IsReadOnly = false;
 
             Dispatcher.BeginInvoke(DispatcherPriority.Input, new Action(() =>
@@ -104,6 +138,11 @@ namespace Tehut.UI.Views.Components
 
         private void CloseTextBox() 
         {
+            if (!IsEditable)
+            {
+                return;
+            }
+
             EditableTextBox.IsReadOnly = true;
 
             Keyboard.ClearFocus();
@@ -132,6 +171,11 @@ namespace Tehut.UI.Views.Components
             if (e.ClickCount == 2)
             { 
                 OpenTextBox();
+            }
+
+            if (IsSelectable)
+            { 
+                RaiseEvent(new RoutedEventArgs(SelectedEvent)); 
             }
         }
 
