@@ -16,6 +16,8 @@ namespace Tehut.UI.ViewModels.Services.Navigation
 
         Task NavigateToNextPage();
 
+        void RequestCancelNavigation(); 
+
         bool CanNavigateToPreviousPage(); 
 
         bool CanNavigateToNextPage();

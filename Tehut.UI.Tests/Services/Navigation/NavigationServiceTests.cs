@@ -22,6 +22,19 @@ namespace Tehut.UI.Tests.Services.Navigation
         public abstract Task OnExitPage<T>(T nextView) where T : ViewModelBase;
     }
 
+    public class CancelPage: ViewModelBase, INavigationPage
+    {
+        private readonly ViewModels.Services.Navigation.INavigationService navigationService;
+
+        public CancelPage(ViewModels.Services.Navigation.INavigationService navigationService)
+        {
+            this.navigationService = navigationService;
+        }
+
+        public Task OnEnterPage(NavigationInformation navigationInformation) => Task.CompletedTask;
+        public async Task OnExitPage<T>(T nextView) where T : ViewModelBase => navigationService.RequestCancelNavigation();
+    }
+
     internal class NavigationServiceTests
     {
         private ViewModels.Services.Navigation.INavigationService sut;
@@ -29,6 +42,7 @@ namespace Tehut.UI.Tests.Services.Navigation
         private Page1 page1; 
         private Page2 page2;
         private Page3 page3;
+        private CancelPage cancelPage;  
 
         [SetUp]
         public void Setup()
@@ -38,6 +52,8 @@ namespace Tehut.UI.Tests.Services.Navigation
             page3 = Substitute.For<Page3>();  
 
             sut = new NavigationService(GetPage); 
+
+            cancelPage = new CancelPage(sut);
         }
 
         private ViewModelBase GetPage(Type pageType)
@@ -53,6 +69,10 @@ namespace Tehut.UI.Tests.Services.Navigation
             else if (pageType == typeof(Page3))
             {
                 return page3;
+            }
+            else if (pageType == typeof(CancelPage))
+            {
+                return cancelPage;
             }
 
             return null!; 
@@ -82,7 +102,7 @@ namespace Tehut.UI.Tests.Services.Navigation
             await sut.NavigateTo<Page2>();
 
             await page1.Received().OnEnterPage(customNavigationInformation);
-            await page1.Received().OnExitPage(); 
+            await page1.Received().OnExitPage(page2); 
 
             await page2.Received().OnEnterPage(NavigationInformation.Empty);
         }
@@ -117,6 +137,18 @@ namespace Tehut.UI.Tests.Services.Navigation
             await page1.Received().OnEnterPage(customNavigationInformation1);
             await page2.Received().OnEnterPage(customNavigationInformation2);
         }
+
+        [Test]
+        public async Task NavigateTo_GivenTwoPages_WhenNavigatingOutOfTheCancelPage_ShouldCancelNavigation()
+        {
+            await sut.NavigateTo<Page1>();
+            await sut.NavigateTo<Page2>();
+            await sut.NavigateTo<CancelPage>();
+
+            await sut.NavigateToPreviousPage();
+
+            Assert.That(sut.CurrentView, Is.EqualTo(cancelPage));
+        } 
 
         [Test]
         public async Task CanNavigateToPrevious_GivenTwoPages_ShouldReturnTrue()

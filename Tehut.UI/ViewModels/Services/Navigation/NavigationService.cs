@@ -17,7 +17,9 @@ namespace Tehut.UI.ViewModels.Services.Navigation
 
         public string NavigationTitle { get; private set; } = string.Empty;
 
-        public event EventHandler NavigationTitleChanged; 
+        public event EventHandler NavigationTitleChanged;
+
+        private CancellationTokenSource cancellationTokenSource = new();
 
         private readonly Func<Type, ViewModelBase> viewModelFactory;
 
@@ -32,28 +34,38 @@ namespace Tehut.UI.ViewModels.Services.Navigation
 
         public async Task NavigateTo<T>(NavigationInformation? navigationInformation = null, bool saveHistory = true) where T : ViewModelBase
         {
-             await NavigateTo(typeof(T), navigationInformation, saveHistory: saveHistory);
+            cancellationTokenSource = new(); 
+
+            await NavigateTo(typeof(T), cancellationTokenSource.Token, navigationInformation, saveHistory: saveHistory);
         }
 
         public async Task NavigateToPreviousPage()
         {
-            navigationHistoryPosition--;
+            cancellationTokenSource = new();
 
-            var (type, information) = navigationHistory[navigationHistoryPosition];
+            var (type, information) = navigationHistory[navigationHistoryPosition - 1];
 
-            await NavigateTo(type, information, saveHistory: false); 
+            // only change the history position if the navigation was successful    
+            if (await NavigateTo(type, cancellationTokenSource.Token, information, saveHistory: false))
+            { 
+                navigationHistoryPosition--;
+            }
         }
 
         public async Task NavigateToNextPage()
         {
-            navigationHistoryPosition++;
+            cancellationTokenSource = new();
 
-            var (type, information) = navigationHistory[navigationHistoryPosition];
+            var (type, information) = navigationHistory[navigationHistoryPosition + 1];
 
-            await NavigateTo(type, information, saveHistory: false);
+            // only change the history position if the navigation was successful    
+            if (await NavigateTo(type, cancellationTokenSource.Token, information, saveHistory: false))
+            { 
+                navigationHistoryPosition++;
+            }
         }
 
-        private async Task NavigateTo(Type viewType, NavigationInformation? navigationInformation = null, bool saveHistory = true)
+        private async Task<bool> NavigateTo(Type viewType, CancellationToken cancellationToken, NavigationInformation? navigationInformation = null, bool saveHistory = true)
         {
             var newView = viewModelFactory(viewType);
 
@@ -62,20 +74,32 @@ namespace Tehut.UI.ViewModels.Services.Navigation
                 await previousPage.OnExitPage(newView);
             }
 
+            if (cancellationToken.IsCancellationRequested)
+            {
+                return false; 
+            }
+
             if (newView is INavigationPage nextPage)
             {
                 await nextPage.OnEnterPage(navigationInformation ?? NavigationInformation.Empty);
+            }
 
-                if (saveHistory)
-                {
-                    navigationHistory = navigationHistoryPosition < navigationHistory.Count - 1 ? navigationHistory[..(navigationHistoryPosition + 1)] : navigationHistory; 
-                    navigationHistory.Add((viewType, navigationInformation ?? NavigationInformation.Empty)); 
-
-                    navigationHistoryPosition = navigationHistory.Count - 1;
-                }
+            if (saveHistory)
+            {
+                SaveNavigationHistory(viewType, navigationInformation);
             }
 
             CurrentView = newView;
+
+            return true; 
+        }
+
+        private void SaveNavigationHistory(Type viewType, NavigationInformation? navigationInformation)
+        {
+            navigationHistory = navigationHistoryPosition < navigationHistory.Count - 1 ? navigationHistory[..(navigationHistoryPosition + 1)] : navigationHistory;
+            navigationHistory.Add((viewType, navigationInformation ?? NavigationInformation.Empty));
+
+            navigationHistoryPosition = navigationHistory.Count - 1;
         }
 
         public bool CanNavigateToPreviousPage() => navigationHistoryPosition > 0 && navigationHistory.Count > 0;
@@ -89,6 +113,11 @@ namespace Tehut.UI.ViewModels.Services.Navigation
                 NavigationTitle = title; 
                 NavigationTitleChanged?.Invoke(this, EventArgs.Empty);
             }
+        }
+
+        public void RequestCancelNavigation()
+        {
+            cancellationTokenSource?.Cancel();  
         }
     }
 }

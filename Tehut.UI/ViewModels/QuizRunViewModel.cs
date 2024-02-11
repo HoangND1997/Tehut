@@ -1,4 +1,5 @@
 ﻿using DevExpress.Mvvm;
+using FluentMigrator.Infrastructure.Extensions;
 using Tehut.Core.Models;
 using Tehut.UI.ViewModels.Actions;
 using Tehut.UI.ViewModels.Services;
@@ -13,6 +14,7 @@ namespace Tehut.UI.ViewModels
         private readonly IHeaderService headerService;
         private readonly Services.IDialogService dialogService;
         private List<IActionBarItem> actions = new();
+        private bool confirmedLeave; 
 
         #region Properties 
 
@@ -62,7 +64,7 @@ namespace Tehut.UI.ViewModels
             actions = new List<IActionBarItem>
             {
                 new ActionBarItem("Reveal Answer", (viewModelBase) => RevealAnswer(), ActionBarType.Reveal),
-                new ActionBarItem("Leave", (viewModelBase) => LeaveQuiz(), ActionBarType.Exit)
+                new ActionBarItem("Leave", async (viewModelBase) => await LeaveQuiz(), ActionBarType.Exit)
             };
         }
 
@@ -80,15 +82,9 @@ namespace Tehut.UI.ViewModels
             SetAnswer(-1);
         }
 
-        private void LeaveQuiz()
+        private async Task LeaveQuiz()
         {
-            dialogService.ShowWarningDialog(StringTable.LeaveTitle, StringTable.LeaveQuestionText, StringTable.LeaveWarningText, StringTable.LeaveWarningButtonText, async () =>
-            {
-                await navigationService.NavigateTo<QuizOverviewViewModel>();
-            }, async () =>
-            {
-                await navigationService.NavigateTo<QuizRunViewModel>(runInformation, saveHistory: false);
-            });
+            await navigationService.NavigateTo<QuizOverviewViewModel>();
         }
 
         #endregion 
@@ -163,6 +159,8 @@ namespace Tehut.UI.ViewModels
                 }
 
                 navigationService.SetNavigationTitle($"{Quiz?.Name} ({quizRunInformation.CurrentQuestionIndex + 1}/{Quiz?.Questions.Count})");
+
+                confirmedLeave = false;
             }
 
             headerService.SetActions(actions);
@@ -174,9 +172,11 @@ namespace Tehut.UI.ViewModels
 
         public Task OnExitPage<T>(T nextView) where T : ViewModelBase
         {
-            if (nextView is not QuizRunViewModel)
+            if (nextView is not QuizRunViewModel && !confirmedLeave)
             {
-                LeaveQuiz(); 
+                dialogService.ShowWarningDialog(StringTable.LeaveTitle, StringTable.LeaveQuestionText, StringTable.LeaveWarningText, StringTable.LeaveWarningButtonText, 
+                    () => Task.Run(() => { confirmedLeave = true; }), 
+                    () => Task.Run(() => navigationService.RequestCancelNavigation()));
             }
 
             return Task.CompletedTask;
