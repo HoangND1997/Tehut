@@ -85,9 +85,15 @@
                                     <DataTrigger Binding="{Binding IsCorrect, RelativeSource={RelativeSource AncestorType={x:Type local:QuestionTextCard}}}" Value="True">
                                         <Setter Property="Fill" Value="{StaticResource CorrectColor}" />
                                     </DataTrigger>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="StrokeThickness" Value="1" />
-                                    </Trigger>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type local:QuestionTextCard}}}" Value="True" />
+                                            <Condition Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}" Value="True" />
+                                        </MultiDataTrigger.Conditions>
+                                        <MultiDataTrigger.Setters>
+                                            <Setter Property="StrokeThickness" Value="1" />
+                                        </MultiDataTrigger.Setters>
+                                    </MultiDataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </Ellipse.Style>

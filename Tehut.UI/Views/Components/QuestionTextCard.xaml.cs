@@ -186,7 +186,10 @@ namespace Tehut.UI.Views.Components
 
         private void CorrectButton_Click(object sender, RoutedEventArgs e)
         {
-            IsCorrect = !IsCorrect; 
+            if (IsEditable)
+            { 
+                IsCorrect = !IsCorrect; 
+            }
         }
     }
 }
