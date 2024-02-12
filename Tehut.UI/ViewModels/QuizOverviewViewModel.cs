@@ -16,7 +16,7 @@ namespace Tehut.UI.ViewModels
         private readonly Services.IDialogService dialogService;
         private readonly IQuizService quizService;
 
-        private ActionBarItem addQuizActionBarItem;
+        private readonly List<IActionBarItem> actions; 
 
         private const string navigationTitle = "Home";
         private const string emptyQuizName = "New Quiz"; 
@@ -34,7 +34,10 @@ namespace Tehut.UI.ViewModels
 
             AddQuizCommand = new AsyncCommand(AddQuiz);
 
-            addQuizActionBarItem = new ActionBarItem("Add Quiz", async (viewModelBase) => await AddQuiz(), ActionBarType.Add);
+            actions = new List<IActionBarItem>
+            {
+                new ActionBarItem("Add Quiz", async (viewModelBase) => await AddQuiz(), ActionBarType.Add),
+            };     
 
             Messenger.Default.Register<QuizDeletedMessage>(this, OnQuizDeleted);
         }
@@ -83,7 +86,7 @@ namespace Tehut.UI.ViewModels
         {
             navigationService.SetNavigationTitle(navigationTitle);
 
-            headerService.SetActions(new List<IActionBarItem> { addQuizActionBarItem });
+            headerService.SetActions(actions); 
             headerService.IsSearchBarActive = true;
 
             await LoadQuizzes();

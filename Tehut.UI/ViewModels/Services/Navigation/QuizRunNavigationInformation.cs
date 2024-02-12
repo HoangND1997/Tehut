@@ -16,5 +16,7 @@ namespace Tehut.UI.ViewModels.Services.Navigation
                 CurrentQuestionIndex = CurrentQuestionIndex + 1
             };
         }
+
+        public bool HasNextQuestion() => Run?.Quiz?.Questions.Count > CurrentQuestionIndex + 1; 
     }
 }

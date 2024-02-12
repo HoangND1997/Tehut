@@ -97,7 +97,14 @@ namespace Tehut.UI.ViewModels
                 return; 
             }
 
-            await navigationService.NavigateTo<QuizRunViewModel>(runInformation.GetNextQuestion());
+            if (runInformation.HasNextQuestion())
+            {
+                await navigationService.NavigateTo<QuizRunViewModel>(runInformation.GetNextQuestion());
+            }
+            else
+            { 
+                await navigationService.NavigateTo<QuizRunSummaryViewModel>(runInformation);    
+            }
         }
 
         private void ShowAnswer(int userSelection)
@@ -172,7 +179,7 @@ namespace Tehut.UI.ViewModels
 
         public Task OnExitPage<T>(T nextView) where T : ViewModelBase
         {
-            if (nextView is not QuizRunViewModel && !confirmedLeave)
+            if (nextView is not (QuizRunViewModel or QuizRunSummaryViewModel) && !confirmedLeave)
             {
                 dialogService.ShowWarningDialog(StringTable.LeaveTitle, StringTable.LeaveQuestionText, StringTable.LeaveWarningText, StringTable.LeaveWarningButtonText, 
                     () => Task.Run(() => { confirmedLeave = true; }), 

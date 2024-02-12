@@ -3,10 +3,146 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:Tehut.UI.Views"
+             xmlns:vm="clr-namespace:Tehut.UI.ViewModels"
+             xmlns:core="clr-namespace:Tehut.Core.Models;assembly=Tehut.Core"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TextBlock FontSize="72" Text="Quiz Summary" Foreground="{StaticResource SecondaryTextColor}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.1*" />
+            <ColumnDefinition Width="0.9*" />
+        </Grid.ColumnDefinitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.3*" />
+            <RowDefinition Height="0.1*" MinHeight="70" />
+            <RowDefinition Height="0.6*" />
+        </Grid.RowDefinitions>
+
+        <ItemsControl ItemsSource="{Binding QuizRunEntries}" Margin="50" Grid.Column="1">
+            
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type vm:QuestionEntry}">
+
+                    <StackPanel Margin="0 20 20 20">
+
+                        <TextBlock Text="{Binding QuestionIndex}" 
+                                   HorizontalAlignment="Center" 
+                                   Foreground="{StaticResource PrimaryTextColor}" 
+                                   FontSize="18"
+                                   Margin="0 10"/>
+
+                        <Border>
+
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="{StaticResource Base2Color}" />
+                                    <Setter Property="CornerRadius" Value="6" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding State}" Value="{x:Static core:QuestionState.Correct}">
+                                            <Setter Property="Background" Value="{StaticResource CorrectColor}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding State}" Value="{x:Static core:QuestionState.Incorrect}">
+                                            <Setter Property="Background" Value="{StaticResource WrongColor}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+
+                            <materialDesign:PackIcon Foreground="{StaticResource Base3Color}" Width="25" Height="25" Margin="5">
+                                <materialDesign:PackIcon.Style>
+                                    <Style TargetType="materialDesign:PackIcon">
+                                        <Setter Property="Kind" Value="Minus" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding State}" Value="{x:Static core:QuestionState.Correct}">
+                                                <Setter Property="Kind" Value="Check" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding State}" Value="{x:Static core:QuestionState.Incorrect}">
+                                                <Setter Property="Kind" Value="Close" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </materialDesign:PackIcon.Style>
+                            </materialDesign:PackIcon>
+                        </Border>
+
+                        
+                    </StackPanel>
+
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+                        
+        </ItemsControl>
+        
+        <StackPanel Grid.Row="1" Grid.Column="1" 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Top"
+                    Margin="50 0">
+
+            <StackPanel.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}" />
+                    <Setter Property="Margin" Value="25 0 50 0" />
+                    <Setter Property="HorizontalAlignment" Value="Center" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                    <Setter Property="FontSize" Value="36" />
+                </Style>
+                <Style TargetType="Border">
+                    <Setter Property="Margin" Value="0 0 0 0" />
+                    <Setter Property="CornerRadius" Value="6" />
+                </Style>
+            </StackPanel.Resources>
+            
+            <Border Background="{StaticResource CorrectColor}">
+                <materialDesign:PackIcon Kind="Check" Foreground="{StaticResource Base3Color}" Width="50" Height="50" Margin="5"/>
+            </Border>
+
+            <TextBlock Text="{Binding AmountCorrectAnswers}" />
+
+            <Border Background="{StaticResource WrongColor}">
+                <materialDesign:PackIcon Kind="Close" Foreground="{StaticResource Base3Color}" Width="50" Height="50" Margin="5"/>
+            </Border>
+
+            <TextBlock Text="{Binding AmountIncorrectAnswers}" />
+            
+            <Border Background="{StaticResource Base2Color}">
+                <materialDesign:PackIcon Kind="Minus" Foreground="{StaticResource Base3Color}" Width="50" Height="50" Margin="5"/>
+            </Border>
+
+            <TextBlock Text="{Binding AmountSkippedAnswers}" Margin="15 0 50 0"/>
+
+            <Border Background="{StaticResource Base2Color}">
+                <materialDesign:PackIcon Kind="BarChart" Foreground="{StaticResource SecondaryTextColor}" Width="50" Height="50" Margin="5"/>
+            </Border>
+
+            <TextBlock Text="{Binding AmountTotalQuestions }" />
+
+        </StackPanel>
+
+        <Border Grid.Row="2" Grid.ColumnSpan="2" 
+                Background="{StaticResource Base2Color}" 
+                VerticalAlignment="Top"
+                HorizontalAlignment="Center"
+                CornerRadius="10"
+                Margin="0 150">
+            <Button Style="{StaticResource TextCardButtonStyle}" 
+                    Content="Home"
+                    FontSize="32"
+                    Margin="30 10"
+                    Command="{Binding GoToHomeCommand}">    
+            </Button>
+        </Border>
+        
+
     </Grid>
 </UserControl>

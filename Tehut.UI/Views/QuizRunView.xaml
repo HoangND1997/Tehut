@@ -36,7 +36,7 @@
             <ColumnDefinition Width="0.1*" MinWidth="60"/>
             <ColumnDefinition Width="0.4*" />
             <ColumnDefinition Width="0.4*" />
-            <ColumnDefinition Width="0.1*" MinWidth="60"/>
+            <ColumnDefinition Width="0.1*" MinWidth="180" />
         </Grid.ColumnDefinitions>
 
         <component:QuestionTextCard Text="{Binding QuestionText}" 
