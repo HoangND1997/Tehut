@@ -8,6 +8,8 @@ namespace Tehut.Core.Models
 
         public bool IsCurrentQuestionAnswered(int currentQuestionIndex) => UserAnswerPerQuestion.ContainsKey(currentQuestionIndex);
 
+        public bool IsQuizFinished() => UserAnswerPerQuestion.Count == Quiz?.Questions.Count;   
+
         public List<int> GetCorrectlyAnsweredQuestions() => UserAnswerPerQuestion.Keys.Where(questionIndex => Quiz?.Questions[questionIndex].CorrectAnswer == UserAnswerPerQuestion[questionIndex]).ToList();
 
         public List<int> GetInCorrectlyAnsweredQuestions() => UserAnswerPerQuestion.Keys.Where(questionIndex => UserAnswerPerQuestion[questionIndex] != -1 && Quiz?.Questions[questionIndex].CorrectAnswer != UserAnswerPerQuestion[questionIndex]).ToList();

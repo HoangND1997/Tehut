@@ -179,7 +179,7 @@ namespace Tehut.UI.ViewModels
 
         public Task OnExitPage<T>(T nextView) where T : ViewModelBase
         {
-            if (nextView is not (QuizRunViewModel or QuizRunSummaryViewModel) && !confirmedLeave)
+            if (nextView is not (QuizRunViewModel or QuizRunSummaryViewModel) && !confirmedLeave && !(runInformation.Run?.IsQuizFinished() ?? true))
             {
                 dialogService.ShowWarningDialog(StringTable.LeaveTitle, StringTable.LeaveQuestionText, StringTable.LeaveWarningText, StringTable.LeaveWarningButtonText, 
                     () => Task.Run(() => { confirmedLeave = true; }), 
