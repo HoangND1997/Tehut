@@ -17,7 +17,7 @@ namespace Tehut.UI.ViewModels.Services
             get => isSearchBarActive;
             set 
             {
-                isSearchBarActive = value; 
+                isSearchBarActive = false; 
                 RaisePropertyChanged(nameof(IsSearchBarActive));
             }
         }
