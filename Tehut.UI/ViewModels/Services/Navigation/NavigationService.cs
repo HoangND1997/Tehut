@@ -19,6 +19,7 @@ namespace Tehut.UI.ViewModels.Services.Navigation
 
         public event EventHandler NavigationTitleChanged;
 
+
         private CancellationTokenSource cancellationTokenSource = new();
 
         private readonly Func<Type, ViewModelBase> viewModelFactory;
@@ -26,6 +27,7 @@ namespace Tehut.UI.ViewModels.Services.Navigation
         private List<(Type, NavigationInformation)> navigationHistory = [];
 
         private int navigationHistoryPosition = 0; 
+
 
         public NavigationService(Func<Type, ViewModelBase> viewModelFactory) 
         {

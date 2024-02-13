@@ -1,5 +1,4 @@
 ﻿using DevExpress.Mvvm;
-using DevExpress.Mvvm.POCO;
 using System.Collections.ObjectModel;
 using Tehut.Core.Models;
 using Tehut.Core.Services;

@@ -6,6 +6,7 @@ namespace Tehut.Core.Models
 
         public Dictionary<int, int> UserAnswerPerQuestion { get; } = [];
 
+
         public bool IsCurrentQuestionAnswered(int currentQuestionIndex) => UserAnswerPerQuestion.ContainsKey(currentQuestionIndex);
 
         public bool IsQuizFinished() => UserAnswerPerQuestion.Count == Quiz?.Questions.Count;   
@@ -15,6 +16,7 @@ namespace Tehut.Core.Models
         public List<int> GetInCorrectlyAnsweredQuestions() => UserAnswerPerQuestion.Keys.Where(questionIndex => UserAnswerPerQuestion[questionIndex] != -1 && Quiz?.Questions[questionIndex].CorrectAnswer != UserAnswerPerQuestion[questionIndex]).ToList();
 
         public List<int> GetSkippedQuestions() => UserAnswerPerQuestion.Keys.Where(questionIndex => UserAnswerPerQuestion[questionIndex] == -1).ToList();
+
 
         public static QuizRun CreateFrom(Quiz quiz)
         {
