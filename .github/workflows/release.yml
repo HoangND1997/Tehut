@@ -5,19 +5,37 @@ on:
     types: [created]
 
 jobs: 
-  publish:
-    - name: Create release binaries 
+  build:
+    
+    strategy:
+      matrix:
+        platform: [win-x64, win-x86]
+
+    name: Create release binaries 
+    runs-on: windows-latest
 
     steps:
       - name: Checkout repository 
         uses: actions/checkout@v3
-      - name: Generate Build artificats
-        run: dotnet publish .\Tehut.UI -r win-x64 /p:IncludeNativeLibrariesForSelfExtract=true --output .
-      - name: Upload artifacts
-        uses: skx/github-action-publish-binaries@master
+
+      - name: Generate Build Artificats
+        run: dotnet publish .\Tehut.UI -r ${{ matrix.platform }} /p:IncludeNativeLibrariesForSelfExtract=true --output .
+
+      - name: Get release
+        id: get_release
+        uses: bruceadams/get-release@v1.3.2
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          args: '*.exe'
-
+          upload_url: ${{ steps.get_release.outputs.upload_url }}
+          asset_path: ./Tehut.exe
+          asset_name: Tehut-${{ github.ref_name }}-${{ matrix.platform }}.exe
+          asset_content_type: application/exe
 
