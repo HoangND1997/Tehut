@@ -7,6 +7,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Views\Resources\Icon.ico</ApplicationIcon>
+	<SelfContained>true</SelfContained>
+    <PublishSingleFile>true</PublishSingleFile>
+    <DebugType>embedded</DebugType>
+    <AssemblyName>Tehut</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
