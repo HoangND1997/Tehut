@@ -3,7 +3,5 @@
     public static class QuizOverviewAutoNames
     {
         public const string AdderCard = "AdderCardButton";
-
-        public const string QuizCard = "QuizCard"; 
     }
 }

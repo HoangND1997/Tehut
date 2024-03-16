@@ -41,7 +41,7 @@ namespace Tehut.UI.Tests.E2E.StepDefinitions.Quiz
         {
             var quizCards = wait.Until(_ => 
             {
-                var quizzes = driver.FindElementsByClassName(QuizOverviewAutoNames.QuizCard);
+                var quizzes = driver.FindElementsByClassName(QuizCardAutoNames.QuizCard);
 
                 if (!quizzes.Any())
                 {
