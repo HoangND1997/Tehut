@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:Tehut.UI.Views"
              xmlns:component="clr-namespace:Tehut.UI.Views.Components"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:automation="clr-namespace:Tehut.UI.Views.Automation"
              xmlns:vm="clr-namespace:Tehut.UI.ViewModels.Entities"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -24,7 +25,7 @@
                         <CollectionContainer Collection="{Binding Source={StaticResource QuizCardCollectionSource}}" />
 
                         <!-- Custom button to add quiz -->
-                        <Button Style="{StaticResource AdderCardButtonStyle}" Width="250" Height="350" Margin="50 50 0 0" Command="{Binding AddQuizCommand}"/>
+                        <Button Style="{StaticResource AdderCardButtonStyle}" Width="250" Height="350" Margin="50 50 0 0" Command="{Binding AddQuizCommand}" AutomationProperties.AutomationId="{x:Static automation:QuizOverviewAutoNames.AdderCard}"/>
 
                 </CompositeCollection>
                 </ItemsControl.ItemsSource>
@@ -37,7 +38,7 @@
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type vm:QuizCardViewModel}">
-                        <component:QuizCard Width="250" Height="350" Margin="50 50 0 0"/>
+                        <component:QuizCard Width="250" Height="350" Margin="50 50 0 0" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
 
