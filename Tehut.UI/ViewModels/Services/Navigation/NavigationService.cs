@@ -24,7 +24,7 @@ namespace Tehut.UI.ViewModels.Services.Navigation
 
         private readonly Func<Type, ViewModelBase> viewModelFactory;
 
-        private List<(Type, NavigationInformation)> navigationHistory = [];
+        private List<(Type, NavigationInformation)> navigationHistory = new();
 
         private int navigationHistoryPosition = 0; 
 
@@ -98,7 +98,7 @@ namespace Tehut.UI.ViewModels.Services.Navigation
 
         private void SaveNavigationHistory(Type viewType, NavigationInformation? navigationInformation)
         {
-            navigationHistory = navigationHistoryPosition < navigationHistory.Count - 1 ? navigationHistory[..(navigationHistoryPosition + 1)] : navigationHistory;
+            navigationHistory = navigationHistoryPosition < navigationHistory.Count - 1 ? navigationHistory.Take(navigationHistoryPosition + 1).ToList() : navigationHistory;
             navigationHistory.Add((viewType, navigationInformation ?? NavigationInformation.Empty));
 
             navigationHistoryPosition = navigationHistory.Count - 1;
