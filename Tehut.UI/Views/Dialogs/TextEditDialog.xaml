@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:Tehut.UI.Views.Dialogs"
+        xmlns:automation="clr-namespace:Tehut.UI.Views.Automation"
         mc:Ignorable="d"
         Height="210" 
         Width="460"
@@ -99,7 +100,8 @@
                         VerticalAlignment="Center"
                         BorderThickness="0"
                         CaretBrush="{StaticResource SecondaryTextColor}"
-                        KeyUp="TextEdit_KeyUp"/>
+                        KeyUp="TextEdit_KeyUp"
+                        AutomationProperties.AutomationId="{x:Static automation:TextEditDialogAutoNames.TextField}"/>
             </Grid>
         </Border>
 
@@ -109,13 +111,15 @@
                     Foreground="{StaticResource PrimaryTextColor}" 
                     Background="{StaticResource CorrectColor}"
                     FontSize="16" 
-                    Click="ConfirmButton_Click"/>
+                    Click="ConfirmButton_Click"
+                    AutomationProperties.AutomationId="{x:Static automation:TextEditDialogAutoNames.ConfirmButton}"/>
             <Button Content="Cancel" Height="40" Width="80" Style="{StaticResource DialogButtonStyle}" 
                     Foreground="{StaticResource PrimaryTextColor}" 
                     Background="{StaticResource Base2Color}"
                     FontSize="16"
                     Margin="10 0"
-                    Click="CancelButton_Click"/>
+                    Click="CancelButton_Click"
+                    AutomationProperties.AutomationId="{x:Static automation:TextEditDialogAutoNames.CancelButton}"/>
         </StackPanel>
 
     </Grid>

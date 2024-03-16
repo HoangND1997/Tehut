@@ -6,6 +6,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Tehut.UI.Views.Components"
              xmlns:converters="clr-namespace:Tehut.UI.Views.Converters"
+             xmlns:automation="clr-namespace:Tehut.UI.Views.Automation"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="280">
 
@@ -31,7 +32,7 @@
             </StackPanel>
 
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-                <Button Style="{StaticResource TextCardButtonStyle}" Width="40" Height="40" Command="{Binding RunQuizCommand}">
+                <Button Style="{StaticResource TextCardButtonStyle}" Width="40" Height="40" Command="{Binding RunQuizCommand}" AutomationProperties.AutomationId="{x:Static automation:QuizCardAutoNames.PlayButton}">
                     <Button.Content>
                             <materialDesign:PackIcon Kind="Play" 
                                                      Width="25" Height="25" 
@@ -39,7 +40,7 @@
                                                      HorizontalAlignment="Center"/>
                     </Button.Content>
                 </Button>
-                <Button Style="{StaticResource TextCardButtonStyle}" Width="40" Height="40" Command="{Binding EditQuizCommand}">
+                <Button Style="{StaticResource TextCardButtonStyle}" Width="40" Height="40" Command="{Binding EditQuizCommand}" AutomationProperties.AutomationId="{x:Static automation:QuizCardAutoNames.EditButton}">
                     <Button.Content>
                         <materialDesign:PackIcon Kind="Edit" 
                                                  Width="25" Height="25" 
@@ -47,7 +48,7 @@
                                                  HorizontalAlignment="Center"/>
                     </Button.Content>
                 </Button>
-                <Button Style="{StaticResource TextCardButtonStyle}" Width="40" Height="40" Command="{Binding DeleteQuizCommand}">
+                <Button Style="{StaticResource TextCardButtonStyle}" Width="40" Height="40" Command="{Binding DeleteQuizCommand}" AutomationProperties.AutomationId="{x:Static automation:QuizCardAutoNames.DeleteButton}">
                     <Button.Content>
                         <materialDesign:PackIcon Kind="Delete" 
                                                  Width="25" Height="25" 
