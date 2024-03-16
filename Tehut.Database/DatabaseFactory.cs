@@ -14,9 +14,14 @@ namespace Tehut.Database
             this.config = config;
         }
 
+        public string GetConnectionString()
+        {
+            return config.UseInMemory ? $"Data Source={config.DatabasePath};Mode=Memory;Cache=Shared" : $"Data Source={config.DatabasePath}";
+        }
+
         public IDbConnection CreateConnection()
         {
-            return new SqliteConnection($"Data Source={config.DatabasePath}");
+            return new SqliteConnection(GetConnectionString());
         }
     }
 }
