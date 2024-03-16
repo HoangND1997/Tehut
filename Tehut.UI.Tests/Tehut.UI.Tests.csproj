@@ -12,6 +12,8 @@
   <ItemGroup>
     <PackageReference Include="Appium.WebDriver" Version="4.4.5" />
     <PackageReference Include="DevExpressMvvm" Version="23.2.3" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
     <PackageReference Include="NSubstitute" Version="5.1.0" />
     <PackageReference Include="NUnit" Version="4.1.0" />
@@ -37,6 +39,12 @@
     <Folder Include="E2E\Features\QuizQuestion\" />
     <Folder Include="E2E\Features\Quiz\" />
     <Folder Include="E2E\StepDefinitions\QuizQuestion\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="testSettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

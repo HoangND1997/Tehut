@@ -25,14 +25,18 @@ namespace Tehut.UI
 
         public App()
         {
+            var commandLineArgs = Environment.GetCommandLineArgs().Skip(1).ToList();
+
+            var useInMemory = commandLineArgs.FirstOrDefault()?.ToLower() is "inmemory";
+
             var applicationFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var databasePath = Path.Combine(Path.Combine(applicationFolder, "Tehut"), "appdata.db");
+            var databasePath = useInMemory ? Guid.NewGuid().ToString() : Path.Combine(Path.Combine(applicationFolder, "Tehut"), "appdata.db");
 
             AppHost = Host.CreateDefaultBuilder()
                 .ConfigureServices(serviceCollection =>
                 {
-                    
-                    databaseConfig = new DatabaseConfig { DatabasePath = databasePath };
+
+                    databaseConfig = new DatabaseConfig { DatabasePath = databasePath, UseInMemory = useInMemory};
 
                     serviceCollection.AddTehutApplication();
                     serviceCollection.AddTehutDatabase(databaseConfig);
@@ -83,6 +87,7 @@ namespace Tehut.UI
             EnsureDatabase(); 
 
             var navigationService = AppHost!.Services.GetRequiredService<ViewModels.Services.Navigation.INavigationService>();
+
             navigationService?.NavigateTo<QuizOverviewViewModel>(); 
 
             var mainWindow = AppHost!.Services.GetRequiredService<MainWindow>();
@@ -103,13 +108,12 @@ namespace Tehut.UI
         { 
             var databaseDirectoryPath = Path.GetDirectoryName(databaseConfig.DatabasePath);
 
-            if (!Directory.Exists(databaseDirectoryPath))
+            if (!databaseConfig.UseInMemory && !Directory.Exists(databaseDirectoryPath))
             { 
                 Directory.CreateDirectory(databaseDirectoryPath!);
             }
 
-            var migrator = AppHost!.Services.GetRequiredService<IDatabaseMigrator>();
-            migrator!.MigrateUp(); 
+            AppHost!.Services.GetRequiredService<IDatabaseMigrator>().MigrateUp();
         }
     }
 }
