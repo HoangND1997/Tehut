@@ -1,5 +1,6 @@
 ﻿using DevExpress.Mvvm;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System.IO;
 using System.Windows;
 using Tehut.Core;
@@ -10,7 +11,6 @@ using Tehut.UI.ViewModels.Services;
 using Tehut.UI.ViewModels.Services.Navigation;
 using Tehut.UI.Views;
 using Tehut.UI.Views.Components;
-using Tehut.UI.Views.Dialogs;
 
 namespace Tehut.UI
 {
@@ -19,27 +19,29 @@ namespace Tehut.UI
     /// </summary>
     public partial class App : Application
     {
-        public static ServiceProvider? ServiceProvider { get; private set; }
+        public static IHost? AppHost { get; private set; }
 
-        private DatabaseConfig databaseConfig; 
+        private DatabaseConfig databaseConfig = null!; 
 
         public App()
         {
             var applicationFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             var databasePath = Path.Combine(Path.Combine(applicationFolder, "Tehut"), "appdata.db");
 
-            databaseConfig = new DatabaseConfig { DatabasePath = databasePath };
+            AppHost = Host.CreateDefaultBuilder()
+                .ConfigureServices(serviceCollection =>
+                {
+                    
+                    databaseConfig = new DatabaseConfig { DatabasePath = databasePath };
 
-            var serviceCollection = new ServiceCollection();
+                    serviceCollection.AddTehutApplication();
+                    serviceCollection.AddTehutDatabase(databaseConfig);
 
-            serviceCollection.AddTehutApplication(); 
-            serviceCollection.AddTehutDatabase(databaseConfig);
+                    RegisterViewModels(serviceCollection);
+                    RegisterViews(serviceCollection);
+                    RegisterOtherServices(serviceCollection);
 
-            RegisterViewModels(serviceCollection);
-            RegisterViews(serviceCollection);
-            RegisterOtherServices(serviceCollection);
-
-            ServiceProvider = serviceCollection.BuildServiceProvider();
+                }).Build();
         }
 
         private static void RegisterViewModels(IServiceCollection serviceCollection)
@@ -76,16 +78,25 @@ namespace Tehut.UI
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            base.OnStartup(e);
+            AppHost!.Start(); 
 
             EnsureDatabase(); 
 
-            var navigationService = ServiceProvider?.GetRequiredService<ViewModels.Services.Navigation.INavigationService>();
+            var navigationService = AppHost!.Services.GetRequiredService<ViewModels.Services.Navigation.INavigationService>();
             navigationService?.NavigateTo<QuizOverviewViewModel>(); 
 
-            var mainWindow = ServiceProvider?.GetRequiredService<MainWindow>();
+            var mainWindow = AppHost!.Services.GetRequiredService<MainWindow>();
 
             mainWindow?.Show();
+
+            base.OnStartup(e);
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            AppHost!.Dispose();
+
+            base.OnExit(e);
         }
 
         private void EnsureDatabase()
@@ -97,9 +108,8 @@ namespace Tehut.UI
                 Directory.CreateDirectory(databaseDirectoryPath!);
             }
 
-            var migrator = ServiceProvider?.GetRequiredService<IDatabaseMigrator>();
-            migrator?.MigrateUp(); 
+            var migrator = AppHost!.Services.GetRequiredService<IDatabaseMigrator>();
+            migrator!.MigrateUp(); 
         }
     }
-
 }

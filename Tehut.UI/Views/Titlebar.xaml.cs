@@ -19,7 +19,7 @@ namespace Tehut.UI.Views
         {
             InitializeComponent();
 
-            DataContext = App.ServiceProvider?.GetRequiredService<HeaderViewModel>(); 
+            DataContext = App.AppHost!.Services.GetRequiredService<HeaderViewModel>(); 
         }
 
         public void SetMainWindow(MainWindow mainWindow)
