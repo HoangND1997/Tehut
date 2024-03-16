@@ -1,6 +1,5 @@
 ﻿using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.DependencyInjection;
-using System.Data;
 using Tehut.Core;
 using Tehut.Core.Services;
 using Tehut.Database;
@@ -12,16 +11,13 @@ namespace Tehut.Integration.Tests.Services
     internal class QuizServiceTests
     {
         private IQuizService sut;
-        private string databasePath = string.Empty; 
 
         [SetUp]
         public void Setup()
         {
-            databasePath = Path.Combine(TestContext.CurrentContext.WorkDirectory, "QuizServiceTests_" + Guid.NewGuid().ToString() + ".db");
-
             var serviceCollection = new ServiceCollection();
 
-            serviceCollection.AddTehutDatabase(new DatabaseConfig { DatabasePath = databasePath });
+            serviceCollection.AddTehutDatabase(new DatabaseConfig { DatabasePath = Guid.NewGuid().ToString(), UseInMemory = true });
             serviceCollection.AddTehutApplication(); 
 
             var serviceProvider = serviceCollection.BuildServiceProvider();
@@ -36,7 +32,6 @@ namespace Tehut.Integration.Tests.Services
         public void TearDown()
         {
            SqliteConnection.ClearAllPools();
-           // File.Delete(databasePath); 
         }
 
         [Test]

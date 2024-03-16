@@ -11,16 +11,12 @@ namespace Tehut.Integration.Tests.Services
         private IQuizQuestionService sut; 
         private IQuizService quizService;
 
-        private string databasePath = string.Empty;
-
         [SetUp]
         public void Setup()
         {
-            databasePath = Path.Combine(TestContext.CurrentContext.WorkDirectory, "QuizServiceTests_" + Guid.NewGuid().ToString() + ".db");
-
             var serviceCollection = new ServiceCollection();
 
-            serviceCollection.AddTehutDatabase(new DatabaseConfig { DatabasePath = databasePath });
+            serviceCollection.AddTehutDatabase(new DatabaseConfig { DatabasePath = Guid.NewGuid().ToString(), UseInMemory = true });
             serviceCollection.AddTehutApplication();
 
             var serviceProvider = serviceCollection.BuildServiceProvider();

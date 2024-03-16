@@ -20,7 +20,7 @@ namespace Tehut.Database
             serviceCollection.AddFluentMigratorCore()
                              .ConfigureRunner(rb => rb
                                 .AddSQLite()
-                                .WithGlobalConnectionString($"Data Source={databaseConfig.DatabasePath}")
+                                .WithGlobalConnectionString(s => s.GetRequiredService<IDatabaseFactory>().GetConnectionString())
                                 .ScanIn(typeof(DatabaseServiceExtensions).Assembly).For.Migrations())
                              .AddLogging(lb => lb.AddFluentMigratorConsole());
         }
