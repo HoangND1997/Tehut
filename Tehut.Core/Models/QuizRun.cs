@@ -4,7 +4,7 @@ namespace Tehut.Core.Models
     {
         public Quiz? Quiz { get; set; }
 
-        public Dictionary<int, int> UserAnswerPerQuestion { get; } = [];
+        public Dictionary<int, int> UserAnswerPerQuestion { get; } = new();
 
 
         public bool IsCurrentQuestionAnswered(int currentQuestionIndex) => UserAnswerPerQuestion.ContainsKey(currentQuestionIndex);

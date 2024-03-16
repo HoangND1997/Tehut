@@ -74,6 +74,9 @@ ScaffoldingReadMe.txt
 # StyleCop
 StyleCopReport.xml
 
+# Specflow
+*.feature.cs
+
 # Files built by Visual Studio
 *_i.c
 *_p.c
