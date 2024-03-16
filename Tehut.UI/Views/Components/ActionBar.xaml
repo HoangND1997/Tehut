@@ -6,8 +6,14 @@
              xmlns:local="clr-namespace:Tehut.UI.Views.Components"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:actionVm="clr-namespace:Tehut.UI.ViewModels.Actions"
+             xmlns:converters="clr-namespace:Tehut.UI.Views.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <converters:ActionBarTypeAutoNameConverter x:Key="TypeConverter" />
+    </UserControl.Resources>
+    
     <Grid>
         <ItemsControl ItemsSource="{Binding HeaderService.Actions}">
             
@@ -25,7 +31,8 @@
                             Command="{Binding ExecuteActionCommand}"
                             ToolTipService.InitialShowDelay="1000"
                             ToolTipService.BetweenShowDelay="500"
-                            Width="40" Height="40" Margin="10 0 0 0">
+                            Width="40" Height="40" Margin="10 0 0 0"
+                            AutomationProperties.AutomationId="{Binding Type, Converter={StaticResource TypeConverter}}">
                         
                         <Button.ToolTip>
                             <ToolTip Content="{Binding Name}" Style="{StaticResource GeneralTooltipStyle}"/>
