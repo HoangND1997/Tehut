@@ -14,3 +14,17 @@ pool:
   vmImage: 'windows-latest'
 
 steps:
+- task: Windows Application Driver@0
+  displayName: Starting Win App Driver 
+  inputs:
+    OperationType: 'Start'
+    
+- script: dotnet restore 
+  displayName: Restoring dependencies
+
+- script: dotnet test .\Tehut.UI.Tests FullyQualifiedName~E2E
+  displayName: Running UI Tests 
+  
+- task: Windows Application Driver@0
+  inputs:
+    OperationType: 'Stop'
