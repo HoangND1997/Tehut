@@ -22,7 +22,7 @@ steps:
 - script: dotnet restore 
   displayName: Restoring dependencies
 
-- script: dotnet test .\Tehut.UI.Tests FullyQualifiedName~E2E
+- script: dotnet test .\Tehut.UI.Tests --filter "FullyQualifiedName~E2E" --no-restore
   displayName: Running UI Tests 
   
 - task: Windows Application Driver@0
