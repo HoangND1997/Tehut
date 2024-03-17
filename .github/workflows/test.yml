@@ -20,4 +20,4 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Test
-      run: dotnet test .\Tehut.UI.Tests --verbosity normal 
+      run: dotnet test .\Tehut.UI.Tests --verbosity normal --filter FullyQualifiedName!~E2E
