@@ -28,3 +28,11 @@ steps:
 - task: Windows Application Driver@0
   inputs:
     OperationType: 'Stop'
+
+- task: SpecFlowPlus@0
+  inputs:
+    generatorSource: 'TestAssembly'
+    testAssemblyFilePath: '.\Tehut.UI.Tests\bin\Debug\net7.0-windows\Tehut.UI.Tests.dll'
+    projectName: 'Tehut UI Tests'
+    testExecutionJson: '.\Tehut.UI.Tests\bin\Debug\net7.0-windows\TestExecution.json'
+    projectLanguage: 'en'
